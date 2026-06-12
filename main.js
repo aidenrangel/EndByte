@@ -167,6 +167,28 @@
     });
   }
 
+  /* ---------- faq accordion (home page only) ---------- */
+  var faqItems = document.querySelectorAll('.faq-item');
+  if(faqItems.length){
+    faqItems.forEach(function(item){
+      var q = item.querySelector('.faq-q');
+      var a = item.querySelector('.faq-a');
+      q.addEventListener('click', function(){
+        var open = item.classList.toggle('open');
+        q.setAttribute('aria-expanded', open);
+        a.style.maxHeight = open ? a.scrollHeight + 'px' : '0';
+      });
+    });
+    window.addEventListener('resize', function(){
+      faqItems.forEach(function(item){
+        if(item.classList.contains('open')){
+          var a = item.querySelector('.faq-a');
+          a.style.maxHeight = a.scrollHeight + 'px';
+        }
+      });
+    });
+  }
+
   /* ---------- scroll reveals (all pages) ---------- */
   var io=new IntersectionObserver(function(entries){
     entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
