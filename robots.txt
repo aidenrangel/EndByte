@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aidenrangel.github.io/endbyte/sitemap.xml
