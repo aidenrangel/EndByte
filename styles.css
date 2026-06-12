@@ -330,11 +330,11 @@ footer a:hover{color:var(--amber)}
 @media(max-width:760px){.rel-row{grid-template-columns:1fr}}
 
 /* ---------- founder (subsection of about) ---------- */
-.founder-sub{display:grid;grid-template-columns:auto 1fr;gap:44px;align-items:start;margin-top:72px;padding:56px 36px;border:1px solid var(--line);background:#0B0E12}
+.founder-sub{display:grid;grid-template-columns:180px minmax(0,1fr);gap:40px;align-items:start;margin-top:72px;padding:56px 36px;border:1px solid var(--line);background:#0B0E12}
 .founder-sub .photo{width:180px;flex-shrink:0}
 .founder-sub .photo .ph{width:180px;height:180px;border:1px solid var(--line2);background:linear-gradient(180deg,var(--panel2),var(--panel));display:grid;place-items:center;position:relative;overflow:hidden}
 .founder-sub .photo .ph::after{content:'A·R';font-family:var(--disp);font-weight:700;font-size:46px;color:var(--line2);letter-spacing:.04em}
-.founder-sub .photo img{width:180px;height:180px;object-fit:cover;display:block;border:1px solid var(--line2)}
+.founder-sub .photo .ph img{position:relative;z-index:1;width:180px;height:180px;object-fit:cover;display:block;color:transparent;font-size:0}
 .founder-sub .photo .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--faint);margin-top:12px;text-align:center}
 .founder-sub .photo .cap b{color:var(--text);display:block;font-weight:500;letter-spacing:.04em;margin-bottom:2px}
 .founder-sub .bio .eyebrow{margin-bottom:14px}
