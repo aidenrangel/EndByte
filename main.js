@@ -134,7 +134,7 @@
       // not configured yet? fail gracefully with a mailto fallback
       if(qform.action.indexOf('YOUR_FORM_ID') !== -1){
         note.className = 'qf-note err';
-        note.innerHTML = 'FORM BACKEND NOT CONFIGURED YET — EMAIL US DIRECTLY AT <a href="mailto:aidenrangel@gmail.com" style="color:var(--amber)">AIDENRANGEL@GMAIL.COM</a>';
+        note.innerHTML = 'FORM BACKEND NOT CONFIGURED YET — EMAIL US DIRECTLY AT <a href="mailto:info@endbyte.net" style="color:var(--amber)">INFO@ENDBYTE.NET</a>';
         return;
       }
 
@@ -162,7 +162,7 @@
         btn.disabled = false;
         btn.textContent = 'SEND REQUEST';
         note.className = 'qf-note err';
-        note.innerHTML = 'SOMETHING WENT WRONG — PLEASE EMAIL <a href="mailto:aidenrangel@gmail.com" style="color:var(--amber)">AIDENRANGEL@GMAIL.COM</a> INSTEAD.';
+        note.innerHTML = 'SOMETHING WENT WRONG — PLEASE EMAIL <a href="mailto:info@endbyte.net" style="color:var(--amber)">INFO@ENDBYTE.NET</a> INSTEAD.';
       });
     });
   }
