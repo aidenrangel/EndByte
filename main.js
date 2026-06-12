@@ -114,6 +114,59 @@
     }, 900);
   }
 
+  /* ---------- quote form (home page only) ---------- */
+  var qform = document.getElementById('quoteForm');
+  if(qform){
+    var note = document.getElementById('qfNote');
+    qform.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      // basic required-field check
+      var name = qform.querySelector('[name="name"]');
+      var email = qform.querySelector('[name="email"]');
+      var msg = qform.querySelector('[name="message"]');
+      if(!name.value.trim() || !email.value.trim() || !msg.value.trim() || email.value.indexOf('@') < 0){
+        note.className = 'qf-note err';
+        note.textContent = 'PLEASE FILL IN NAME, A VALID EMAIL, AND A MESSAGE.';
+        return;
+      }
+
+      // not configured yet? fail gracefully with a mailto fallback
+      if(qform.action.indexOf('YOUR_FORM_ID') !== -1){
+        note.className = 'qf-note err';
+        note.innerHTML = 'FORM BACKEND NOT CONFIGURED YET — EMAIL US DIRECTLY AT <a href="mailto:aidenrangel@gmail.com" style="color:var(--amber)">AIDENRANGEL@GMAIL.COM</a>';
+        return;
+      }
+
+      var btn = qform.querySelector('.qf-submit');
+      btn.disabled = true;
+      btn.textContent = 'SENDING…';
+      note.className = 'qf-note';
+      note.textContent = '';
+
+      fetch(qform.action, {
+        method: 'POST',
+        body: new FormData(qform),
+        headers: {'Accept': 'application/json'}
+      }).then(function(res){
+        if(res.ok){
+          qform.classList.add('sent');
+          var done = document.createElement('div');
+          done.className = 'qf-sent-msg';
+          done.innerHTML = '<div class="big">REQUEST RECEIVED ✓</div><p>Thanks — we\'ll get back to you shortly, usually same day. If it\'s urgent, call <a href="tel:+14084206991" style="color:var(--amber)">+1 (408) 420-6991</a>.</p>';
+          qform.appendChild(done);
+        } else {
+          throw new Error('bad status');
+        }
+      }).catch(function(){
+        btn.disabled = false;
+        btn.textContent = 'SEND REQUEST';
+        note.className = 'qf-note err';
+        note.innerHTML = 'SOMETHING WENT WRONG — PLEASE EMAIL <a href="mailto:aidenrangel@gmail.com" style="color:var(--amber)">AIDENRANGEL@GMAIL.COM</a> INSTEAD.';
+      });
+    });
+  }
+
   /* ---------- scroll reveals (all pages) ---------- */
   var io=new IntersectionObserver(function(entries){
     entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
