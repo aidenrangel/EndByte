@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260612d">
+<link rel="stylesheet" href="styles.css?v=20260612e">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -226,14 +226,45 @@
     <div class="reveal">
       <div class="eyebrow">Get started</div>
       <h2>Tell us what's powering down</h2>
-      <p style="color:var(--dim);max-width:440px">One call covers it — drive counts, timelines, on-site vs. drop-off, and whether the free program fits your situation.</p>
+      <p style="color:var(--dim);max-width:440px">One message covers it — drive counts, condition, wipe vs. shred, and whether the free program fits. We'll reply with a straight answer, usually same day.</p>
       <a class="bigphone" href="tel:+14084206991">+1 (408) 420-6991</a>
+      <div style="margin-top:28px">
+        <div class="c-line"><span class="k">Email</span><span class="v"><a href="mailto:aidenrangel@gmail.com">aidenrangel@gmail.com</a></span></div>
+        <div class="c-line"><span class="k">Based in</span><span class="v">Silicon Valley · Bay Area, CA</span></div>
+        <div class="c-line"><span class="k">Service area</span><span class="v">San Francisco Bay Area & Silicon Valley</span></div>
+        <div class="c-line"><span class="k">Hours</span><span class="v">By appointment — call or email anytime</span></div>
+      </div>
     </div>
     <div class="reveal">
-      <div class="c-line"><span class="k">Email</span><span class="v"><a href="mailto:aidenrangel@gmail.com">aidenrangel@gmail.com</a></span></div>
-      <div class="c-line"><span class="k">Based in</span><span class="v">Silicon Valley · Bay Area, CA</span></div>
-      <div class="c-line"><span class="k">Service area</span><span class="v">San Francisco Bay Area & Silicon Valley</span></div>
-      <div class="c-line"><span class="k">Hours</span><span class="v">By appointment — call or email anytime</span></div>
+      <form class="qform" id="quoteForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+        <div class="qf-head">REQUEST A QUOTE</div>
+        <div class="qf-row two">
+          <label>NAME *<input type="text" name="name" required autocomplete="name"></label>
+          <label>EMAIL *<input type="email" name="email" required autocomplete="email"></label>
+        </div>
+        <div class="qf-row two">
+          <label>PHONE<input type="tel" name="phone" autocomplete="tel"></label>
+          <label>DRIVE COUNT (APPROX.)<input type="text" name="drive_count" inputmode="numeric" placeholder="e.g. 50"></label>
+        </div>
+        <div class="qf-row">
+          <label>SERVICE NEEDED
+            <select name="service">
+              <option value="Not sure yet" selected>Not sure yet</option>
+              <option>Secure Drive Wiping</option>
+              <option>Physical Destruction</option>
+              <option>On-Site Destruction</option>
+              <option>Pickup &amp; Chain of Custody</option>
+              <option>Free Certified Destruction</option>
+            </select>
+          </label>
+        </div>
+        <div class="qf-row">
+          <label>MESSAGE *<textarea name="message" rows="4" required placeholder="What kind of media, condition, timeline…"></textarea></label>
+        </div>
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <button type="submit" class="btn btn-primary qf-submit">SEND REQUEST</button>
+        <div class="qf-note" id="qfNote"></div>
+      </form>
     </div>
   </div>
 </section>
@@ -244,6 +275,6 @@
     <span>BAY AREA, CA · <a href="tel:+14084206991">+1 (408) 420-6991</a> · <a href="mailto:aidenrangel@gmail.com">AIDENRANGEL@GMAIL.COM</a></span>
   </div>
 </footer>
-<script src="main.js?v=20260612d"></script>
+<script src="main.js?v=20260612e"></script>
 </body>
 </html>
