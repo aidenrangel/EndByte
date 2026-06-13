@@ -30,22 +30,21 @@
     });
   }
 
-  /* ---------- hex rain (hero background, home page only) ---------- */
+  /* ---------- hex rain (full-page background, home page only) ---------- */
   var hexCanvas = document.getElementById('hexrain');
   if(hexCanvas && !reduced){
     // ===== TUNABLE: overall visibility of the rain. 0 = invisible, 1 = bold. =====
-    var RAIN_INTENSITY = 0.8;   // try 0.3 (whisper) to 0.8 (prominent)
+    var RAIN_INTENSITY = 0.5;   // try 0.3 (whisper) to 0.8 (prominent)
     // =============================================================================
 
     var ctx = hexCanvas.getContext('2d');
-    var hero = hexCanvas.closest('.hero');
     var cols, drops, fontSize = 14, dpr = Math.min(window.devicePixelRatio || 1, 2);
     var hexChars = '0123456789ABCDEF';
-    var zeroBandTop = 0, zeroBandBot = 0; // vertical region (around headline) where chars resolve to 00
+    var zeroBandTop = 0, zeroBandBot = 0; // region (around hero headline) where chars resolve to 00
     var running = true, rafId = null;
 
     function sizeCanvas(){
-      var w = hero.clientWidth, h = hero.clientHeight;
+      var w = window.innerWidth, h = window.innerHeight; // fixed canvas = viewport size
       hexCanvas.width = w * dpr;
       hexCanvas.height = h * dpr;
       hexCanvas.style.width = w + 'px';
@@ -54,9 +53,9 @@
       cols = Math.floor(w / (fontSize * 1.6));
       drops = [];
       for(var i = 0; i < cols; i++) drops[i] = Math.random() * (h / fontSize);
-      // headline sits roughly in the upper-left-to-middle; resolve-to-zero band there
-      zeroBandTop = h * 0.28;
-      zeroBandBot = h * 0.62;
+      // resolve-to-zero band sits in the upper area where the hero headline is (when at top of page)
+      zeroBandTop = h * 0.30;
+      zeroBandBot = h * 0.58;
     }
     sizeCanvas();
 
@@ -64,34 +63,36 @@
 
     function draw(){
       if(!running){ return; }
-      var w = hero.clientWidth, h = hero.clientHeight;
+      var w = window.innerWidth, h = window.innerHeight;
       // fade previous frame slightly for a soft trail (very dark, matches bg)
       ctx.fillStyle = 'rgba(14,17,22,0.18)';
       ctx.fillRect(0, 0, w, h);
       ctx.font = fontSize + "px 'IBM Plex Mono', monospace";
 
+      // only show the resolve-to-zero band when the user is near the top (hero in view)
+      var nearTop = window.scrollY < h * 0.6;
+
       for(var i = 0; i < cols; i++){
         var x = i * fontSize * 1.6 + 4;
         var y = drops[i] * fontSize;
-        var inZeroBand = (y > zeroBandTop && y < zeroBandBot);
+        var inZeroBand = nearTop && (y > zeroBandTop && y < zeroBandBot);
         var text, alpha;
         if(inZeroBand){
           text = '00';
-          // occasional amber zero to echo the brand accent
           var amber = Math.random() < 0.06;
           alpha = (0.10 + Math.random()*0.10) * RAIN_INTENSITY;
           ctx.fillStyle = amber
             ? 'rgba(255,176,32,' + (alpha*1.6).toFixed(3) + ')'
-            : 'rgba(120,210,160,' + alpha.toFixed(3) + ')'; // faint green-ish zero
+            : 'rgba(120,210,160,' + alpha.toFixed(3) + ')';
         } else {
           text = pair();
           alpha = (0.05 + Math.random()*0.07) * RAIN_INTENSITY;
-          ctx.fillStyle = 'rgba(139,149,165,' + alpha.toFixed(3) + ')'; // --dim, very faint
+          ctx.fillStyle = 'rgba(139,149,165,' + alpha.toFixed(3) + ')';
         }
         ctx.fillText(text, x, y);
 
         if(y > h && Math.random() > 0.975){ drops[i] = 0; }
-        drops[i] += 0.45; // fall speed (slow)
+        drops[i] += 0.45;
       }
       rafId = requestAnimationFrame(draw);
     }
@@ -101,13 +102,7 @@
 
     draw();
 
-    // pause when the hero scrolls out of view (saves battery/CPU)
-    var heroObserver = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ e.isIntersecting ? startRain() : stopRain(); });
-    }, {threshold: 0.01});
-    heroObserver.observe(hero);
-
-    // pause when tab is hidden
+    // pause when tab is hidden (the canvas is fixed/full-viewport so it's always "in view")
     document.addEventListener('visibilitychange', function(){
       document.hidden ? stopRain() : startRain();
     });
