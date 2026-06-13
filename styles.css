@@ -330,7 +330,7 @@ footer a:hover{color:var(--amber)}
 @media(max-width:760px){.rel-row{grid-template-columns:1fr}}
 
 /* ---------- founder (subsection of about) ---------- */
-.founder-sub{display:flex;align-items:flex-start;gap:40px;margin-top:72px;padding:56px 36px;border:1px solid var(--line);background:#0B0E12}
+.founder-sub{display:flex;align-items:flex-start;gap:40px;max-width:1180px;margin:72px auto 0;padding:56px 36px;border:1px solid var(--line);background:#0B0E12}
 .founder-sub .photo{width:180px;flex:0 0 180px}
 .founder-sub .bio{flex:1 1 auto;min-width:0}
 .founder-sub .photo .ph{width:180px;height:180px;border:1px solid var(--line2);background:linear-gradient(180deg,var(--panel2),var(--panel));display:grid;place-items:center;position:relative;overflow:hidden}
