@@ -90,14 +90,19 @@
       var now = (typeof performance !== 'undefined' ? performance.now() : Date.now());
       var env = cyclePhase(now, h);
 
-      // clear fully (no persistent trail buildup that becomes streaks)
-      ctx.clearRect(0, 0, w, h);
-
       if(env <= 0.001){
-        // resting — nothing drawn, but keep the loop alive to resume on schedule
+        // resting — aggressively fade remaining trails to fully dark, then idle
+        ctx.fillStyle = 'rgba(14,17,22,0.45)';
+        ctx.fillRect(0, 0, w, h);
         rafId = requestAnimationFrame(draw);
         return;
       }
+
+      // soft trail: paint a translucent bg over the last frame so glyphs leave comet tails.
+      // as the wave fades out (env -> 0), clear more aggressively so streaks don't linger.
+      var trailAlpha = 0.10 + (1 - env) * 0.28;
+      ctx.fillStyle = 'rgba(14,17,22,' + trailAlpha.toFixed(3) + ')';
+      ctx.fillRect(0, 0, w, h);
 
       ctx.font = fontSize + "px 'IBM Plex Mono', monospace";
       var nearTop = window.scrollY < h * 0.6;
