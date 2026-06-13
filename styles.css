@@ -86,11 +86,6 @@ nav.open .mobilemenu{max-height:calc(100vh - 66px);overflow-y:auto}
 
 /* ---------- hero ---------- */
 .hero{position:relative;padding:84px 0 90px;border-bottom:1px solid var(--line);overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:
-  linear-gradient(rgba(38,45,56,.22) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(38,45,56,.22) 1px,transparent 1px);
-  background-size:44px 44px;mask-image:radial-gradient(ellipse 80% 70% at 70% 30%,#000 30%,transparent 75%)}
-.hero::before{z-index:0}
 .hexrain{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block;background:var(--bg)}
 html{background:var(--bg)}
 body{position:relative;z-index:0;background:transparent}
