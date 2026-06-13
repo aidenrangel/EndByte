@@ -35,25 +35,35 @@
   if(hexCanvas && !reduced){
     // ===== TUNABLE: overall visibility of the rain. 0 = invisible, 1 = bold. =====
     var RAIN_INTENSITY = 0.5;   // try 0.3 (whisper) to 0.8 (prominent)
+    // ===== TUNABLE: cycle timing (milliseconds) =====
+    var FADE_IN_MS   = 2500;    // ramp up
+    var HOLD_MS      = 7000;    // full strength
+    var FADE_OUT_MS  = 3500;    // ramp down
+    var REST_MS      = 4000;    // dark pause before it begins again
     // =============================================================================
 
     var ctx = hexCanvas.getContext('2d');
     var cols, drops, fontSize = 14, dpr = Math.min(window.devicePixelRatio || 1, 2);
     var hexChars = '0123456789ABCDEF';
-    var zeroBandTop = 0, zeroBandBot = 0; // region (around hero headline) where chars resolve to 00
+    var zeroBandTop = 0, zeroBandBot = 0;
     var running = true, rafId = null;
+    var cycleStart = (typeof performance !== 'undefined' ? performance.now() : Date.now());
+    var CYCLE_MS = FADE_IN_MS + HOLD_MS + FADE_OUT_MS + REST_MS;
+
+    function reseedDrops(h){
+      drops = [];
+      for(var i = 0; i < cols; i++) drops[i] = Math.random() * (h / fontSize);
+    }
 
     function sizeCanvas(){
-      var w = window.innerWidth, h = window.innerHeight; // fixed canvas = viewport size
+      var w = window.innerWidth, h = window.innerHeight;
       hexCanvas.width = w * dpr;
       hexCanvas.height = h * dpr;
       hexCanvas.style.width = w + 'px';
       hexCanvas.style.height = h + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       cols = Math.floor(w / (fontSize * 1.6));
-      drops = [];
-      for(var i = 0; i < cols; i++) drops[i] = Math.random() * (h / fontSize);
-      // resolve-to-zero band sits in the upper area where the hero headline is (when at top of page)
+      reseedDrops(h);
       zeroBandTop = h * 0.30;
       zeroBandBot = h * 0.58;
     }
@@ -61,15 +71,35 @@
 
     function pair(){ return hexChars[Math.floor(Math.random()*16)] + hexChars[Math.floor(Math.random()*16)]; }
 
+    // returns 0..1 envelope for where we are in the current cycle
+    function cyclePhase(now, h){
+      var t = (now - cycleStart) % CYCLE_MS;
+      // at the very start of a fresh cycle, reseed so it never resumes as synced columns
+      if(t < 16){ reseedDrops(h); }
+      if(t < FADE_IN_MS) return t / FADE_IN_MS;                          // fading in
+      t -= FADE_IN_MS;
+      if(t < HOLD_MS) return 1;                                          // full
+      t -= HOLD_MS;
+      if(t < FADE_OUT_MS) return 1 - (t / FADE_OUT_MS);                  // fading out
+      return 0;                                                          // resting
+    }
+
     function draw(){
       if(!running){ return; }
       var w = window.innerWidth, h = window.innerHeight;
-      // fade previous frame slightly for a soft trail (very dark, matches bg)
-      ctx.fillStyle = 'rgba(14,17,22,0.18)';
-      ctx.fillRect(0, 0, w, h);
-      ctx.font = fontSize + "px 'IBM Plex Mono', monospace";
+      var now = (typeof performance !== 'undefined' ? performance.now() : Date.now());
+      var env = cyclePhase(now, h);
 
-      // only show the resolve-to-zero band when the user is near the top (hero in view)
+      // clear fully (no persistent trail buildup that becomes streaks)
+      ctx.clearRect(0, 0, w, h);
+
+      if(env <= 0.001){
+        // resting — nothing drawn, but keep the loop alive to resume on schedule
+        rafId = requestAnimationFrame(draw);
+        return;
+      }
+
+      ctx.font = fontSize + "px 'IBM Plex Mono', monospace";
       var nearTop = window.scrollY < h * 0.6;
 
       for(var i = 0; i < cols; i++){
@@ -80,13 +110,13 @@
         if(inZeroBand){
           text = '00';
           var amber = Math.random() < 0.06;
-          alpha = (0.10 + Math.random()*0.10) * RAIN_INTENSITY;
+          alpha = (0.10 + Math.random()*0.10) * RAIN_INTENSITY * env;
           ctx.fillStyle = amber
             ? 'rgba(255,176,32,' + (alpha*1.6).toFixed(3) + ')'
             : 'rgba(120,210,160,' + alpha.toFixed(3) + ')';
         } else {
           text = pair();
-          alpha = (0.05 + Math.random()*0.07) * RAIN_INTENSITY;
+          alpha = (0.05 + Math.random()*0.07) * RAIN_INTENSITY * env;
           ctx.fillStyle = 'rgba(139,149,165,' + alpha.toFixed(3) + ')';
         }
         ctx.fillText(text, x, y);
@@ -102,12 +132,10 @@
 
     draw();
 
-    // pause when tab is hidden (the canvas is fixed/full-viewport so it's always "in view")
     document.addEventListener('visibilitychange', function(){
       document.hidden ? stopRain() : startRain();
     });
 
-    // resize handling (debounced)
     var rt;
     window.addEventListener('resize', function(){
       clearTimeout(rt);
