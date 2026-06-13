@@ -35,25 +35,13 @@
   if(hexCanvas && !reduced){
     // ===== TUNABLE: overall visibility of the rain. 0 = invisible, 1 = bold. =====
     var RAIN_INTENSITY = 0.5;   // try 0.3 (whisper) to 0.8 (prominent)
-    // ===== TUNABLE: cycle timing (milliseconds) =====
-    var FADE_IN_MS   = 2500;    // ramp up
-    var HOLD_MS      = 7000;    // full strength
-    var FADE_OUT_MS  = 3500;    // ramp down
-    var REST_MS      = 4000;    // dark pause before it begins again
     // =============================================================================
 
     var ctx = hexCanvas.getContext('2d');
-    var cols, drops, fontSize = 14, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var cols, drops, speeds, fontSize = 14, dpr = Math.min(window.devicePixelRatio || 1, 2);
     var hexChars = '0123456789ABCDEF';
     var zeroBandTop = 0, zeroBandBot = 0;
-    var running = true, rafId = null;
-    var cycleStart = (typeof performance !== 'undefined' ? performance.now() : Date.now());
-    var CYCLE_MS = FADE_IN_MS + HOLD_MS + FADE_OUT_MS + REST_MS;
-
-    function reseedDrops(h){
-      drops = [];
-      for(var i = 0; i < cols; i++) drops[i] = Math.random() * (h / fontSize);
-    }
+    var running = true, rafId = null, frameCount = 0;
 
     function sizeCanvas(){
       var w = window.innerWidth, h = window.innerHeight;
@@ -63,7 +51,11 @@
       hexCanvas.style.height = h + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       cols = Math.floor(w / (fontSize * 1.6));
-      reseedDrops(h);
+      drops = []; speeds = [];
+      for(var i = 0; i < cols; i++){
+        drops[i] = Math.random() * (h / fontSize);
+        speeds[i] = 0.35 + Math.random() * 0.5; // varied speeds so columns never sync up
+      }
       zeroBandTop = h * 0.30;
       zeroBandBot = h * 0.58;
     }
@@ -71,40 +63,22 @@
 
     function pair(){ return hexChars[Math.floor(Math.random()*16)] + hexChars[Math.floor(Math.random()*16)]; }
 
-    // returns 0..1 envelope for where we are in the current cycle
-    function cyclePhase(now, h){
-      var t = (now - cycleStart) % CYCLE_MS;
-      // at the very start of a fresh cycle, reseed so it never resumes as synced columns
-      if(t < 16){ reseedDrops(h); }
-      if(t < FADE_IN_MS) return t / FADE_IN_MS;                          // fading in
-      t -= FADE_IN_MS;
-      if(t < HOLD_MS) return 1;                                          // full
-      t -= HOLD_MS;
-      if(t < FADE_OUT_MS) return 1 - (t / FADE_OUT_MS);                  // fading out
-      return 0;                                                          // resting
-    }
-
     function draw(){
       if(!running){ return; }
       var w = window.innerWidth, h = window.innerHeight;
-      var now = (typeof performance !== 'undefined' ? performance.now() : Date.now());
-      var env = cyclePhase(now, h);
-
-      if(env <= 0.001){
-        // resting — aggressively fade remaining trails to fully dark, then idle
-        ctx.fillStyle = 'rgba(14,17,22,0.45)';
-        ctx.fillRect(0, 0, w, h);
-        rafId = requestAnimationFrame(draw);
-        return;
-      }
-
-      // soft trail: paint a translucent bg over the last frame so glyphs leave comet tails.
-      // as the wave fades out (env -> 0), clear more aggressively so streaks don't linger.
-      var trailAlpha = 0.10 + (1 - env) * 0.28;
-      ctx.fillStyle = 'rgba(14,17,22,' + trailAlpha.toFixed(3) + ')';
+      // soft trail: translucent bg over the previous frame gives the comet-tail streaks.
+      // slightly stronger than a pure trail so faint streaks can't accumulate forever.
+      ctx.fillStyle = 'rgba(14,17,22,0.16)';
       ctx.fillRect(0, 0, w, h);
-
+      // every ~90 frames, one extra faint sweep clears any lingering vertical buildup
+      // (imperceptible to the eye, but stops static columns from forming over time)
+      frameCount++;
+      if(frameCount % 90 === 0){
+        ctx.fillStyle = 'rgba(14,17,22,0.30)';
+        ctx.fillRect(0, 0, w, h);
+      }
       ctx.font = fontSize + "px 'IBM Plex Mono', monospace";
+
       var nearTop = window.scrollY < h * 0.6;
 
       for(var i = 0; i < cols; i++){
@@ -115,19 +89,24 @@
         if(inZeroBand){
           text = '00';
           var amber = Math.random() < 0.06;
-          alpha = (0.10 + Math.random()*0.10) * RAIN_INTENSITY * env;
+          alpha = (0.10 + Math.random()*0.10) * RAIN_INTENSITY;
           ctx.fillStyle = amber
             ? 'rgba(255,176,32,' + (alpha*1.6).toFixed(3) + ')'
             : 'rgba(120,210,160,' + alpha.toFixed(3) + ')';
         } else {
           text = pair();
-          alpha = (0.05 + Math.random()*0.07) * RAIN_INTENSITY * env;
+          alpha = (0.05 + Math.random()*0.07) * RAIN_INTENSITY;
           ctx.fillStyle = 'rgba(139,149,165,' + alpha.toFixed(3) + ')';
         }
         ctx.fillText(text, x, y);
 
-        if(y > h && Math.random() > 0.975){ drops[i] = 0; }
-        drops[i] += 0.45;
+        // reset a column to the top once it passes the bottom (randomized so they
+        // never line up), and give it a fresh random speed each time
+        if(y > h && Math.random() > 0.975){
+          drops[i] = 0;
+          speeds[i] = 0.35 + Math.random() * 0.5;
+        }
+        drops[i] += speeds[i];
       }
       rafId = requestAnimationFrame(draw);
     }
