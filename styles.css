@@ -330,8 +330,9 @@ footer a:hover{color:var(--amber)}
 @media(max-width:760px){.rel-row{grid-template-columns:1fr}}
 
 /* ---------- founder (subsection of about) ---------- */
-.founder-sub{display:grid;grid-template-columns:180px minmax(0,1fr);gap:40px;align-items:start;margin-top:72px;padding:56px 36px;border:1px solid var(--line);background:#0B0E12}
-.founder-sub .photo{width:180px;flex-shrink:0}
+.founder-sub{display:flex;align-items:flex-start;gap:40px;margin-top:72px;padding:56px 36px;border:1px solid var(--line);background:#0B0E12}
+.founder-sub .photo{width:180px;flex:0 0 180px}
+.founder-sub .bio{flex:1 1 auto;min-width:0}
 .founder-sub .photo .ph{width:180px;height:180px;border:1px solid var(--line2);background:linear-gradient(180deg,var(--panel2),var(--panel));display:grid;place-items:center;position:relative;overflow:hidden}
 .founder-sub .photo .ph::after{content:'A·R';font-family:var(--disp);font-weight:700;font-size:46px;color:var(--line2);letter-spacing:.04em}
 .founder-sub .photo .ph img{position:relative;z-index:1;width:180px;height:180px;object-fit:cover;display:block;color:transparent;font-size:0}
@@ -344,8 +345,9 @@ footer a:hover{color:var(--amber)}
 .founder-sub .sig{font-family:var(--disp);font-weight:700;font-size:18px;color:var(--text);margin-top:24px;letter-spacing:.01em}
 .founder-sub .sig span{display:block;font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:.1em;color:var(--amber);margin-top:4px}
 @media(max-width:760px){
-  .founder-sub{grid-template-columns:1fr;gap:28px;margin-top:48px;padding:40px 24px}
-  .founder-sub .photo,.founder-sub .photo .ph,.founder-sub .photo img{width:140px}
+  .founder-sub{flex-direction:column;gap:28px;margin-top:48px;padding:40px 24px}
+  .founder-sub .photo{flex:0 0 auto}
+  .founder-sub .photo,.founder-sub .photo .ph,.founder-sub .photo .ph img{width:140px}
   .founder-sub .photo .ph{height:140px}
   .founder-sub .photo .ph::after{font-size:36px}
 }
