@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260613n">
+<link rel="stylesheet" href="styles.css?v=20260613o">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -212,6 +212,46 @@
   </div>
 </section>
 
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Common questions</div>
+      <h2>Answers before you ask</h2>
+      <p>The things data center and IT teams ask us most. Don't see yours? Call or send a message — straight answers, no sales runaround.</p>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Can SSDs actually be wiped securely?<span class="faq-pm">+</span></button>
+        <div class="faq-a"><p>Yes — but the method matters. SSDs store data differently from spinning drives, so a standard multi-pass overwrite isn't enough on its own. We use the drive's built-in secure-erase and sanitize commands where supported, verify the result, and physically destroy any SSD that can't be reliably verified. NIST 800-88 covers flash media specifically, and we follow it.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">What's actually on the certificate?<span class="faq-pm">+</span></button>
+        <div class="faq-a"><p>Per drive: the device model and serial number, the method used (wipe standard or destruction type), the date, the operator, and the verification result. For batch jobs, all of it rolls up into a single audit report that reconciles against the original intake list — so your auditor can match every drive received to its final disposition.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Why is the free program actually free?<span class="faq-pm">+</span></button>
+        <div class="faq-a"><p>No catch — it's an aligned trade. Properly wiped, working enterprise drives still hold resale value. When you let us keep the drives after they're sanitized and verified, that recovered value covers the cost of the service, so we don't invoice you. You get the full certified process; we recover the hardware. It fits best with working enterprise drives in reasonable volume — if your media is mostly failed or policy-bound to physical destruction, we'll tell you up front and quote the paid service instead.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">What happens to drives that fail verification?<span class="faq-pm">+</span></button>
+        <div class="faq-a"><p>They're physically destroyed — shredded or crushed — and documented the same way as everything else. A drive that can't prove it was wiped clean never goes back into circulation and never gets returned as "probably fine." Failure handling is automatic and on the record.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">How do my drives get to you?<span class="faq-pm">+</span></button>
+        <div class="faq-a"><p>For businesses, we offer secure pickup — we inventory every drive by serial at your site, transport it sealed, and reconcile the certificates against the pickup list. Bay Area pickup-to-certificate typically runs about 24 hours. Individuals can mail drives in through our personal service. Either way, every drive is accounted for from the moment we take custody.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Do you serve the whole Bay Area?<span class="faq-pm">+</span></button>
+        <div class="faq-a"><p>Yes — the San Francisco Bay Area and Silicon Valley, including San Jose, Santa Clara, Sunnyvale, Fremont, Oakland, and San Francisco. Not sure if you're in range? Just ask.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Do you work with individuals, or only businesses?<span class="faq-pm">+</span></button>
+        <div class="faq-a"><p>Both. Alongside our business and data center work, we offer a lighter <strong>personal service</strong> for individuals — a single laptop drive, an old desktop, a handful of drives from a home office, or media left behind on a family member's computer. Same certified standards, scaled to the job. Whether the free program applies depends on the drive, so just tell us what you have and we'll let you know.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="about" id="about">
   <div class="wrap">
     <div class="reveal">
@@ -239,46 +279,6 @@
       <p>Somewhere along the way I started <strong>building the software that runs the wipe bench itself</strong> — the tooling that drives the hardware, tracks every drive through every pass, and turns a wall of disks into a clean, verified audit trail. I don't just operate the process; I built the tools it runs on, and I know exactly what's happening to every sector.</p>
       <p>I started EndByte to offer that directly — without the overhead, the layers, or the handoffs that come with a big vendor. When you hire EndByte, you're not getting a ticket number. You're getting me: every drive I take in, I personally wipe or destroy, verify, and certify.</p>
       <div class="sig">Aiden Rangel<span>FOUNDER &amp; CEO · ENDBYTE</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="faq" id="faq">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="eyebrow">Common questions</div>
-      <h2>Answers before you ask</h2>
-      <p>The things data center and IT teams ask us most. Don't see yours? Call or send a message — straight answers, no sales runaround.</p>
-    </div>
-    <div class="faq-list reveal">
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Can SSDs actually be wiped securely?<span class="faq-pm">+</span></button>
-        <div class="faq-a"><p>Yes — but the method matters. SSDs store data differently from spinning drives, so a standard multi-pass overwrite isn't enough on its own. We use the drive's built-in secure-erase and sanitize commands where supported, verify the result, and physically destroy any SSD that can't be reliably verified. NIST 800-88 covers flash media specifically, and we follow it.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">What's actually on the certificate?<span class="faq-pm">+</span></button>
-        <div class="faq-a"><p>Per drive: the device model and serial number, the method used (wipe standard or destruction type), the date, the operator, and the verification result. For batch jobs, all of it rolls up into a single audit report that reconciles against the original intake list — so your auditor can match every drive received to its final disposition.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Why is the free program actually free?<span class="faq-pm">+</span></button>
-        <div class="faq-a"><p>No catch — it's an aligned trade. Properly wiped, working enterprise drives still hold resale value. When you let us keep the drives after they're sanitized and verified, that recovered value covers the cost of the service, so we don't invoice you. You get the full certified process; we recover the hardware. It fits best with working enterprise drives in reasonable volume — if your media is mostly failed or policy-bound to physical destruction, we'll tell you up front and quote the paid service instead.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">What happens to drives that fail verification?<span class="faq-pm">+</span></button>
-        <div class="faq-a"><p>They're physically destroyed — shredded or crushed — and documented the same way as everything else. A drive that can't prove it was wiped clean never goes back into circulation and never gets returned as "probably fine." Failure handling is automatic and on the record.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">On-site or pickup — which do I need?<span class="faq-pm">+</span></button>
-        <div class="faq-a"><p>If your security policy prohibits data-bearing media from leaving the building, choose on-site: we bring the destruction to your facility and your team witnesses it. Otherwise, secure pickup is simpler and faster — we inventory every drive by serial at your site, transport it sealed, and reconcile the certificates against the pickup list. Bay Area pickup-to-certificate typically runs about 24 hours.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Do you serve the whole Bay Area?<span class="faq-pm">+</span></button>
-        <div class="faq-a"><p>Yes — the San Francisco Bay Area and Silicon Valley, including San Jose, Santa Clara, Sunnyvale, Fremont, Oakland, and San Francisco. Not sure if you're in range? Just ask.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">Do you work with individuals, or only businesses?<span class="faq-pm">+</span></button>
-        <div class="faq-a"><p>Both. Alongside our business and data center work, we offer a lighter <strong>personal service</strong> for individuals — a single laptop drive, an old desktop, a handful of drives from a home office, or media left behind on a family member's computer. Same certified standards, scaled to the job. Whether the free program applies depends on the drive, so just tell us what you have and we'll let you know.</p></div>
-      </div>
     </div>
   </div>
 </section>
@@ -337,6 +337,6 @@
     <span>BAY AREA, CA · <a href="tel:+14084206991">+1 (408) 420-6991</a> · <a href="mailto:info@endbyte.net">INFO@ENDBYTE.NET</a></span>
   </div>
 </footer>
-<script src="main.js?v=20260613n"></script>
+<script src="main.js?v=20260613o"></script>
 </body>
 </html>
