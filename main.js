@@ -34,7 +34,7 @@
   var hexCanvas = document.getElementById('hexrain');
   if(hexCanvas && !reduced){
     // ===== TUNABLE: overall visibility of the rain. 0 = invisible, 1 = bold. =====
-    var RAIN_INTENSITY = 0.8;   // try 0.3 (whisper) to 0.8 (prominent)
+    var RAIN_INTENSITY = 1.0;   // try 0.3 (whisper) to 0.8 (prominent)
     // =============================================================================
 
     var ctx = hexCanvas.getContext('2d');
