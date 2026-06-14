@@ -369,6 +369,13 @@ footer a:hover{color:var(--amber)}
 }
 
 /* ---------- estimator ---------- */
+.est-teaser .sec-head{max-width:640px}
+.est-teaser .sec-head .btn{margin-top:24px;display:inline-block}
+.estimator-page{padding:64px 0 90px}
+.estimator-page .sec-head{margin-bottom:34px}
+.estimator-page h1{font-family:var(--disp);font-weight:700;font-size:40px;color:var(--text);line-height:1.08;margin:10px 0 14px}
+.estimator-page .sec-head p{color:var(--dim);max-width:600px}
+@media(max-width:560px){.estimator-page h1{font-size:31px}}
 .estimator .est{display:grid;grid-template-columns:1.15fr 1fr;gap:0;border:1px solid var(--line2);background:var(--panel)}
 .est-controls{padding:34px 32px;border-right:1px solid var(--line)}
 .est-field{margin-bottom:22px}

@@ -139,8 +139,9 @@
     });
   }
 
-  /* ---------- instant estimate calculator (home page only) ---------- */
-  var estRoot = document.getElementById('estimate');
+  /* ---------- instant estimate calculator (estimate page; teaser has no controls) ---------- */
+  var estTotalEl = document.getElementById('estTotal');
+  var estRoot = estTotalEl ? (estTotalEl.closest('.estimator') || document) : null;
   if(estRoot){
     // pricing grid: price[service][type][capacityTier]
     // SSD ignores capacity tier (uses 's'); HDD uses s/m/l
