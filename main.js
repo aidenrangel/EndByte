@@ -149,7 +149,7 @@
       destroy: { ssd: {s:15, m:15, l:15}, hdd: {s:15, m:19, l:23} }
     };
     var RESALE_DISCOUNT = 0.5;   // 50% off, wipe only, under the free threshold
-    var FREE_THRESHOLD = 50;     // at/above this many drives, resale = FREE (free program)
+    var FREE_THRESHOLD = 100;     // at/above this many drives, resale = FREE (free program)
 
     var state = { service:'wipe', type:'ssd', cap:'s', qty:1, resale:false };
 
