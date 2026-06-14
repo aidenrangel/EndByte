@@ -28,11 +28,17 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offs
 /* ---------- top status bar ---------- */
 .statusbar{border-bottom:1px solid var(--line);background:#0B0E12;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--faint)}
 .statusbar .wrap{display:flex;justify-content:space-between;align-items:center;height:34px}
+.statusbar .sb-left,.statusbar .right{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .statusbar .led{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:7px;box-shadow:0 0 6px var(--green);vertical-align:1px}
 .statusbar a{color:var(--dim)}
 .statusbar a:hover{color:var(--amber)}
 .statusbar .right span{margin-left:22px}
-@media(max-width:720px){.statusbar .right span:not(:last-child){display:none}}
+@media(max-width:720px){
+  .statusbar{font-size:10.5px;letter-spacing:.02em}
+  .statusbar .right span:not(:last-child){display:none}
+  .statusbar .right span{margin-left:0}
+}
+@media(max-width:430px){.statusbar .sb-loc{display:none}}
 
 /* ---------- nav ---------- */
 nav{position:sticky;top:0;z-index:50;background:rgba(14,17,22,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
