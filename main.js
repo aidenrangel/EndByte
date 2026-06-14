@@ -148,7 +148,8 @@
       wipe:    { ssd: {s:12, m:12, l:12}, hdd: {s:12, m:16, l:20} },
       destroy: { ssd: {s:15, m:15, l:15}, hdd: {s:15, m:19, l:23} }
     };
-    var RESALE_DISCOUNT = 0.5; // 50% off, wipe only
+    var RESALE_DISCOUNT = 0.5;   // 50% off, wipe only, under the free threshold
+    var FREE_THRESHOLD = 50;     // at/above this many drives, resale = FREE (free program)
 
     var state = { service:'wipe', type:'ssd', cap:'s', qty:1, resale:false };
 
@@ -160,9 +161,16 @@
     var breakEl = document.getElementById('estBreak');
     var ctaEl = document.getElementById('estCta');
 
+    function qualifiesFree(){
+      return state.service === 'wipe' && state.resale && state.qty >= FREE_THRESHOLD;
+    }
+
     function perDrive(){
       var base = PRICES[state.service][state.type][state.type === 'ssd' ? 's' : state.cap];
-      if(state.service === 'wipe' && state.resale) base = base * (1 - RESALE_DISCOUNT);
+      if(state.service === 'wipe' && state.resale){
+        if(state.qty >= FREE_THRESHOLD) return 0;          // free program territory
+        base = base * (1 - RESALE_DISCOUNT);               // otherwise 50% off
+      }
       return base;
     }
 
@@ -179,21 +187,43 @@
         resaleField.classList.remove('dim');
       }
 
+      // dynamic resale toggle label: 50% off normally, FREE at/above the threshold
+      var resaleText = document.getElementById('estResaleText');
+      if(resaleText){
+        if(state.resale && state.qty >= FREE_THRESHOLD){
+          resaleText.innerHTML = 'Let EndByte keep &amp; resell the wiped drives <b class="est-free">— FREE at ' + FREE_THRESHOLD + '+ drives</b>';
+        } else {
+          resaleText.innerHTML = 'Let EndByte keep &amp; resell the wiped drives <b>— 50% off</b> <span class="est-hint">(free at ' + FREE_THRESHOLD + '+)</span>';
+        }
+      }
+
+      var free = qualifiesFree();
       var unit = perDrive();
       var total = unit * state.qty;
-      totalEl.textContent = fmt(total);
 
       var typeLabel = state.type.toUpperCase();
       var capLabel = '';
       if(state.type === 'hdd'){ capLabel = ({s:' ≤4TB', m:' 4–12TB', l:' >12TB'})[state.cap]; }
       var svcLabel = state.service === 'wipe' ? 'wipe' : 'destroy';
-      var resaleLabel = (state.service === 'wipe' && state.resale) ? ' · resale 50% off' : '';
-      breakEl.textContent = state.qty + ' ' + typeLabel + capLabel + ' · ' + svcLabel + ' · ' + fmt(unit) + '/drive' + resaleLabel;
 
-      // build a prefill for the contact form / message
-      var summary = state.qty + ' ' + typeLabel + capLabel + ' drive' + (state.qty>1?'s':'') +
-                    ', ' + svcLabel + resaleLabel + ' — estimated ' + fmt(total);
-      ctaEl.setAttribute('data-summary', summary);
+      if(free){
+        totalEl.textContent = 'FREE';
+        totalEl.classList.add('est-isfree');
+        breakEl.textContent = state.qty + ' ' + typeLabel + capLabel + ' · qualifies for the free certified destruction program';
+        ctaEl.textContent = 'CLAIM FREE DESTRUCTION →';
+        var summaryF = state.qty + ' ' + typeLabel + capLabel + ' drive' + (state.qty>1?'s':'') +
+                       ', ' + svcLabel + ' — qualifies for FREE certified destruction (resale, ' + FREE_THRESHOLD + '+ drives)';
+        ctaEl.setAttribute('data-summary', summaryF);
+      } else {
+        totalEl.textContent = fmt(total);
+        totalEl.classList.remove('est-isfree');
+        var resaleLabel = (state.service === 'wipe' && state.resale) ? ' · resale 50% off' : '';
+        breakEl.textContent = state.qty + ' ' + typeLabel + capLabel + ' · ' + svcLabel + ' · ' + fmt(unit) + '/drive' + resaleLabel;
+        ctaEl.textContent = 'GET THIS QUOTE CONFIRMED →';
+        var summary = state.qty + ' ' + typeLabel + capLabel + ' drive' + (state.qty>1?'s':'') +
+                      ', ' + svcLabel + resaleLabel + ' — estimated ' + fmt(total);
+        ctaEl.setAttribute('data-summary', summary);
+      }
     }
 
     // segmented buttons
