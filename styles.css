@@ -160,7 +160,7 @@ h1 .zero{color:var(--amber);position:relative}
 
 /* ---------- stats strip ---------- */
 .stats{border-bottom:1px solid var(--line);background:#0B0E12}
-.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);border-right:1px solid var(--line)}
 .stat{padding:34px 26px;border-left:1px solid var(--line)}
 .stat:last-child{border-right:1px solid var(--line)}
 .stat .num{font-family:var(--disp);font-weight:700;font-size:34px;color:var(--text);line-height:1.1}
