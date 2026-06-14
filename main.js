@@ -34,7 +34,7 @@
   var hexCanvas = document.getElementById('hexrain');
   if(hexCanvas && !reduced){
     // ===== TUNABLE: overall visibility of the rain. 0 = invisible, 1 = bold. =====
-    var RAIN_INTENSITY = 1.0;   // try 0.3 (whisper) to 0.8 (prominent)
+    var RAIN_INTENSITY = 0.5;   // try 0.3 (whisper) to 0.8 (prominent)
     // =============================================================================
 
     var ctx = hexCanvas.getContext('2d');
@@ -287,10 +287,20 @@
   }
 
   /* ---------- scroll reveals (all pages) ---------- */
-  var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  },{threshold:0.12});
-  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  function revealAll(){
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+    // failsafe: if anything goes wrong, ensure everything is visible after 3s
+    setTimeout(revealAll, 3000);
+  } else {
+    // no observer support — just show everything
+    revealAll();
+  }
 
   /* ---------- stat counters (home page only) ---------- */
   var counters = document.querySelectorAll('[data-count]');
