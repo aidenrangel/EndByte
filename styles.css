@@ -369,7 +369,8 @@ footer a:hover{color:var(--amber)}
 }
 
 /* ---------- estimator ---------- */
-.est-teaser .sec-head{max-width:640px}
+.est-teaser{padding:56px 0}
+.est-teaser .sec-head{max-width:640px;margin-bottom:0}
 .est-teaser .sec-head .btn{margin-top:24px;display:inline-block}
 .estimator-page{padding:64px 0 90px}
 .estimator-page .sec-head{margin-bottom:34px}
