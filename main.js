@@ -256,35 +256,75 @@
     // resale toggle
     resaleBox.addEventListener('change', function(){ state.resale = resaleBox.checked; render(); });
 
-    // CTA: carry the estimate into the contact form, then guide the user to finish it
+    // CTA: hand the estimate to the dedicated quote page via URL params.
+    // Only product selections travel in the URL — never any personal data.
     ctaEl.addEventListener('click', function(e){
-      var summary = ctaEl.getAttribute('data-summary') || '';
-      var form = document.getElementById('quoteForm');
-      var msg = form ? form.querySelector('[name="message"]') : null;
-      var svc = form ? form.querySelector('[name="service"]') : null;
-      var nameField = form ? form.querySelector('[name="name"]') : null;
-
-      if(msg){
-        msg.value = 'INSTANT ESTIMATE REQUEST\n' +
-                    '------------------------\n' +
-                    summary + '\n\n' +
-                    'Please confirm this quote. Anything else I should know about the drives, I\'ll add here:';
-      }
-      if(svc){
-        svc.value = state.service === 'destroy' ? 'Physical Destruction' : 'Secure Drive Wiping';
-      }
-
-      // brief highlight so it's obvious the estimate landed in the form
-      if(form){
-        form.classList.add('qform-flash');
-        setTimeout(function(){ form.classList.remove('qform-flash'); }, 1600);
-        // focus the first thing they still need to fill in (name)
-        setTimeout(function(){ if(nameField) nameField.focus({preventScroll:true}); }, 650);
-      }
-      // the href="#contact" handles the smooth scroll
+      e.preventDefault();
+      var free = qualifiesFree();
+      var params = new URLSearchParams();
+      params.set('svc', state.service);          // wipe | destroy
+      params.set('type', state.type);            // ssd | hdd
+      if(state.type === 'hdd') params.set('cap', state.cap);
+      params.set('qty', state.qty);
+      params.set('resale', state.resale ? '1' : '0');
+      params.set('total', free ? 'free' : String(perDrive() * state.qty));
+      window.location.href = 'quote.html?' + params.toString();
     });
 
     render();
+  }
+
+  /* ---------- quote page: read estimate from URL, show it, prefill form ---------- */
+  var qpEstimate = document.getElementById('qpEstimate');
+  if(qpEstimate){
+    var qp = new URLSearchParams(window.location.search);
+    if(qp.has('qty') && qp.has('svc')){
+      var svc = qp.get('svc') === 'destroy' ? 'destroy' : 'wipe';
+      var type = qp.get('type') === 'hdd' ? 'hdd' : 'ssd';
+      var cap = qp.get('cap'); // s|m|l (hdd only)
+      var qty = Math.max(1, Math.min(9999, parseInt(qp.get('qty'), 10) || 1));
+      var resale = qp.get('resale') === '1';
+      var totalParam = qp.get('total'); // number string or 'free'
+      var isFree = totalParam === 'free';
+
+      var typeLabel = type.toUpperCase();
+      var capLabel = '';
+      if(type === 'hdd' && cap){ capLabel = ({s:' ≤4TB', m:' 4–12TB', l:' >12TB'})[cap] || ''; }
+      var svcLabel = svc === 'wipe' ? 'wipe' : 'destroy';
+
+      // populate the estimate banner
+      var qpTotal = document.getElementById('qpTotal');
+      var qpBreak = document.getElementById('qpBreak');
+      if(isFree){
+        qpTotal.textContent = 'FREE';
+        qpTotal.classList.add('est-isfree');
+        qpBreak.textContent = qty + ' ' + typeLabel + capLabel + ' · qualifies for the free certified destruction program';
+      } else {
+        var num = parseFloat(totalParam);
+        qpTotal.textContent = isNaN(num) ? '—' : ('$' + (Number.isInteger(num) ? num : num.toFixed(2)));
+        var resaleLabel = (svc === 'wipe' && resale) ? ' · resale 50% off' : '';
+        qpBreak.textContent = qty + ' ' + typeLabel + capLabel + ' · ' + svcLabel + resaleLabel;
+      }
+      qpEstimate.hidden = false;
+
+      // prefill the form
+      var form = document.getElementById('quoteForm');
+      if(form){
+        var dc = form.querySelector('[name="drive_count"]');
+        var sv = form.querySelector('[name="service"]');
+        var msg = form.querySelector('[name="message"]');
+        if(dc) dc.value = qty;
+        if(sv) sv.value = svc === 'destroy' ? 'Physical Destruction'
+                         : (isFree ? 'Free Certified Destruction' : 'Secure Drive Wiping');
+        if(msg){
+          var line = isFree
+            ? (qty + ' ' + typeLabel + capLabel + ' drive' + (qty>1?'s':'') + ', ' + svcLabel + ' — qualifies for FREE certified destruction (resale, 100+ drives)')
+            : (qty + ' ' + typeLabel + capLabel + ' drive' + (qty>1?'s':'') + ', ' + svcLabel + ((svc==='wipe'&&resale)?' · resale 50% off':'') + ' — estimated ' + qpTotal.textContent);
+          msg.value = 'INSTANT ESTIMATE REQUEST\n------------------------\n' + line +
+                      '\n\nPlease confirm this quote. Anything else I should know about the drives, I\'ll add here:';
+        }
+      }
+    }
   }
 
   /* ---------- cert date (home page only) ---------- */

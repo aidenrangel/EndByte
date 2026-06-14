@@ -4,9 +4,9 @@
 <script>document.documentElement.className+=' js';</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Page Not Found — EndByte</title>
-<meta name="description" content="That page could not be found. Return to EndByte for certified data destruction across the Bay Area.">
-<link rel="canonical" href="https://www.endbyte.net/404.html">
+<title>Request a Quote — EndByte</title>
+<meta name="description" content="Confirm your instant estimate and request certified data destruction from EndByte — Bay Area drive wiping and physical destruction.">
+<link rel="canonical" href="https://www.endbyte.net/quote.html">
 <meta name="theme-color" content="#0E1116">
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -15,15 +15,15 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="EndByte">
-<meta property="og:url" content="https://www.endbyte.net/404.html">
-<meta property="og:title" content="Page Not Found — EndByte">
-<meta property="og:description" content="That page could not be found. Return to EndByte for certified data destruction across the Bay Area.">
+<meta property="og:url" content="https://www.endbyte.net/quote.html">
+<meta property="og:title" content="Request a Quote — EndByte">
+<meta property="og:description" content="Confirm your instant estimate and request certified data destruction from EndByte — Bay Area drive wiping and physical destruction.">
 <meta property="og:image" content="https://www.endbyte.net/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Page Not Found — EndByte">
-<meta name="twitter:description" content="That page could not be found. Return to EndByte for certified data destruction across the Bay Area.">
+<meta name="twitter:title" content="Request a Quote — EndByte">
+<meta name="twitter:description" content="Confirm your instant estimate and request certified data destruction from EndByte — Bay Area drive wiping and physical destruction.">
 <meta name="twitter:image" content="https://www.endbyte.net/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,15 +85,53 @@
   </div>
 </nav>
 
-<div class="nf">
-  <div class="code">ERROR 404 · SECTOR NOT FOUND</div>
-  <h1>This page got<br>wiped to <span class="gl">zero</span>.</h1>
-  <p>The page you're looking for doesn't exist — or it was sanitized a little too thoroughly. Let's get you back to solid ground.</p>
-  <div class="btns">
-    <a href="index.html"><button class="btn btn-primary">BACK TO HOME</button></a>
-    <a href="index.html#services"><button class="btn btn-ghost">VIEW SERVICES</button></a>
+<section class="quotepage">
+  <div class="wrap">
+    <div class="qp-head">
+      <div class="eyebrow">Request a quote</div>
+      <h1>Confirm your estimate</h1>
+      <p>Here's your instant estimate. Add your contact details below and we'll confirm it — usually the same day. Final price is locked once we receive and inspect your drives.</p>
+    </div>
+
+    <div class="qp-estimate" id="qpEstimate" hidden>
+      <div class="qp-est-row">
+        <span class="qp-est-label">YOUR ESTIMATE</span>
+        <span class="qp-est-total" id="qpTotal">—</span>
+      </div>
+      <div class="qp-est-break" id="qpBreak"></div>
+    </div>
+
+    <form class="qform" id="quoteForm" action="https://formspree.io/f/xdavwvwp" method="POST" novalidate>
+      <div class="qf-head">YOUR DETAILS</div>
+      <div class="qf-row two">
+        <label>NAME *<input type="text" name="name" required autocomplete="name"></label>
+        <label>EMAIL *<input type="email" name="email" required autocomplete="email"></label>
+      </div>
+      <div class="qf-row two">
+        <label>PHONE<input type="tel" name="phone" autocomplete="tel"></label>
+        <label>DRIVE COUNT (APPROX.)<input type="text" name="drive_count" inputmode="numeric" placeholder="e.g. 50"></label>
+      </div>
+      <div class="qf-row">
+        <label>SERVICE NEEDED
+          <select name="service">
+            <option value="Not sure yet" selected>Not sure yet</option>
+            <option>Secure Drive Wiping</option>
+            <option>Physical Destruction</option>
+            <option>Pickup &amp; Chain of Custody</option>
+            <option>Free Certified Destruction</option>
+          </select>
+        </label>
+      </div>
+      <div class="qf-row">
+        <label>MESSAGE *<textarea name="message" rows="5" required placeholder="What kind of media, condition, timeline…"></textarea></label>
+      </div>
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+      <button type="submit" class="btn btn-primary qf-submit">SEND REQUEST</button>
+      <div class="qf-note" id="qfNote"></div>
+      <div class="qp-back"><a href="index.html#estimate">← Back to the estimator</a></div>
+    </form>
   </div>
-</div>
+</section>
 
 <footer>
   <div class="wrap">

@@ -408,6 +408,26 @@ footer a:hover{color:var(--amber)}
   .est-total{font-size:46px}
 }
 
+/* ---------- quote page ---------- */
+.quotepage{padding:70px 0 90px}
+.quotepage .wrap{max-width:760px}
+.qp-head{margin-bottom:30px}
+.qp-head h1{font-family:var(--disp);font-weight:700;font-size:40px;color:var(--text);line-height:1.08;margin:10px 0 14px}
+.qp-head p{color:var(--dim);max-width:560px;font-size:16px}
+.qp-estimate{border:1px solid var(--amber);background:var(--amber-dim);padding:20px 24px;margin-bottom:30px}
+.qp-est-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.qp-est-label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--amber)}
+.qp-est-total{font-family:var(--disp);font-weight:700;font-size:38px;color:var(--amber);line-height:1}
+.qp-est-total.est-isfree{color:var(--green)}
+.qp-est-break{font-family:var(--mono);font-size:12.5px;color:var(--dim);margin-top:8px}
+.qp-back{margin-top:18px;text-align:center;font-family:var(--mono);font-size:12px}
+.qp-back a{color:var(--faint)}
+.qp-back a:hover{color:var(--amber)}
+@media(max-width:560px){
+  .qp-head h1{font-size:31px}
+  .qp-est-total{font-size:31px}
+}
+
 /* ---------- faq ---------- */
 .faq-list{border-top:1px solid var(--line)}
 .faq-item{border-bottom:1px solid var(--line)}
