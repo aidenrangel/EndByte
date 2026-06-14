@@ -139,6 +139,104 @@
     });
   }
 
+  /* ---------- instant estimate calculator (home page only) ---------- */
+  var estRoot = document.getElementById('estimate');
+  if(estRoot){
+    // pricing grid: price[service][type][capacityTier]
+    // SSD ignores capacity tier (uses 's'); HDD uses s/m/l
+    var PRICES = {
+      wipe:    { ssd: {s:12, m:12, l:12}, hdd: {s:12, m:16, l:20} },
+      destroy: { ssd: {s:15, m:15, l:15}, hdd: {s:15, m:19, l:23} }
+    };
+    var RESALE_DISCOUNT = 0.5; // 50% off, wipe only
+
+    var state = { service:'wipe', type:'ssd', cap:'s', qty:1, resale:false };
+
+    var capField = document.getElementById('estCapField');
+    var resaleField = document.getElementById('estResaleField');
+    var resaleBox = document.getElementById('estResale');
+    var qtyInput = document.getElementById('estQty');
+    var totalEl = document.getElementById('estTotal');
+    var breakEl = document.getElementById('estBreak');
+    var ctaEl = document.getElementById('estCta');
+
+    function perDrive(){
+      var base = PRICES[state.service][state.type][state.type === 'ssd' ? 's' : state.cap];
+      if(state.service === 'wipe' && state.resale) base = base * (1 - RESALE_DISCOUNT);
+      return base;
+    }
+
+    function fmt(n){ return '$' + (Number.isInteger(n) ? n : n.toFixed(2)); }
+
+    function render(){
+      // SSD: capacity irrelevant -> dim it; HDD: active
+      if(state.type === 'ssd'){ capField.classList.add('dim'); } else { capField.classList.remove('dim'); }
+      // resale only applies to wipe -> dim + uncheck on destroy
+      if(state.service === 'destroy'){
+        resaleField.classList.add('dim');
+        if(state.resale){ state.resale = false; resaleBox.checked = false; }
+      } else {
+        resaleField.classList.remove('dim');
+      }
+
+      var unit = perDrive();
+      var total = unit * state.qty;
+      totalEl.textContent = fmt(total);
+
+      var typeLabel = state.type.toUpperCase();
+      var capLabel = '';
+      if(state.type === 'hdd'){ capLabel = ({s:' ≤4TB', m:' 4–12TB', l:' >12TB'})[state.cap]; }
+      var svcLabel = state.service === 'wipe' ? 'wipe' : 'destroy';
+      var resaleLabel = (state.service === 'wipe' && state.resale) ? ' · resale 50% off' : '';
+      breakEl.textContent = state.qty + ' ' + typeLabel + capLabel + ' · ' + svcLabel + ' · ' + fmt(unit) + '/drive' + resaleLabel;
+
+      // build a prefill for the contact form / message
+      var summary = state.qty + ' ' + typeLabel + capLabel + ' drive' + (state.qty>1?'s':'') +
+                    ', ' + svcLabel + resaleLabel + ' — estimated ' + fmt(total);
+      ctaEl.setAttribute('data-summary', summary);
+    }
+
+    // segmented buttons
+    estRoot.querySelectorAll('.est-seg').forEach(function(seg){
+      var group = seg.getAttribute('data-group');
+      seg.querySelectorAll('.est-opt').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          seg.querySelectorAll('.est-opt').forEach(function(b){ b.classList.remove('on'); });
+          btn.classList.add('on');
+          state[group] = btn.getAttribute('data-val');
+          render();
+        });
+      });
+    });
+
+    // quantity steppers
+    function setQty(v){
+      v = Math.max(1, Math.min(9999, v || 1));
+      state.qty = v; qtyInput.value = v; render();
+    }
+    document.getElementById('estMinus').addEventListener('click', function(){ setQty(state.qty - 1); });
+    document.getElementById('estPlus').addEventListener('click', function(){ setQty(state.qty + 1); });
+    qtyInput.addEventListener('input', function(){ setQty(parseInt(qtyInput.value, 10)); });
+
+    // resale toggle
+    resaleBox.addEventListener('change', function(){ state.resale = resaleBox.checked; render(); });
+
+    // CTA: carry the estimate into the contact form message field
+    ctaEl.addEventListener('click', function(){
+      var summary = ctaEl.getAttribute('data-summary') || '';
+      var msg = document.querySelector('#quoteForm [name="message"]');
+      var svc = document.querySelector('#quoteForm [name="service"]');
+      if(msg && summary){
+        msg.value = 'Instant estimate: ' + summary + '.\n\n(Please confirm — anything else I should know about the drives?)';
+      }
+      if(svc){
+        svc.value = state.service === 'destroy' ? 'Physical Destruction' : 'Secure Drive Wiping';
+      }
+    });
+
+    render();
+  }
+
   /* ---------- cert date (home page only) ---------- */
   var certDate = document.getElementById('certDate');
   if(certDate){

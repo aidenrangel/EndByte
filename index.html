@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260614e">
+<link rel="stylesheet" href="styles.css?v=20260614f">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -84,6 +84,7 @@
     <div class="navlinks">
       <a href="index.html#services">Services</a>
       <a href="index.html#free">Free Destruction</a>
+      <a href="index.html#estimate">Estimate</a>
       <a href="index.html#process">Process</a>
       <a href="index.html#faq">FAQ</a>
       <a href="index.html#about">About</a>
@@ -108,6 +109,7 @@
         </div>
       </div>
       <a class="mm-link" href="index.html#free">Free Destruction</a>
+      <a class="mm-link" href="index.html#estimate">Estimate</a>
       <a class="mm-link" href="index.html#process">Process</a>
       <a class="mm-link" href="index.html#faq">FAQ</a>
       <a class="mm-link" href="index.html#about">About</a>
@@ -212,6 +214,64 @@
       <div class="step"><span class="n">STEP 03</span><h4>Verification</h4><p>Full-surface read-back confirms every sector returns zero. Drives that fail get shredded.</p></div>
       <div class="step"><span class="n">STEP 04</span><h4>Certification</h4><p>A per-drive certificate with serial, method, and verification result — your audit trail.</p></div>
       <div class="step"><span class="n">STEP 05</span><h4>Recover or Recycle</h4><p>Sanitized drives re-enter the market; everything else is responsibly recycled.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="estimator" id="estimate">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Instant estimate</div>
+      <h2>Price your job in seconds</h2>
+      <p>Tell us what you have and get a ballpark right now — no waiting on a callback. Final price is confirmed when we receive your drives.</p>
+    </div>
+    <div class="est reveal">
+      <div class="est-controls">
+        <div class="est-field">
+          <label class="est-label">Service</label>
+          <div class="est-seg" data-group="service">
+            <button type="button" class="est-opt on" data-val="wipe">Wipe</button>
+            <button type="button" class="est-opt" data-val="destroy">Destroy</button>
+          </div>
+        </div>
+        <div class="est-field">
+          <label class="est-label">Drive type</label>
+          <div class="est-seg" data-group="type">
+            <button type="button" class="est-opt on" data-val="ssd">SSD</button>
+            <button type="button" class="est-opt" data-val="hdd">HDD</button>
+          </div>
+        </div>
+        <div class="est-field est-cap" id="estCapField">
+          <label class="est-label">Capacity (HDD)</label>
+          <div class="est-seg est-seg-3" data-group="cap">
+            <button type="button" class="est-opt on" data-val="s">≤ 4 TB</button>
+            <button type="button" class="est-opt" data-val="m">4–12 TB</button>
+            <button type="button" class="est-opt" data-val="l">&gt; 12 TB</button>
+          </div>
+        </div>
+        <div class="est-field">
+          <label class="est-label">How many drives?</label>
+          <div class="est-qty">
+            <button type="button" class="est-step" id="estMinus" aria-label="Decrease">−</button>
+            <input type="number" id="estQty" class="est-qtyinput" value="1" min="1" max="9999" inputmode="numeric">
+            <button type="button" class="est-step" id="estPlus" aria-label="Increase">+</button>
+          </div>
+        </div>
+        <div class="est-field est-resale" id="estResaleField">
+          <label class="est-toggle">
+            <input type="checkbox" id="estResale">
+            <span class="est-check"></span>
+            <span>Let EndByte keep &amp; resell the wiped drives <b>— 50% off</b></span>
+          </label>
+        </div>
+      </div>
+      <div class="est-result">
+        <div class="est-rlabel">ESTIMATED TOTAL</div>
+        <div class="est-total" id="estTotal">$12</div>
+        <div class="est-break" id="estBreak">1 SSD · wipe · $12/drive</div>
+        <a href="#contact" class="btn btn-primary est-cta" id="estCta">GET THIS QUOTE CONFIRMED →</a>
+        <div class="est-note">Ballpark estimate. Final price confirmed once we receive and inspect your drives.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -340,6 +400,6 @@
     <span>BAY AREA, CA · <a href="tel:+14084206991">+1 (408) 420-6991</a> · <a href="mailto:info@endbyte.net">INFO@ENDBYTE.NET</a></span>
   </div>
 </footer>
-<script src="main.js?v=20260614e"></script>
+<script src="main.js?v=20260614f"></script>
 </body>
 </html>
