@@ -160,13 +160,13 @@ h1 .zero{color:var(--amber);position:relative}
 
 /* ---------- stats strip ---------- */
 .stats{border-bottom:1px solid var(--line);background:#0B0E12}
-.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);border-right:1px solid var(--line)}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
 .stat{padding:34px 26px;border-left:1px solid var(--line)}
 .stat:last-child{border-right:1px solid var(--line)}
 .stat .num{font-family:var(--disp);font-weight:700;font-size:34px;color:var(--text);line-height:1.1}
 .stat .num em{color:var(--amber);font-style:normal}
 .stat .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--faint);text-transform:uppercase;margin-top:6px}
-@media(max-width:860px){.stats .wrap{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid var(--line)}}
+@media(max-width:860px){.stats .wrap{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid var(--line)}.stat:nth-child(2n){border-right:1px solid var(--line)}}
 
 /* ---------- section scaffolding ---------- */
 section{padding:96px 0}
