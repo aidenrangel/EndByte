@@ -381,12 +381,9 @@ footer a:hover{color:var(--amber)}
 .est-opt.on{background:var(--amber-dim);border-color:var(--amber);color:var(--amber)}
 .est-cap{transition:opacity .25s}
 .est-cap.dim{opacity:.32;pointer-events:none}
-.est-qty{display:flex;align-items:stretch;max-width:200px}
-.est-step{width:46px;font-family:var(--disp);font-size:22px;font-weight:600;color:var(--amber);background:#0C0F13;border:1px solid var(--line);cursor:pointer;transition:all .18s;line-height:1}
-.est-step:hover{background:var(--amber-dim);border-color:var(--amber)}
-.est-qtyinput{flex:1;text-align:center;font-family:var(--disp);font-weight:600;font-size:18px;color:var(--text);background:#0C0F13;border:1px solid var(--line);border-left:0;border-right:0;width:100%;-moz-appearance:textfield}
-.est-qtyinput::-webkit-outer-spin-button,.est-qtyinput::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-.est-qtyinput:focus{outline:none}
+.est-qtybox{max-width:200px;width:100%;font-family:var(--disp);font-weight:600;font-size:18px;color:var(--text);background:#0C0F13;border:1px solid var(--line);padding:11px 14px;transition:border-color .18s;-moz-appearance:textfield;appearance:textfield}
+.est-qtybox:focus{outline:none;border-color:var(--amber)}
+.est-qtybox::-webkit-outer-spin-button,.est-qtybox::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .est-toggle{display:flex;align-items:flex-start;gap:11px;cursor:pointer;font-size:14px;color:var(--dim);line-height:1.5}
 .est-toggle b{color:var(--green);font-weight:600}
 .est-toggle .est-free{color:var(--green)}

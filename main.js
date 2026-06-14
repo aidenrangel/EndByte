@@ -239,14 +239,19 @@
       });
     });
 
-    // quantity steppers
-    function setQty(v){
-      v = Math.max(1, Math.min(9999, v || 1));
-      state.qty = v; qtyInput.value = v; render();
-    }
-    document.getElementById('estMinus').addEventListener('click', function(){ setQty(state.qty - 1); });
-    document.getElementById('estPlus').addEventListener('click', function(){ setQty(state.qty + 1); });
-    qtyInput.addEventListener('input', function(){ setQty(parseInt(qtyInput.value, 10)); });
+    // quantity text box
+    qtyInput.addEventListener('input', function(){
+      var v = parseInt(qtyInput.value, 10);
+      state.qty = (isNaN(v) || v < 1) ? 1 : Math.min(9999, v);
+      render();
+    });
+    // tidy the displayed value when they leave the field (don't fight them mid-type)
+    qtyInput.addEventListener('blur', function(){
+      var v = parseInt(qtyInput.value, 10);
+      if(isNaN(v) || v < 1) v = 1;
+      v = Math.min(9999, v);
+      qtyInput.value = v; state.qty = v; render();
+    });
 
     // resale toggle
     resaleBox.addEventListener('change', function(){ state.resale = resaleBox.checked; render(); });
