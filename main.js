@@ -28,6 +28,18 @@
     window.addEventListener('resize', function(){
       if(window.innerWidth > 920 && nav.classList.contains('open')) setMenu(false);
     });
+
+    // collapsible Services group in the mobile menu
+    var svcToggle = document.getElementById('mmServicesToggle');
+    var svcList = document.getElementById('mmServicesList');
+    if(svcToggle && svcList){
+      var svcGroup = svcToggle.closest('.mm-group');
+      svcToggle.addEventListener('click', function(){
+        var open = svcGroup.classList.toggle('open');
+        svcToggle.setAttribute('aria-expanded', open);
+        svcList.style.maxHeight = open ? svcList.scrollHeight + 'px' : '0';
+      });
+    }
   }
 
   /* ---------- hex rain (full-page background, home page only) ---------- */

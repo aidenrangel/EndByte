@@ -73,7 +73,11 @@ nav.open .mobilemenu{max-height:calc(100vh - 66px);overflow-y:auto}
 .mm-link{font-family:var(--disp);font-weight:600;font-size:17px;padding:15px 2px;border-bottom:1px solid var(--line);transition:color .2s,padding-left .2s}
 .mm-link:hover{color:var(--amber);padding-left:8px}
 .mm-group{padding:15px 2px;border-bottom:1px solid var(--line)}
-.mm-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--amber);display:block;margin-bottom:8px}
+.mm-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--amber);display:flex;justify-content:space-between;align-items:center;width:100%;background:none;border:none;padding:0;cursor:pointer;text-align:left}
+.mm-chev{font-family:var(--mono);font-weight:400;font-size:16px;line-height:1;color:var(--amber);transition:transform .3s}
+.mm-group.open .mm-chev{transform:rotate(45deg)}
+.mm-sublist{max-height:0;overflow:hidden;transition:max-height .35s ease;margin-top:0}
+.mm-group.open .mm-sublist{margin-top:10px}
 .mm-sub{display:block;font-size:15px;color:var(--dim);padding:9px 0 9px 16px;border-left:1px solid var(--line2);transition:color .2s,border-color .2s}
 .mm-sub:hover{color:var(--text);border-color:var(--amber)}
 .mm-cta{font-family:var(--mono);font-size:14px;font-weight:500;letter-spacing:.04em;background:var(--amber);color:#0E1116;text-align:center;padding:16px;margin-top:20px}
