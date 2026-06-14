@@ -427,7 +427,8 @@ footer a:hover{color:var(--amber)}
 @media(max-width:560px){.nf .btns{width:100%;flex-direction:column}.nf .btns a{display:block}.nf .btns .btn{width:100%}}
 
 /* ---------- quote form ---------- */
-.qform{background:var(--panel);border:1px solid var(--line2);padding:30px 28px 26px;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.qform{background:var(--panel);border:1px solid var(--line2);padding:30px 28px 26px;box-shadow:0 18px 50px rgba(0,0,0,.35);transition:border-color .4s,box-shadow .4s}
+.qform-flash{border-color:var(--amber);box-shadow:0 0 0 1px var(--amber),0 18px 50px rgba(255,176,32,.18)}
 .qf-head{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--amber);border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:20px}
 .qf-row{margin-bottom:16px}
 .qf-row.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}

@@ -221,17 +221,32 @@
     // resale toggle
     resaleBox.addEventListener('change', function(){ state.resale = resaleBox.checked; render(); });
 
-    // CTA: carry the estimate into the contact form message field
-    ctaEl.addEventListener('click', function(){
+    // CTA: carry the estimate into the contact form, then guide the user to finish it
+    ctaEl.addEventListener('click', function(e){
       var summary = ctaEl.getAttribute('data-summary') || '';
-      var msg = document.querySelector('#quoteForm [name="message"]');
-      var svc = document.querySelector('#quoteForm [name="service"]');
-      if(msg && summary){
-        msg.value = 'Instant estimate: ' + summary + '.\n\n(Please confirm — anything else I should know about the drives?)';
+      var form = document.getElementById('quoteForm');
+      var msg = form ? form.querySelector('[name="message"]') : null;
+      var svc = form ? form.querySelector('[name="service"]') : null;
+      var nameField = form ? form.querySelector('[name="name"]') : null;
+
+      if(msg){
+        msg.value = 'INSTANT ESTIMATE REQUEST\n' +
+                    '------------------------\n' +
+                    summary + '\n\n' +
+                    'Please confirm this quote. Anything else I should know about the drives, I\'ll add here:';
       }
       if(svc){
         svc.value = state.service === 'destroy' ? 'Physical Destruction' : 'Secure Drive Wiping';
       }
+
+      // brief highlight so it's obvious the estimate landed in the form
+      if(form){
+        form.classList.add('qform-flash');
+        setTimeout(function(){ form.classList.remove('qform-flash'); }, 1600);
+        // focus the first thing they still need to fill in (name)
+        setTimeout(function(){ if(nameField) nameField.focus({preventScroll:true}); }, 650);
+      }
+      // the href="#contact" handles the smooth scroll
     });
 
     render();
