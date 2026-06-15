@@ -441,12 +441,19 @@ footer a:hover{color:var(--amber)}
 
 /* ---------- service-area strip ---------- */
 .areastrip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#0B0E12}
-.areastrip .wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding-top:18px;padding-bottom:18px}
-.areastrip-label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--amber)}
-.areastrip-cities{display:flex;gap:22px;flex-wrap:wrap;font-family:var(--mono);font-size:13px;letter-spacing:.03em}
-.areastrip-cities a{color:var(--dim);transition:color .2s}
-.areastrip-cities a:hover{color:var(--amber)}
-@media(max-width:560px){.areastrip .wrap{gap:12px}.areastrip-cities{gap:16px;font-size:12px}}
+.areastrip .wrap{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;padding-top:30px;padding-bottom:30px}
+.areastrip-eyebrow{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:7px}
+.areastrip-head h3{font-family:var(--disp);font-weight:600;font-size:22px;color:var(--text);line-height:1.1}
+.areastrip-cities{display:flex;gap:12px;flex-wrap:wrap}
+.area-pill{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:13.5px;letter-spacing:.03em;color:var(--text);background:#0C0F13;border:1px solid var(--line2);padding:11px 18px;transition:all .18s}
+.area-pill span{color:var(--amber);transition:transform .18s}
+.area-pill:hover{border-color:var(--amber);background:var(--amber-dim)}
+.area-pill:hover span{transform:translateX(3px)}
+@media(max-width:620px){
+  .areastrip .wrap{flex-direction:column;align-items:flex-start;gap:18px}
+  .areastrip-cities{width:100%}
+  .area-pill{flex:1;justify-content:center;min-width:0}
+}
 
 /* ---------- faq ---------- */
 .faq-list{border-top:1px solid var(--line)}
