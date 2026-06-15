@@ -279,6 +279,9 @@ h2{font-family:var(--disp);font-weight:700;font-size:clamp(28px,3.2vw,40px);line
 /* ---------- footer ---------- */
 footer{border-top:1px solid var(--line);background:#0B0E12;padding:30px 0}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11.5px;color:var(--faint);letter-spacing:.04em;flex-wrap:wrap;gap:14px}
+.foot-areas{flex-basis:100%;padding-bottom:14px;margin-bottom:4px;border-bottom:1px solid var(--line);color:var(--dim)}
+.foot-areas a{color:var(--faint)}
+.foot-areas a:hover{color:var(--amber)}
 footer a:hover{color:var(--amber)}
 
 /* ================= SERVICE PAGE STYLES ================= */
