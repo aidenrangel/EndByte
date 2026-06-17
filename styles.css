@@ -207,7 +207,7 @@ h2{font-family:var(--disp);font-weight:700;font-size:clamp(28px,3.2vw,40px);line
 .offer .offer-sub a{color:rgba(14,17,22,.92);text-decoration:underline}
 .offer .btn-dark{background:#0E1116;color:var(--amber);margin-top:30px}
 .offer .btn-dark:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(0,0,0,.35)}
-.cert{background:#0E1116;color:var(--text);padding:30px 28px;font-family:var(--mono);font-size:12.5px;line-height:2.1;box-shadow:12px 12px 0 rgba(14,17,22,.18);position:relative}
+.cert{background:#0E1116;color:var(--text);padding:30px 28px 64px;font-family:var(--mono);font-size:12.5px;line-height:2.1;box-shadow:12px 12px 0 rgba(14,17,22,.18);position:relative}
 .cert .ch{color:var(--amber);letter-spacing:.14em;font-size:11px;border-bottom:1px solid var(--line2);padding-bottom:10px;margin-bottom:12px;display:flex;justify-content:space-between}
 .cert .row{display:flex;justify-content:space-between;gap:20px}
 .cert .row span:first-child{color:var(--faint)}
