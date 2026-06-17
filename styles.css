@@ -259,6 +259,13 @@ h2{font-family:var(--disp);font-weight:700;font-size:clamp(28px,3.2vw,40px);line
 
 /* ---------- about ---------- */
 .about .wrap{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start}
+.about-teaser .wrap{display:block;max-width:760px}
+.about-teaser .btn{margin-top:24px;display:inline-block}
+.about-page{padding:64px 0 0}
+.about-page h1{font-family:var(--disp);font-weight:700;font-size:40px;color:var(--text);line-height:1.08;margin:10px 0 16px}
+.about-page .bio-h{font-family:var(--disp);font-weight:700;font-size:25px;color:var(--text);line-height:1.15;margin:8px 0 16px}
+.about-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:56px;padding-bottom:20px}
+@media(max-width:560px){.about-page h1{font-size:31px}}
 .about p{color:var(--dim);font-size:16px;margin-bottom:18px}
 .about .vals{border-left:2px solid var(--amber);padding-left:28px;display:flex;flex-direction:column;gap:26px}
 .about .vals h5{font-family:var(--disp);font-size:16px;font-weight:600;margin-bottom:6px}
