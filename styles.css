@@ -226,6 +226,16 @@ h2{font-family:var(--disp);font-weight:700;font-size:clamp(28px,3.2vw,40px);line
 .step:last-child::after{display:none}
 @media(max-width:980px){.proc-row{grid-template-columns:1fr 1fr}.step::after{display:none}}
 @media(max-width:560px){.proc-row{grid-template-columns:1fr}}
+.process-teaser .sec-head{max-width:680px}
+.process-teaser .sec-head .btn{margin-top:24px;display:inline-block}
+.process-page{padding-top:64px}
+.process-page h2{font-family:var(--disp);font-weight:700;font-size:30px;color:var(--text);margin:8px 0 32px}
+.proc-steps{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);background:var(--line)}
+.proc-step{background:var(--panel);padding:30px 32px}
+.proc-step .n{font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:.12em;display:block;margin-bottom:10px}
+.proc-step h3{font-family:var(--disp);font-weight:600;font-size:20px;color:var(--text);margin-bottom:10px}
+.proc-step p{color:var(--dim);font-size:15px;line-height:1.7;max-width:760px}
+@media(max-width:560px){.process-page h2{font-size:24px}.proc-step{padding:24px 22px}}
 
 /* ---------- partners ---------- */
 .partners{background:#0B0E12;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
