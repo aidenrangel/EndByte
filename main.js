@@ -448,6 +448,10 @@
         headers: {'Accept': 'application/json'}
       }).then(function(res){
         if(res.ok){
+          // fire the Google Ads conversion only on a real, successful submission
+          if(typeof gtag === 'function'){
+            gtag('event', 'ads_conversion_Request_quote_1', {});
+          }
           qform.classList.add('sent');
           var done = document.createElement('div');
           done.className = 'qf-sent-msg';
