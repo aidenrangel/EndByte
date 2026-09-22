@@ -555,3 +555,45 @@ footer a:hover{color:var(--amber)}
   html{scroll-behavior:auto}
   .js .reveal{opacity:1;transform:none}
 }
+
+/* ===== 2026-09 site update ===== */
+/* CTAs are now plain links (no <button> inside <a>) */
+a.nav-cta{display:inline-block;line-height:1.2}
+a.btn{text-align:center}
+
+/* services grid: 7 cards — let the last one span the leftover space */
+@media(min-width:981px){.svc-grid .svc:last-child:nth-child(3n+1){grid-column:span 3}}
+@media(min-width:641px) and (max-width:980px){.svc-grid .svc:last-child:nth-child(2n+1){grid-column:span 2}}
+
+/* sample certificate link in the free-program band */
+.offer .offer-sample{display:block;margin-top:18px;font-family:var(--mono);font-size:13px;letter-spacing:.02em;color:#0E1116;text-decoration:underline;text-underline-offset:3px}
+.offer .offer-sample:hover{opacity:.75}
+
+/* links inside FAQ answers */
+.faq-a a{color:var(--text);text-decoration:underline;text-decoration-color:var(--line2);text-underline-offset:3px}
+.faq-a a:hover{color:var(--amber);text-decoration-color:var(--amber)}
+
+/* sticky mobile call / quote bar */
+.callbar{display:none}
+@media(max-width:720px){
+  .callbar{display:grid;grid-template-columns:1.4fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:60;border-top:1px solid var(--line2);background:#0B0E12;padding-bottom:env(safe-area-inset-bottom)}
+  .callbar a{font-family:var(--mono);font-size:13px;letter-spacing:.04em;text-align:center;padding:16px 8px;font-weight:500}
+  .callbar .cb-call{color:var(--text)}
+  .callbar .cb-quote{background:var(--amber);color:#0E1116}
+  body{padding-bottom:calc(52px + env(safe-area-inset-bottom))}
+  nav.open ~ .callbar{display:none}
+}
+
+/* privacy / legal page */
+.legal{padding:64px 0 90px}
+.legal .wrap{max-width:820px}
+.legal h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,4vw,44px);line-height:1.1;margin:10px 0 10px}
+.legal .updated{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--faint);margin-bottom:36px}
+.legal h2{font-family:var(--disp);font-weight:600;font-size:22px;margin:40px 0 12px}
+.legal p,.legal li{color:var(--dim);font-size:16px;line-height:1.7}
+.legal p{margin-bottom:14px}
+.legal ul{margin:0 0 16px 20px}
+.legal li{margin-bottom:6px}
+.legal strong{color:var(--text)}
+.legal a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.legal a:hover{color:var(--amber)}

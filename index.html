@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260614x">
+<link rel="stylesheet" href="styles.css?v=16266c1e">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -51,12 +51,19 @@
   "email": "info@endbyte.net",
   "address": {
     "@type": "PostalAddress",
+    "addressLocality": "Santa Clara",
     "addressRegion": "CA",
     "addressCountry": "US"
   },
   "areaServed": [
     {"@type": "Place", "name": "Northern California"},
-    {"@type": "Place", "name": "Silicon Valley"}
+    {"@type": "Place", "name": "Silicon Valley"},
+    {"@type": "City", "name": "San Jose"},
+    {"@type": "City", "name": "Santa Clara"},
+    {"@type": "City", "name": "Sunnyvale"},
+    {"@type": "City", "name": "Fremont"},
+    {"@type": "City", "name": "Oakland"},
+    {"@type": "City", "name": "San Francisco"}
   ],
   "founder": {
     "@type": "Person",
@@ -66,6 +73,7 @@
   "makesOffer": [
     {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Secure Drive Wiping"}},
     {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Physical Destruction"}},
+    {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "On-Site Data Destruction"}},
     {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Secure Pickup and Chain of Custody"}},
     {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Certificates and Audit Reporting"}},
     {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Free Certified Data Destruction"}},
@@ -73,9 +81,82 @@
   ]
 }
 </script>
+<script type="application/ld+json" id="faq-schema">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can SSDs actually be wiped securely?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — but the method matters. SSDs store data differently from spinning drives, so a standard overwrite isn't enough on its own. We use the drive's built-in secure-erase and sanitize commands where supported, verify the result, and physically destroy any SSD that can't be reliably verified. NIST 800-88 covers flash media specifically, and we follow it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's actually on the certificate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Per drive: the device model and serial number, the method used (wipe standard or destruction type), the date, the operator, and the verification result. For batch jobs, all of it rolls up into a single audit report that reconciles against the original intake list — so your auditor can match every drive received to its final disposition."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you do DoD 5220.22-M 3-pass wipes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If your policy calls for it, yes — and your certificate will say so. But our default is NIST 800-88, the current federal guideline, which replaced the older DoD 5220.22-M approach. For modern hard drives, NIST 800-88 treats a single overwrite pass followed by full verification as sufficient, and extra passes don't make the data any more gone. What matters is the verification, and every drive gets that either way."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the free program actually free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No catch — it's an aligned trade. Properly wiped, working enterprise drives still hold resale value. When you let us keep the drives after they're sanitized and verified, that recovered value covers the cost of the service, so we don't invoice you. You get the full certified process; we recover the hardware. It fits best with working enterprise drives in reasonable volume — if your media is mostly failed or policy-bound to physical destruction, we'll tell you up front and quote the paid service instead."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens to drives that fail verification?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "They're physically destroyed — shredded or crushed — and documented the same way as everything else. A drive that can't prove it was wiped clean never goes back into circulation and never gets returned as \"probably fine.\" Failure handling is automatic and on the record."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do my drives get to you?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For businesses, we offer secure pickup — we inventory every drive by serial at your site, transport it sealed, and reconcile the certificates against the pickup list. Bay Area pickup-to-certificate typically runs about 24 hours. Individuals can mail drives in through our personal service. Either way, every drive is accounted for from the moment we take custody."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you serve the whole Bay Area?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — the San Francisco Bay Area and Silicon Valley, including San Jose, Santa Clara, Sunnyvale, Fremont, Oakland, and San Francisco. Not sure if you're in range? Just ask."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you work with individuals, or only businesses?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Both. Alongside our business and data center work, we offer a lighter personal service for individuals — a single laptop drive, an old desktop, a handful of drives from a home office, or media left behind on a family member's computer. Same certified standards, scaled to the job. Whether the free program applies depends on the drive, so just tell us what you have and we'll let you know."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <canvas class="hexrain" id="hexrain" aria-hidden="true"></canvas>
+<!-- @header -->
 <div class="statusbar">
   <div class="wrap">
     <div class="sb-left"><span class="led"></span>WIPE BENCH ONLINE<span class="sb-loc"> · BAY AREA, CA</span></div>
@@ -97,7 +178,7 @@
       <a href="index.html#faq">FAQ</a>
       <a href="about.html">About</a>
     </div>
-    <a class="nav-cta-link" href="index.html#contact"><button class="nav-cta">GET A QUOTE</button></a>
+    <a class="nav-cta-link nav-cta" href="index.html#contact">GET A QUOTE</a>
     <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
       <span></span><span></span><span></span>
     </button>
@@ -110,6 +191,7 @@
         <div class="mm-sublist" id="mmServicesList">
           <a class="mm-sub" href="services/drive-wiping.html">Secure Drive Wiping</a>
           <a class="mm-sub" href="services/physical-destruction.html">Physical Destruction</a>
+          <a class="mm-sub" href="services/onsite-destruction.html">On-Site Destruction</a>
           <a class="mm-sub" href="services/pickup-logistics.html">Pickup &amp; Chain of Custody</a>
           <a class="mm-sub" href="services/certification.html">Certificates &amp; Audit Reporting</a>
           <a class="mm-sub" href="services/free-program.html">Free Certified Destruction</a>
@@ -129,6 +211,7 @@
     </div>
   </div>
 </nav>
+<!-- @end header -->
 
 <header class="hero">
   <div class="wrap">
@@ -137,8 +220,8 @@
       <h1>Every byte<br>down to <span class="zero" id="zeroWord">zero</span>.<br>Certified.</h1>
       <p class="sub">EndByte does one thing: certified data destruction. Wiping, shredding, secure pickup — and every single drive leaves with a verifiable certificate, or it doesn't leave at all.</p>
       <div class="hero-ctas">
-        <a href="#contact"><button class="btn btn-primary">SCHEDULE A WIPE</button></a>
-        <a href="#free"><button class="btn btn-ghost">FREE DESTRUCTION ↓</button></a>
+        <a class="btn btn-primary" href="#contact">SCHEDULE A WIPE</a>
+        <a class="btn btn-ghost" href="#free">FREE DESTRUCTION ↓</a>
       </div>
       <div class="hero-trust">
         <span><span class="tick">✓</span> KillDisk Industrial</span>
@@ -155,7 +238,7 @@
       <div class="slots" id="slots"></div>
       <div class="bench-foot">
         <span>SANITIZED THIS SESSION: <b id="wipeCount">0</b></span>
-        <span>METHOD: <b style="color:var(--amber)">3-PASS DoD</b></span>
+        <span>METHOD: <b style="color:var(--amber)">NIST 800-88</b></span>
       </div>
     </div>
   </div>
@@ -163,7 +246,7 @@
 
 <div class="stats">
   <div class="wrap">
-    <div class="stat"><div class="num"><span data-count="3">0</span><em>-pass</em></div><div class="lbl">Minimum wipe standard</div></div>
+    <div class="stat"><div class="num"><span data-count="1">0</span><em>:1</em></div><div class="lbl">Certificate per drive</div></div>
     <div class="stat"><div class="num"><span data-count="100">0</span><em>%</em></div><div class="lbl">Sectors verified</div></div>
     <div class="stat"><div class="num"><span data-count="24">0</span><em>h</em></div><div class="lbl">Typical turnaround</div></div>
     <div class="stat"><div class="num"><em>$</em><span data-count="0">0</span></div><div class="lbl">Free-program invoice</div></div>
@@ -178,8 +261,9 @@
       <p>EndByte does data destruction — not as a side service, but as the whole company. Wiped or destroyed, picked up or mailed in, every path ends in a certificate. Businesses and data centers are our core work, and we offer a lighter <strong style="color:var(--text)">personal service</strong> for individuals too.</p>
     </div>
     <div class="svc-grid">
-      <a class="svc reveal" href="services/drive-wiping.html"><span class="tag">SVC / WIPE</span><h3>Secure Drive Wiping</h3><p>Multi-pass NIST 800-88 sanitization with full-surface verification. Every sector read back to zero — or the drive doesn't get a certificate.</p><span class="more">Learn more →</span></a>
+      <a class="svc reveal" href="services/drive-wiping.html"><span class="tag">SVC / WIPE</span><h3>Secure Drive Wiping</h3><p>NIST 800-88 sanitization with full-surface verification. Every sector read back to zero — or the drive doesn't get a certificate.</p><span class="more">Learn more →</span></a>
       <a class="svc reveal" href="services/physical-destruction.html"><span class="tag">SVC / SHRED</span><h3>Physical Destruction</h3><p>Shredding and crushing for failed media, tapes, and policy-mandated destruction. Fragments no laboratory recovers data from.</p><span class="more">Learn more →</span></a>
+      <a class="svc reveal" href="services/onsite-destruction.html"><span class="tag">SVC / ONSITE</span><h3>On-Site Destruction</h3><p>When policy says nothing leaves the building intact, we bring the wipe or shred to your facility — witnessed by your team, certified before we go.</p><span class="more">Learn more →</span></a>
       <a class="svc reveal" href="services/pickup-logistics.html"><span class="tag">SVC / CUSTODY</span><h3>Pickup & Chain of Custody</h3><p>Serial-level inventory at your site, sealed transport, and signed handoffs — documented from your door to destruction.</p><span class="more">Learn more →</span></a>
       <a class="svc reveal" href="services/certification.html"><span class="tag">SVC / CERTIFY</span><h3>Certificates & Audit Reporting</h3><p>Per-drive certificates and reconciled batch reports — serial, method, date, and result, formatted for the people who audit you.</p><span class="more">Learn more →</span></a>
       <a class="svc reveal" href="services/free-program.html"><span class="tag">SVC / FREE</span><h3>Free Certified Destruction</h3><p>The full certified process at zero cost when we retain the sanitized drives. You get compliance; the hardware pays the bill.</p><span class="more">Learn more →</span></a>
@@ -198,6 +282,9 @@
       <a href="areas/san-jose.html" class="area-pill">San Jose<span>→</span></a>
       <a href="areas/santa-clara.html" class="area-pill">Santa Clara<span>→</span></a>
       <a href="areas/sunnyvale.html" class="area-pill">Sunnyvale<span>→</span></a>
+      <a href="areas/fremont.html" class="area-pill">Fremont<span>→</span></a>
+      <a href="areas/oakland.html" class="area-pill">Oakland<span>→</span></a>
+      <a href="areas/san-francisco.html" class="area-pill">San Francisco<span>→</span></a>
     </div>
   </div>
 </div>
@@ -209,13 +296,14 @@
       <h2>Free certified data destruction</h2>
       <p>Built for businesses and IT teams retiring drives in volume. Send us 100 or more drives, let us keep them after they're wiped and verified, and the entire service is free — professional KillDisk sanitization, per-drive certificates, zero invoice. You get compliance. We recover the hardware. Everyone wins.</p>
       <p class="offer-sub">Fewer drives? The <a href="#estimate">instant estimator</a> covers individual and small-batch jobs, with 50% off when you let us resell.</p>
-      <a href="#contact"><button class="btn btn-dark">CLAIM FREE DESTRUCTION</button></a>
+      <a class="btn btn-dark" href="#contact">CLAIM FREE DESTRUCTION</a>
+      <a class="offer-sample" href="endbyte-sample-certificate.pdf" target="_blank" rel="noopener">See a sample certificate (PDF) →</a>
     </div>
     <div class="cert reveal" aria-label="Sample certificate of destruction">
       <div class="ch"><span>CERTIFICATE OF DESTRUCTION</span><span>№ CD-2611</span></div>
       <div class="row"><span>DEVICE</span><span>ST8000NM0055</span></div>
       <div class="row"><span>SERIAL</span><span>ZA1C••••K9</span></div>
-      <div class="row"><span>METHOD</span><span>DoD 5220.22-M / 3-PASS</span></div>
+      <div class="row"><span>METHOD</span><span>NIST 800-88 CLEAR</span></div>
       <div class="row"><span>VERIFY</span><span class="ok">PASS · 100% SECTORS</span></div>
       <div class="row"><span>OPERATOR</span><span>ENDBYTE-BENCH-01</span></div>
       <div class="row"><span>DATE</span><span id="certDate">—</span></div>
@@ -256,11 +344,15 @@
     <div class="faq-list reveal">
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">Can SSDs actually be wiped securely?<span class="faq-pm">+</span></button>
-        <div class="faq-a"><p>Yes — but the method matters. SSDs store data differently from spinning drives, so a standard multi-pass overwrite isn't enough on its own. We use the drive's built-in secure-erase and sanitize commands where supported, verify the result, and physically destroy any SSD that can't be reliably verified. NIST 800-88 covers flash media specifically, and we follow it.</p></div>
+        <div class="faq-a"><p>Yes — but the method matters. SSDs store data differently from spinning drives, so a standard overwrite isn't enough on its own. We use the drive's built-in secure-erase and sanitize commands where supported, verify the result, and physically destroy any SSD that can't be reliably verified. NIST 800-88 covers flash media specifically, and we follow it.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">What's actually on the certificate?<span class="faq-pm">+</span></button>
         <div class="faq-a"><p>Per drive: the device model and serial number, the method used (wipe standard or destruction type), the date, the operator, and the verification result. For batch jobs, all of it rolls up into a single audit report that reconciles against the original intake list — so your auditor can match every drive received to its final disposition.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Do you do DoD 5220.22-M 3-pass wipes?<span class="faq-pm">+</span></button>
+        <div class="faq-a"><p>If your policy calls for it, yes — and your certificate will say so. But our default is NIST 800-88, the current federal guideline, which replaced the older DoD 5220.22-M approach. For modern hard drives, NIST 800-88 treats a single overwrite pass followed by full verification as sufficient, and extra passes don't make the data any more gone. What matters is the verification, and every drive gets that either way.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">Why is the free program actually free?<span class="faq-pm">+</span></button>
@@ -276,7 +368,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">Do you serve the whole Bay Area?<span class="faq-pm">+</span></button>
-        <div class="faq-a"><p>Yes — the San Francisco Bay Area and Silicon Valley, including San Jose, Santa Clara, Sunnyvale, Fremont, Oakland, and San Francisco. Not sure if you're in range? Just ask.</p></div>
+        <div class="faq-a"><p>Yes — the San Francisco Bay Area and Silicon Valley, including <a href="areas/san-jose.html">San Jose</a>, <a href="areas/santa-clara.html">Santa Clara</a>, <a href="areas/sunnyvale.html">Sunnyvale</a>, <a href="areas/fremont.html">Fremont</a>, <a href="areas/oakland.html">Oakland</a>, and <a href="areas/san-francisco.html">San Francisco</a>. Not sure if you're in range? Just ask.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">Do you work with individuals, or only businesses?<span class="faq-pm">+</span></button>
@@ -328,8 +420,10 @@
               <option value="Not sure yet" selected>Not sure yet</option>
               <option>Secure Drive Wiping</option>
               <option>Physical Destruction</option>
+              <option>On-Site Destruction</option>
               <option>Pickup &amp; Chain of Custody</option>
               <option>Free Certified Destruction</option>
+              <option>Personal &amp; Home</option>
             </select>
           </label>
         </div>
@@ -344,13 +438,19 @@
   </div>
 </section>
 
+<!-- @footer -->
 <footer>
   <div class="wrap">
-    <div class="foot-areas">SERVICE AREAS · <a href="areas/san-jose.html">San Jose</a> · <a href="areas/santa-clara.html">Santa Clara</a> · <a href="areas/sunnyvale.html">Sunnyvale</a></div>
-    <span>© 2026 ENDBYTE DATA DESTRUCTION — ALL RIGHTS RESERVED</span>
-    <span>BAY AREA, CA · <a href="tel:+14084206991">+1 (408) 420-6991</a> · <a href="mailto:info@endbyte.net">INFO@ENDBYTE.NET</a></span>
+    <div class="foot-areas">SERVICE AREAS · <a href="areas/san-jose.html">San Jose</a> · <a href="areas/santa-clara.html">Santa Clara</a> · <a href="areas/sunnyvale.html">Sunnyvale</a> · <a href="areas/fremont.html">Fremont</a> · <a href="areas/oakland.html">Oakland</a> · <a href="areas/san-francisco.html">San Francisco</a></div>
+    <span>© 2026 ENDBYTE DATA DESTRUCTION — ALL RIGHTS RESERVED · <a href="privacy.html">PRIVACY POLICY</a></span>
+    <span>SANTA CLARA, CA · <a href="tel:+14084206991">+1 (408) 420-6991</a> · <a href="mailto:info@endbyte.net">INFO@ENDBYTE.NET</a></span>
   </div>
 </footer>
-<script src="main.js?v=20260614x"></script>
+<div class="callbar" aria-label="Quick contact">
+  <a class="cb-call" href="tel:+14084206991">CALL (408) 420-6991</a>
+  <a class="cb-quote" href="index.html#contact">GET A QUOTE</a>
+</div>
+<!-- @end footer -->
+<script src="main.js?v=1877a784"></script>
 </body>
 </html>

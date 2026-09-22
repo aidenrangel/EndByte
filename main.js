@@ -358,10 +358,10 @@
 
     function start(s){
       s.state='wiping'; s.prog=0; s.pass=1;
-      s.speed = 0.8 + Math.random()*1.8;
+      s.speed = 0.3 + Math.random()*0.7;   // single NIST 800-88 pass, so a slower bar
       s.sn = serial();
       s.el.dataset.state='wiping';
-      s.st.textContent='PASS 1/3 · '+s.sn;
+      s.st.textContent='WIPING · '+s.sn;
     }
 
     function tick(){
@@ -369,8 +369,7 @@
         if(s.state==='wiping'){
           s.prog += s.speed;
           if(s.prog>=100){
-            if(s.pass<3){ s.pass++; s.prog=0; s.st.textContent='PASS '+s.pass+'/3 · '+s.sn; }
-            else { s.state='verifying'; s.prog=0; s.el.dataset.state='verifying'; s.st.textContent='VERIFYING…'; s.speed*=2.2; }
+            s.state='verifying'; s.prog=0; s.el.dataset.state='verifying'; s.st.textContent='VERIFYING…'; s.speed*=2.2;
           }
         } else if(s.state==='verifying'){
           s.prog += s.speed;
@@ -389,7 +388,7 @@
 
     slots.forEach(function(s){
       var r=Math.random();
-      if(r<0.45){ start(s); s.prog=Math.random()*90; s.pass=1+Math.floor(Math.random()*3); s.st.textContent='PASS '+s.pass+'/3 · '+s.sn; }
+      if(r<0.45){ start(s); s.prog=Math.random()*90; s.bar.style.width=s.prog+'%'; }
       else if(r<0.6){ s.state='done'; s.el.dataset.state='done'; s.st.textContent='CERTIFIED ✓'; s.bar.style.width='100%';
         setTimeout(function(){ s.state='empty'; s.el.dataset.state=''; s.bar.style.width='0%'; s.st.textContent='EMPTY'; }, 4000+Math.random()*8000); }
     });

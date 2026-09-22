@@ -36,9 +36,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260614x">
+<link rel="stylesheet" href="styles.css?v=16266c1e">
 </head>
 <body>
+<!-- @header -->
 <div class="statusbar">
   <div class="wrap">
     <div class="sb-left"><span class="led"></span>WIPE BENCH ONLINE<span class="sb-loc"> · BAY AREA, CA</span></div>
@@ -60,7 +61,7 @@
       <a href="index.html#faq">FAQ</a>
       <a href="about.html">About</a>
     </div>
-    <a class="nav-cta-link" href="index.html#contact"><button class="nav-cta">GET A QUOTE</button></a>
+    <a class="nav-cta-link nav-cta" href="index.html#contact">GET A QUOTE</a>
     <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
       <span></span><span></span><span></span>
     </button>
@@ -73,6 +74,7 @@
         <div class="mm-sublist" id="mmServicesList">
           <a class="mm-sub" href="services/drive-wiping.html">Secure Drive Wiping</a>
           <a class="mm-sub" href="services/physical-destruction.html">Physical Destruction</a>
+          <a class="mm-sub" href="services/onsite-destruction.html">On-Site Destruction</a>
           <a class="mm-sub" href="services/pickup-logistics.html">Pickup &amp; Chain of Custody</a>
           <a class="mm-sub" href="services/certification.html">Certificates &amp; Audit Reporting</a>
           <a class="mm-sub" href="services/free-program.html">Free Certified Destruction</a>
@@ -92,6 +94,7 @@
     </div>
   </div>
 </nav>
+<!-- @end header -->
 
 <section class="quotepage">
   <div class="wrap">
@@ -125,8 +128,10 @@
             <option value="Not sure yet" selected>Not sure yet</option>
             <option>Secure Drive Wiping</option>
             <option>Physical Destruction</option>
+              <option>On-Site Destruction</option>
             <option>Pickup &amp; Chain of Custody</option>
             <option>Free Certified Destruction</option>
+              <option>Personal &amp; Home</option>
           </select>
         </label>
       </div>
@@ -141,13 +146,19 @@
   </div>
 </section>
 
+<!-- @footer -->
 <footer>
   <div class="wrap">
-    <div class="foot-areas">SERVICE AREAS · <a href="areas/san-jose.html">San Jose</a> · <a href="areas/santa-clara.html">Santa Clara</a> · <a href="areas/sunnyvale.html">Sunnyvale</a></div>
-    <span>© 2026 ENDBYTE DATA DESTRUCTION — ALL RIGHTS RESERVED</span>
-    <span>BAY AREA, CA · <a href="tel:+14084206991">+1 (408) 420-6991</a> · <a href="mailto:info@endbyte.net">INFO@ENDBYTE.NET</a></span>
+    <div class="foot-areas">SERVICE AREAS · <a href="areas/san-jose.html">San Jose</a> · <a href="areas/santa-clara.html">Santa Clara</a> · <a href="areas/sunnyvale.html">Sunnyvale</a> · <a href="areas/fremont.html">Fremont</a> · <a href="areas/oakland.html">Oakland</a> · <a href="areas/san-francisco.html">San Francisco</a></div>
+    <span>© 2026 ENDBYTE DATA DESTRUCTION — ALL RIGHTS RESERVED · <a href="privacy.html">PRIVACY POLICY</a></span>
+    <span>SANTA CLARA, CA · <a href="tel:+14084206991">+1 (408) 420-6991</a> · <a href="mailto:info@endbyte.net">INFO@ENDBYTE.NET</a></span>
   </div>
 </footer>
-<script src="main.js?v=20260614x"></script>
+<div class="callbar" aria-label="Quick contact">
+  <a class="cb-call" href="tel:+14084206991">CALL (408) 420-6991</a>
+  <a class="cb-quote" href="index.html#contact">GET A QUOTE</a>
+</div>
+<!-- @end footer -->
+<script src="main.js?v=1877a784"></script>
 </body>
 </html>
