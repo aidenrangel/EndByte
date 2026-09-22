@@ -41,9 +41,64 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.endbyte.net/guides/can-you-wipe-an-ssd.html</loc>
+    <lastmod>2026-09-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/guides/index.html</loc>
+    <lastmod>2026-09-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/guides/nist-800-88-explained.html</loc>
+    <lastmod>2026-09-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/guides/remove-laptop-hard-drive.html</loc>
+    <lastmod>2026-09-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/guides/ship-a-hard-drive-safely.html</loc>
+    <lastmod>2026-09-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.endbyte.net/</loc>
     <lastmod>2026-09-22</lastmod>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/industries/data-centers.html</loc>
+    <lastmod>2026-09-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/industries/education.html</loc>
+    <lastmod>2026-09-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/industries/finance.html</loc>
+    <lastmod>2026-09-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/industries/healthcare.html</loc>
+    <lastmod>2026-09-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/industries/legal.html</loc>
+    <lastmod>2026-09-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/industries/startups.html</loc>
+    <lastmod>2026-09-22</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.endbyte.net/privacy.html</loc>
@@ -94,5 +149,15 @@
     <loc>https://www.endbyte.net/services/pickup-logistics.html</loc>
     <lastmod>2026-09-22</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/trust.html</loc>
+    <lastmod>2026-09-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/verify.html</loc>
+    <lastmod>2026-09-22</lastmod>
+    <priority>0.6</priority>
   </url>
 </urlset>

@@ -29,17 +29,17 @@
       if(window.innerWidth > 920 && nav.classList.contains('open')) setMenu(false);
     });
 
-    // collapsible Services group in the mobile menu
-    var svcToggle = document.getElementById('mmServicesToggle');
-    var svcList = document.getElementById('mmServicesList');
-    if(svcToggle && svcList){
-      var svcGroup = svcToggle.closest('.mm-group');
-      svcToggle.addEventListener('click', function(){
-        var open = svcGroup.classList.toggle('open');
-        svcToggle.setAttribute('aria-expanded', open);
-        svcList.style.maxHeight = open ? svcList.scrollHeight + 'px' : '0';
+    // collapsible groups (Services, Industries) in the mobile menu
+    nav.querySelectorAll('.mm-group').forEach(function(group){
+      var toggle = group.querySelector('.mm-label');
+      var list = group.querySelector('.mm-sublist');
+      if(!toggle || !list) return;
+      toggle.addEventListener('click', function(){
+        var open = group.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open);
+        list.style.maxHeight = open ? list.scrollHeight + 'px' : '0';
       });
-    }
+    });
   }
 
   /* ---------- hex rain (full-page background, home page only) ---------- */
@@ -528,4 +528,60 @@
     },{threshold:0.5});
     counters.forEach(function(el){ io2.observe(el); });
   }
+
+  /* ---------- certificate verification (verify.html) ---------- */
+  var vForm = document.getElementById('verifyForm');
+  if(vForm){
+    var vInput = document.getElementById('certId');
+    var vOut = document.getElementById('verifyResult');
+    var registry = null;
+    function esc(t){ return String(t).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+    function norm(v){
+      v = String(v || '').toUpperCase().replace(/\s+/g, '').replace(/[–—]/g, '-');
+      var m = v.match(/^([A-Z]{2,4})-?(\d{3,8})$/);
+      return m ? m[1] + '-' + m[2] : v;
+    }
+    function load(){
+      if(registry) return Promise.resolve(registry);
+      var base = document.querySelector('link[rel="icon"]').getAttribute('href').replace(/favicon\.svg$/, '');
+      return fetch(base + 'certificates.json', {cache:'no-store'}).then(function(r){
+        if(!r.ok) throw new Error('registry unavailable');
+        return r.json();
+      }).then(function(d){ registry = d.certificates || {}; return registry; });
+    }
+    function show(id){
+      id = norm(id);
+      if(!id){ vOut.innerHTML = ''; return; }
+      vOut.className = 'vr loading'; vOut.textContent = 'CHECKING REGISTRY…';
+      load().then(function(reg){
+        var c = reg[id];
+        if(!c){
+          vOut.className = 'vr miss';
+          vOut.innerHTML = '<div class="vr-h">NO MATCH · ' + esc(id) + '</div><p>We couldn\'t find that certificate number. Check it against the top of the certificate, or call <a href="tel:+14084206991">+1 (408) 420-6991</a> and we\'ll confirm it by hand.</p>';
+          return;
+        }
+        vOut.className = 'vr hit' + (c.sample ? ' sample' : '');
+        vOut.innerHTML =
+          '<div class="vr-h"><span>' + (c.sample ? 'SAMPLE CERTIFICATE' : 'GENUINE · ISSUED BY ENDBYTE') + '</span><span>№ ' + esc(id) + '</span></div>' +
+          '<div class="row"><span>ISSUED</span><span>' + esc(c.issued) + '</span></div>' +
+          '<div class="row"><span>METHOD</span><span>' + esc(c.method) + '</span></div>' +
+          '<div class="row"><span>DRIVES</span><span>' + esc(c.drives) + '</span></div>' +
+          '<div class="row"><span>RESULT</span><span class="ok">' + esc(c.result) + '</span></div>' +
+          (c.sample ? '<p class="vr-note">This is the demonstration certificate shown on our website. It doesn\'t cover real media.</p>' : '');
+      }).catch(function(){
+        vOut.className = 'vr miss';
+        vOut.innerHTML = '<div class="vr-h">REGISTRY UNAVAILABLE</div><p>We couldn\'t reach the certificate registry. Please try again, or call <a href="tel:+14084206991">+1 (408) 420-6991</a>.</p>';
+      });
+    }
+    vForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var id = norm(vInput.value);
+      vInput.value = id;
+      if(history.replaceState) history.replaceState(null, '', '?id=' + encodeURIComponent(id));
+      show(id);
+    });
+    var pre = new URLSearchParams(window.location.search).get('id');
+    if(pre){ vInput.value = norm(pre); show(pre); }
+  }
+
 })();
