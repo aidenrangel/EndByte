@@ -23,7 +23,7 @@ import hashlib, html, json, os, re, datetime
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://www.endbyte.net"
 PARTIALS = os.path.join(ROOT, "_build", "partials")
-NO_SITEMAP = {"404.html"}  # pages kept out of sitemap.xml
+NO_SITEMAP = {"404.html", "services/onsite-destruction.html"}  # pages kept out of sitemap.xml
 
 def read(p):
     with open(p, encoding="utf-8") as f: return f.read()

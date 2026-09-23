@@ -143,14 +143,22 @@
   var estTotalEl = document.getElementById('estTotal');
   var estRoot = estTotalEl ? (estTotalEl.closest('.estimator') || document) : null;
   if(estRoot){
-    // pricing grid: price[service][type][capacityTier]
-    // SSD ignores capacity tier (uses 's'); HDD uses s/m/l
+    // ===== PRICING — edit these numbers to change the estimator =====
+    // Wipe: HDD priced by capacity (bigger drives take longer on the bench); SSD flat.
+    // Destroy: flat per drive type — shredding time doesn't depend on capacity.
     var PRICES = {
       wipe:    { ssd: {s:12, m:12, l:12}, hdd: {s:12, m:16, l:20} },
-      destroy: { ssd: {s:15, m:15, l:15}, hdd: {s:15, m:19, l:23} }
+      destroy: { ssd: {s:15, m:15, l:15}, hdd: {s:15, m:15, l:15} }
     };
-    var RESALE_DISCOUNT = 0.5;   // 50% off, wipe only, under the free threshold
+    // Volume discounts (applied to the per-drive price before any resale discount)
+    var VOLUME_TIERS = [
+      { min: 50, off: 0.35 },   // 50–99+ drives: 35% off
+      { min: 10, off: 0.20 }    // 10–49 drives: 20% off
+    ];
+    var RESALE_DISCOUNT = 0.5;    // 50% off, wipe only, under the free threshold
     var FREE_THRESHOLD = 100;     // at/above this many drives, resale = FREE (free program)
+    var NUDGE_WITHIN = 20;        // suggest "add N more for free" when this close to the threshold
+    // =================================================================
 
     var state = { service:'wipe', type:'ssd', cap:'s', qty:1, resale:false };
 
@@ -161,25 +169,41 @@
     var totalEl = document.getElementById('estTotal');
     var breakEl = document.getElementById('estBreak');
     var ctaEl = document.getElementById('estCta');
+    var nudgeEl = document.getElementById('estNudge');
+
+    function volumeOff(q){
+      for(var i = 0; i < VOLUME_TIERS.length; i++){ if(q >= VOLUME_TIERS[i].min) return VOLUME_TIERS[i].off; }
+      return 0;
+    }
+    function usesCap(){ return state.type === 'hdd' && state.service === 'wipe'; }
 
     function qualifiesFree(){
       return state.service === 'wipe' && state.resale && state.qty >= FREE_THRESHOLD;
     }
 
     function perDrive(){
-      var base = PRICES[state.service][state.type][state.type === 'ssd' ? 's' : state.cap];
-      if(state.service === 'wipe' && state.resale){
-        if(state.qty >= FREE_THRESHOLD) return 0;          // free program territory
-        base = base * (1 - RESALE_DISCOUNT);               // otherwise 50% off
-      }
-      return base;
+      if(qualifiesFree()) return 0;
+      var base = PRICES[state.service][state.type][usesCap() ? state.cap : 's'];
+      base = base * (1 - volumeOff(state.qty));
+      if(state.service === 'wipe' && state.resale) base = base * (1 - RESALE_DISCOUNT);
+      return Math.round(base * 100) / 100;
     }
 
-    function fmt(n){ return '$' + (Number.isInteger(n) ? n : n.toFixed(2)); }
+    function fmt(n){ return '$' + (Number.isInteger(n) ? n.toLocaleString() : n.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})); }
+
+    function labels(){
+      var typeLabel = state.type.toUpperCase();
+      var capLabel = usesCap() ? ({s:' ≤4TB', m:' 4–12TB', l:' >12TB'})[state.cap] : '';
+      var svcLabel = state.service === 'wipe' ? 'wipe' : 'destroy';
+      var vo = volumeOff(state.qty);
+      var volLabel = vo ? ' · ' + Math.round(vo*100) + '% volume discount' : '';
+      var resaleLabel = (state.service === 'wipe' && state.resale) ? ' · resale 50% off' : '';
+      return {type:typeLabel, cap:capLabel, svc:svcLabel, vol:volLabel, resale:resaleLabel};
+    }
 
     function render(){
-      // SSD: capacity irrelevant -> dim it; HDD: active
-      if(state.type === 'ssd'){ capField.classList.add('dim'); } else { capField.classList.remove('dim'); }
+      // capacity only matters for HDD wipes
+      if(usesCap()){ capField.classList.remove('dim'); } else { capField.classList.add('dim'); }
       // resale only applies to wipe -> dim + uncheck on destroy
       if(state.service === 'destroy'){
         resaleField.classList.add('dim');
@@ -188,42 +212,48 @@
         resaleField.classList.remove('dim');
       }
 
-      // dynamic resale toggle label: 50% off normally, FREE at/above the threshold
       var resaleText = document.getElementById('estResaleText');
       if(resaleText){
         if(state.resale && state.qty >= FREE_THRESHOLD){
-          resaleText.innerHTML = 'Let EndByte keep &amp; resell the wiped drives <b class="est-free">— FREE at ' + FREE_THRESHOLD + '+ drives</b>';
+          resaleText.innerHTML = 'Let EndByte keep &amp; resell the wiped drives <b class="est-free">— FREE at ' + FREE_THRESHOLD + '+ drives</b> <span class="est-hint">Working drives, about 5 years old or newer, 1TB+. Confirmed on inspection.</span>';
         } else {
-          resaleText.innerHTML = 'Let EndByte keep &amp; resell the wiped drives <b>— 50% off</b> <span class="est-hint">(free at ' + FREE_THRESHOLD + '+)</span>';
+          resaleText.innerHTML = 'Let EndByte keep &amp; resell the wiped drives <b>— 50% off</b> <span class="est-hint">(free at ' + FREE_THRESHOLD + '+) Working drives, about 5 years old or newer, 1TB+. Confirmed on inspection.</span>';
+        }
+      }
+
+      // "add N more" nudge toward the free program
+      if(nudgeEl){
+        var gap = FREE_THRESHOLD - state.qty;
+        if(state.service === 'wipe' && state.resale && gap > 0 && gap <= NUDGE_WITHIN){
+          nudgeEl.textContent = 'Add ' + gap + ' more drive' + (gap > 1 ? 's' : '') + ' and the whole job is free.';
+          nudgeEl.hidden = false;
+        } else if(state.service === 'wipe' && !state.resale && state.qty >= FREE_THRESHOLD){
+          nudgeEl.textContent = 'Working drives? Tick the resale box — at ' + FREE_THRESHOLD + '+ drives the job is free.';
+          nudgeEl.hidden = false;
+        } else {
+          nudgeEl.hidden = true;
         }
       }
 
       var free = qualifiesFree();
       var unit = perDrive();
-      var total = unit * state.qty;
-
-      var typeLabel = state.type.toUpperCase();
-      var capLabel = '';
-      if(state.type === 'hdd'){ capLabel = ({s:' ≤4TB', m:' 4–12TB', l:' >12TB'})[state.cap]; }
-      var svcLabel = state.service === 'wipe' ? 'wipe' : 'destroy';
+      var total = Math.round(unit * state.qty * 100) / 100;
+      var L = labels();
 
       if(free){
         totalEl.textContent = 'FREE';
         totalEl.classList.add('est-isfree');
-        breakEl.textContent = state.qty + ' ' + typeLabel + capLabel + ' · qualifies for the free certified destruction program';
+        breakEl.textContent = state.qty + ' ' + L.type + L.cap + ' · qualifies for the free certified destruction program';
         ctaEl.textContent = 'CLAIM FREE DESTRUCTION →';
-        var summaryF = state.qty + ' ' + typeLabel + capLabel + ' drive' + (state.qty>1?'s':'') +
-                       ', ' + svcLabel + ' — qualifies for FREE certified destruction (resale, ' + FREE_THRESHOLD + '+ drives)';
-        ctaEl.setAttribute('data-summary', summaryF);
+        ctaEl.setAttribute('data-summary', state.qty + ' ' + L.type + L.cap + ' drive' + (state.qty>1?'s':'') +
+                       ', ' + L.svc + ' — qualifies for FREE certified destruction (resale, ' + FREE_THRESHOLD + '+ drives)');
       } else {
         totalEl.textContent = fmt(total);
         totalEl.classList.remove('est-isfree');
-        var resaleLabel = (state.service === 'wipe' && state.resale) ? ' · resale 50% off' : '';
-        breakEl.textContent = state.qty + ' ' + typeLabel + capLabel + ' · ' + svcLabel + ' · ' + fmt(unit) + '/drive' + resaleLabel;
+        breakEl.textContent = state.qty + ' ' + L.type + L.cap + ' · ' + L.svc + ' · ' + fmt(unit) + '/drive' + L.vol + L.resale;
         ctaEl.textContent = 'GET THIS QUOTE CONFIRMED →';
-        var summary = state.qty + ' ' + typeLabel + capLabel + ' drive' + (state.qty>1?'s':'') +
-                      ', ' + svcLabel + resaleLabel + ' — estimated ' + fmt(total);
-        ctaEl.setAttribute('data-summary', summary);
+        ctaEl.setAttribute('data-summary', state.qty + ' ' + L.type + L.cap + ' drive' + (state.qty>1?'s':'') +
+                      ', ' + L.svc + L.vol + L.resale + ' — estimated ' + fmt(total));
       }
     }
 
@@ -265,10 +295,10 @@
       var params = new URLSearchParams();
       params.set('svc', state.service);          // wipe | destroy
       params.set('type', state.type);            // ssd | hdd
-      if(state.type === 'hdd') params.set('cap', state.cap);
+      if(usesCap()) params.set('cap', state.cap);
       params.set('qty', state.qty);
       params.set('resale', state.resale ? '1' : '0');
-      params.set('total', free ? 'free' : String(perDrive() * state.qty));
+      params.set('total', free ? 'free' : String(Math.round(perDrive() * state.qty * 100) / 100));
       window.location.href = 'quote.html?' + params.toString();
     });
 
@@ -290,7 +320,8 @@
 
       var typeLabel = type.toUpperCase();
       var capLabel = '';
-      if(type === 'hdd' && cap){ capLabel = ({s:' ≤4TB', m:' 4–12TB', l:' >12TB'})[cap] || ''; }
+      if(type === 'hdd' && cap && svc === 'wipe'){ capLabel = ({s:' ≤4TB', m:' 4–12TB', l:' >12TB'})[cap] || ''; }
+      var volLabel = qty >= 50 ? ' · 35% volume discount' : (qty >= 10 ? ' · 20% volume discount' : '');
       var svcLabel = svc === 'wipe' ? 'wipe' : 'destroy';
 
       // populate the estimate banner
@@ -302,9 +333,9 @@
         qpBreak.textContent = qty + ' ' + typeLabel + capLabel + ' · qualifies for the free certified destruction program';
       } else {
         var num = parseFloat(totalParam);
-        qpTotal.textContent = isNaN(num) ? '—' : ('$' + (Number.isInteger(num) ? num : num.toFixed(2)));
+        qpTotal.textContent = isNaN(num) ? '—' : ('$' + (Number.isInteger(num) ? num.toLocaleString() : num.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})));
         var resaleLabel = (svc === 'wipe' && resale) ? ' · resale 50% off' : '';
-        qpBreak.textContent = qty + ' ' + typeLabel + capLabel + ' · ' + svcLabel + resaleLabel;
+        qpBreak.textContent = qty + ' ' + typeLabel + capLabel + ' · ' + svcLabel + volLabel + resaleLabel;
       }
       qpEstimate.hidden = false;
 
@@ -320,7 +351,7 @@
         if(msg){
           var line = isFree
             ? (qty + ' ' + typeLabel + capLabel + ' drive' + (qty>1?'s':'') + ', ' + svcLabel + ' — qualifies for FREE certified destruction (resale, 100+ drives)')
-            : (qty + ' ' + typeLabel + capLabel + ' drive' + (qty>1?'s':'') + ', ' + svcLabel + ((svc==='wipe'&&resale)?' · resale 50% off':'') + ' — estimated ' + qpTotal.textContent);
+            : (qty + ' ' + typeLabel + capLabel + ' drive' + (qty>1?'s':'') + ', ' + svcLabel + volLabel + ((svc==='wipe'&&resale)?' · resale 50% off':'') + ' — estimated ' + qpTotal.textContent);
           msg.value = 'INSTANT ESTIMATE REQUEST\n------------------------\n' + line +
                       '\n\nPlease confirm this quote. Anything else I should know about the drives, I\'ll add here:';
         }

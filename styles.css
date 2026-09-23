@@ -731,3 +731,7 @@ a.btn{text-align:center}
 .foot-res{flex-basis:100%;padding-bottom:14px;margin-bottom:4px;border-bottom:1px solid var(--line);color:var(--dim)}
 .foot-res a{color:var(--faint)}
 .foot-res a:hover{color:var(--amber)}
+
+/* estimator: resale conditions + free-program nudge */
+.est-toggle .est-hint{display:block;margin-top:4px;line-height:1.45}
+.est-nudge{margin:14px 0 4px;padding:10px 12px;border:1px dashed var(--green);color:var(--green);font-family:var(--mono);font-size:12px;letter-spacing:.02em;line-height:1.5}
