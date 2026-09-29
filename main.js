@@ -7,6 +7,23 @@
   /* ========================= */
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---------- light / dark theme toggle ---------- */
+  var root = document.documentElement;
+  function setTheme(t){
+    if(t === 'light') root.setAttribute('data-theme', 'light'); else root.removeAttribute('data-theme');
+    try{ localStorage.setItem('eb-theme', t); }catch(e){}
+    document.querySelectorAll('[data-theme-toggle]').forEach(function(b){
+      b.setAttribute('aria-label', t === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+    });
+    var tc = document.querySelector('meta[name="theme-color"]');
+    if(tc) tc.setAttribute('content', t === 'light' ? '#F6F7F9' : '#0E1116');
+    document.dispatchEvent(new Event('eb-theme'));
+  }
+  setTheme(root.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+  document.querySelectorAll('[data-theme-toggle]').forEach(function(b){
+    b.addEventListener('click', function(){ setTheme(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light'); });
+  });
+
   /* ---------- mobile menu (all pages) ---------- */
   var nav = document.querySelector('nav');
   var menuBtn = document.getElementById('menuBtn');
@@ -76,6 +93,8 @@
     // =============================================================================
 
     var ctx = hexCanvas.getContext('2d');
+    function isLight(){ return document.documentElement.getAttribute('data-theme') === 'light'; }
+    document.addEventListener('eb-theme', function(){ ctx.clearRect(0, 0, hexCanvas.width, hexCanvas.height); });
     var cols, drops, speeds, fontSize = 14, dpr = Math.min(window.devicePixelRatio || 1, 2);
     var hexChars = '0123456789ABCDEF';
     var zeroBandTop = 0, zeroBandBot = 0;
@@ -106,13 +125,13 @@
       var w = window.innerWidth, h = window.innerHeight;
       // soft trail: translucent bg over the previous frame gives the comet-tail streaks.
       // slightly stronger than a pure trail so faint streaks can't accumulate forever.
-      ctx.fillStyle = 'rgba(14,17,22,0.16)';
+      ctx.fillStyle = isLight() ? 'rgba(246,247,249,0.16)' : 'rgba(14,17,22,0.16)';
       ctx.fillRect(0, 0, w, h);
       // every ~90 frames, one extra faint sweep clears any lingering vertical buildup
       // (imperceptible to the eye, but stops static columns from forming over time)
       frameCount++;
       if(frameCount % 90 === 0){
-        ctx.fillStyle = 'rgba(14,17,22,0.30)';
+        ctx.fillStyle = isLight() ? 'rgba(246,247,249,0.30)' : 'rgba(14,17,22,0.30)';
         ctx.fillRect(0, 0, w, h);
       }
       ctx.font = fontSize + "px 'IBM Plex Mono', monospace";
@@ -129,12 +148,12 @@
           var amber = Math.random() < 0.06;
           alpha = (0.10 + Math.random()*0.10) * RAIN_INTENSITY;
           ctx.fillStyle = amber
-            ? 'rgba(255,176,32,' + (alpha*1.6).toFixed(3) + ')'
-            : 'rgba(120,210,160,' + alpha.toFixed(3) + ')';
+            ? (isLight() ? 'rgba(190,120,0,' : 'rgba(255,176,32,') + (alpha*1.6).toFixed(3) + ')'
+            : (isLight() ? 'rgba(20,130,70,' : 'rgba(120,210,160,') + alpha.toFixed(3) + ')';
         } else {
           text = pair();
           alpha = (0.05 + Math.random()*0.07) * RAIN_INTENSITY;
-          ctx.fillStyle = 'rgba(139,149,165,' + alpha.toFixed(3) + ')';
+          ctx.fillStyle = (isLight() ? 'rgba(70,80,94,' : 'rgba(139,149,165,') + alpha.toFixed(3) + ')';
         }
         ctx.fillText(text, x, y);
 
