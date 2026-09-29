@@ -5,8 +5,14 @@
       "issued": "2026-06-14",
       "method": "NIST 800-88 Clear",
       "drives": 1,
-      "result": "PASS \u00b7 100% sectors verified",
+      "result": "PASS · 100% sectors verified",
       "sample": true
+    },
+    "CD-2606": {
+      "issued": "2023-12-20",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 2,
+      "result": "2 erased, not verified"
     }
   }
 }
