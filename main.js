@@ -7,22 +7,22 @@
   /* ========================= */
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- light / dark theme toggle ---------- */
+  /* ---------- light / dark theme: follows the visitor's device setting ---------- */
   var root = document.documentElement;
-  function setTheme(t){
-    if(t === 'light') root.setAttribute('data-theme', 'light'); else root.removeAttribute('data-theme');
-    try{ localStorage.setItem('eb-theme', t); }catch(e){}
-    document.querySelectorAll('[data-theme-toggle]').forEach(function(b){
-      b.setAttribute('aria-label', t === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
-    });
+  var lightQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  function applyTheme(){
+    var light = !!(lightQuery && lightQuery.matches);
+    if(light) root.setAttribute('data-theme', 'light'); else root.removeAttribute('data-theme');
     var tc = document.querySelector('meta[name="theme-color"]');
-    if(tc) tc.setAttribute('content', t === 'light' ? '#F6F7F9' : '#0E1116');
+    if(tc) tc.setAttribute('content', light ? '#F6F7F9' : '#0E1116');
     document.dispatchEvent(new Event('eb-theme'));
   }
-  setTheme(root.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
-  document.querySelectorAll('[data-theme-toggle]').forEach(function(b){
-    b.addEventListener('click', function(){ setTheme(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light'); });
-  });
+  applyTheme();
+  if(lightQuery){
+    if(lightQuery.addEventListener) lightQuery.addEventListener('change', applyTheme);
+    else if(lightQuery.addListener) lightQuery.addListener(applyTheme);
+  }
+  try{ localStorage.removeItem('eb-theme'); }catch(e){}
 
   /* ---------- mobile menu (all pages) ---------- */
   var nav = document.querySelector('nav');
