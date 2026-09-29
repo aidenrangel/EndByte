@@ -12,18 +12,6 @@
       "note": "Demo job — shows how tracking works.",
       "certificates": [],
       "demo": true
-    },
-    "EB-4PTE-G2EB": {
-      "stage": "verifying",
-      "drives": 10,
-      "history": {
-        "received": "2026-09-29",
-        "wiping": "2026-09-29",
-        "verifying": "2026-09-29"
-      },
-      "updated": "2026-09-29",
-      "note": "",
-      "certificates": []
     }
   }
 }
