@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>document.documentElement.className+=' js';</script>
+<script>document.documentElement.className+=' js';try{if(localStorage.getItem('eb-theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google tag (gtag.js) -->
@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css?v=f3b2521e">
+<link rel="stylesheet" href="../styles.css?v=490057a3">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -103,6 +103,10 @@
       <a href="../about.html">About</a>
     </div>
     <a class="nav-cta-link nav-cta" href="../index.html#contact">GET A QUOTE</a>
+    <button class="theme-btn" type="button" data-theme-toggle aria-label="Switch to light mode" title="Light / dark mode">
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg>
+    </button>
     <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
       <span></span><span></span><span></span>
     </button>
@@ -138,6 +142,7 @@
       <a class="mm-link" href="../track.html">Track a Job</a>
       <a class="mm-link" href="../index.html#faq">FAQ</a>
       <a class="mm-link" href="../about.html">About</a>
+      <button class="mm-link mm-theme" type="button" data-theme-toggle><span class="mm-theme-l">Light mode</span><span class="mm-theme-d">Dark mode</span></button>
       <a class="mm-cta" href="../index.html#contact">GET A QUOTE →</a>
       <div class="mm-foot">
         <a href="tel:+14084206991">Call +1 (408) 420-6991</a>
@@ -210,6 +215,6 @@
   </div>
 </footer>
 <!-- @end footer -->
-<script src="../main.js?v=01d2aa13"></script>
+<script src="../main.js?v=f94bfc9b"></script>
 </body>
 </html>
