@@ -2,11 +2,10 @@
   "_note": "Public job tracker for endbyte.net/track.html. Never put client names or serial numbers here.",
   "jobs": {
     "EB-DEMO-2026": {
-      "stage": "wiping",
+      "stage": "received",
       "drives": 32,
       "history": {
-        "received": "2026-09-28",
-        "wiping": "2026-09-29"
+        "received": "2026-09-28"
       },
       "updated": "2026-09-29",
       "note": "Demo job — shows how tracking works.",
