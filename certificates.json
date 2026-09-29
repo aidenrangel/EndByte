@@ -11,8 +11,14 @@
     "CD-2606": {
       "issued": "2023-12-20",
       "method": "NIST 800-88 · 1-pass random",
-      "drives": 2,
-      "result": "2 erased, not verified"
+      "drives": 1,
+      "result": "Erased · no errors · not verified"
+    },
+    "CD-2607": {
+      "issued": "2023-12-20",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "Erased · no errors · not verified"
     }
   }
 }
