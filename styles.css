@@ -865,3 +865,8 @@ a.btn{text-align:center}
 .vr .warn{color:var(--amber)}
 .qform textarea[hidden],.qform [hidden]{display:none!important}
 .doc-grid.two{grid-template-columns:1fr 1fr}@media(max-width:560px){.doc-grid.two{grid-template-columns:1fr}}
+.vr-cert{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line2);background:var(--bg);padding:10px 14px;margin-top:8px;text-decoration:none!important;transition:border-color .2s}
+.vr-cert:hover{border-color:var(--amber)}
+.vr-cert b{color:var(--text);font-weight:500;letter-spacing:.06em}
+.vr-cert span{color:var(--dim);font-size:12px}
+.vr .vr-cert .ok{color:var(--green)}

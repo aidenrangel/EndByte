@@ -656,6 +656,8 @@
     function esc(t){ return String(t).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
     function norm(v){
       v = String(v || '').toUpperCase().replace(/\s+/g, '').replace(/[–—]/g, '-');
+      var j = v.match(/^EB-?([A-Z0-9]{4})-?([A-Z0-9]{4})$/);
+      if(j && /[A-Z]/.test(j[1] + j[2])) return 'EB-' + j[1] + '-' + j[2];   // job code
       var m = v.match(/^([A-Z]{2,4})-?(\d{3,8})$/);
       return m ? m[1] + '-' + m[2] : v;
     }
@@ -667,15 +669,55 @@
         return r.json();
       }).then(function(d){ registry = d.certificates || {}; return registry; });
     }
+    function isJob(id){ return /^EB-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(id) && /[A-Z]/.test(id.slice(3)); }
+    function loadJobs(){
+      var base = document.querySelector('link[rel="icon"]').getAttribute('href').replace(/favicon\.svg$/, '');
+      return fetch(base + 'jobs.json', {cache:'no-store'}).then(function(r){
+        if(!r.ok) throw new Error('jobs unavailable'); return r.json();
+      }).then(function(d){ return d.jobs || {}; });
+    }
+    function showJob(code){
+      vOut.className = 'vr loading'; vOut.textContent = 'LOOKING UP JOB…';
+      Promise.all([loadJobs(), load()]).then(function(r){
+        var j = r[0][code], reg = r[1];
+        if(!j){
+          vOut.className = 'vr miss';
+          vOut.innerHTML = '<div class="vr-h">NO MATCH · ' + esc(code) + '</div><p>We couldn\'t find that job code. Check it against your pickup receipt, or call <a href="tel:+14084206991">+1 (408) 420-6991</a>.</p>';
+          return;
+        }
+        var certs = j.certificates || [];
+        if(!certs.length){
+          vOut.className = 'vr hit sample';
+          vOut.innerHTML = '<div class="vr-h"><span>JOB · ' + esc(code) + '</span><span>' + (j.drives ? esc(j.drives) + ' DRIVES' : '') + '</span></div>' +
+            '<p>No certificate has been issued for this job yet — it\'s still in progress.</p>' +
+            '<a class="btn btn-primary tr-cert" href="track.html?job=' + encodeURIComponent(code) + '">TRACK THIS JOB →</a>';
+          return;
+        }
+        var rows = certs.map(function(n){
+          var c = reg[n];
+          var detail = c ? esc(c.issued) + ' · ' + esc(c.drives) + ' drive' + (c.drives == 1 ? '' : 's') + ' · ' +
+                           '<span class="' + (/fail|not verified/i.test(c.result) ? 'warn' : 'ok') + '">' + esc(c.result) + '</span>'
+                         : '<span class="warn">Not on the verify list yet</span>';
+          return '<a class="vr-cert" href="verify.html?id=' + encodeURIComponent(n) + '"><b>№ ' + esc(n) + ' →</b><span>' + detail + '</span></a>';
+        }).join('');
+        vOut.className = 'vr hit';
+        vOut.innerHTML = '<div class="vr-h"><span>JOB · ' + esc(code) + '</span><span>' + certs.length + ' CERTIFICATE' + (certs.length === 1 ? '' : 'S') + '</span></div>' +
+          '<p>Certificates issued by EndByte for this job. Select one to see its full verification.</p>' + rows;
+      }).catch(function(){
+        vOut.className = 'vr miss';
+        vOut.innerHTML = '<div class="vr-h">LOOKUP UNAVAILABLE</div><p>Please try again, or call <a href="tel:+14084206991">+1 (408) 420-6991</a>.</p>';
+      });
+    }
     function show(id){
       id = norm(id);
       if(!id){ vOut.innerHTML = ''; return; }
+      if(isJob(id)){ showJob(id); return; }
       vOut.className = 'vr loading'; vOut.textContent = 'CHECKING REGISTRY…';
       load().then(function(reg){
         var c = reg[id];
         if(!c){
           vOut.className = 'vr miss';
-          vOut.innerHTML = '<div class="vr-h">NO MATCH · ' + esc(id) + '</div><p>We couldn\'t find that certificate number. Check it against the top of the certificate, or call <a href="tel:+14084206991">+1 (408) 420-6991</a> and we\'ll confirm it by hand.</p>';
+          vOut.innerHTML = '<div class="vr-h">NO MATCH · ' + esc(id) + '</div><p>We couldn\'t find that certificate number. Check it against the top of the certificate (or try your job code), or call <a href="tel:+14084206991">+1 (408) 420-6991</a> and we\'ll confirm it by hand.</p>';
           return;
         }
         vOut.className = 'vr hit' + (c.sample ? ' sample' : '');
