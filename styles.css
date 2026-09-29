@@ -864,3 +864,4 @@ a.btn{text-align:center}
 .mm-foot{row-gap:10px}
 .vr .warn{color:var(--amber)}
 .qform textarea[hidden],.qform [hidden]{display:none!important}
+.doc-grid.two{grid-template-columns:1fr 1fr}@media(max-width:560px){.doc-grid.two{grid-template-columns:1fr}}

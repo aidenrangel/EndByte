@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=9b3373c3">
+<link rel="stylesheet" href="styles.css?v=2ac50033">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -151,7 +151,7 @@
       <a class="btn btn-ghost" href="endbyte-sample-certificate.pdf" target="_blank" rel="noopener">SAMPLE CERTIFICATE (PDF)</a>
     </div>
     <div class="jump">
-      <a href="#standards">Standards</a><a href="#controls">Controls</a><a href="#compliance">Compliance mapping</a><a href="#documents">Documents</a><a href="#verify">Verification</a>
+      <a href="#standards">Standards</a><a href="#controls">Controls</a><a href="#compliance">Compliance mapping</a><a href="#documents">Documents</a><a href="#verify">Track &amp; verify</a>
     </div>
   </div>
 </header>
@@ -191,6 +191,10 @@
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">Custody never breaks<span class="faq-pm">+</span></button>
         <div class="faq-a"><p>Media that holds your data never leaves EndByte's control until it has been sanitized or destroyed. There are no subcontracted wipes and no unlogged hand-offs in between.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Live job status<span class="faq-pm">+</span></button>
+        <div class="faq-a"><p>Each job gets a unique tracking code when we take custody. You can check its stage online at any time — Received, Wiping, Verifying, Certificate ready — without calling us. <a href="track.html">Track a job →</a></p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">Sanitization to NIST 800-88<span class="faq-pm">+</span></button>
@@ -258,13 +262,16 @@
 </section>
 
 <section class="tc-sec" id="verify">
-  <div class="wrap verify-band">
-    <div>
-      <div class="eyebrow">Verification</div>
-      <h2>Every certificate can be checked</h2>
-      <p>Anyone holding an EndByte certificate — you, your auditor, or the buyer of your old hardware — can confirm it's genuine by entering its number on our verification page.</p>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Track &amp; verify</div>
+      <h2>See where your drives are — and prove what happened to them</h2>
+      <p>You don't have to take our word for it at any point. Follow your job while it's in our custody, then check the certificate once it's issued.</p>
     </div>
-    <a class="btn btn-primary" href="verify.html">VERIFY A CERTIFICATE →</a>
+    <div class="doc-grid two">
+      <a class="doc" href="track.html"><span class="tag">WHILE WE HAVE YOUR DRIVES</span><h3>Track your job</h3><p>Every job gets a code at pickup or drop-off. Enter it to see each stage — Received, Wiping, Verifying, Certificate ready — with the date it happened.</p><span class="more">Track a job →</span></a>
+      <a class="doc" href="verify.html"><span class="tag">AFTER THE JOB</span><h3>Verify a certificate</h3><p>Every certificate has a number and a QR code. Anyone holding it — you, your auditor, or the buyer of your old hardware — can confirm it's genuine in seconds.</p><span class="more">Verify a certificate →</span></a>
+    </div>
   </div>
 </section>
 
