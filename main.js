@@ -1,4 +1,10 @@
 (function(){
+  /* ===== SITE SETTINGS =====
+     BOOKING_URL: paste your Calendly (or Cal.com) link here, e.g. 'https://calendly.com/endbyte/pickup'.
+     While it's empty, "Book a pickup" buttons fall back to the quote form and the extra
+     booking buttons stay hidden. */
+  var BOOKING_URL = '';
+  /* ========================= */
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- mobile menu (all pages) ---------- */
@@ -462,6 +468,67 @@
     }, 900);
   }
 
+  /* ---------- quote form: optional asset list (read in the browser, sent as text) ---------- */
+  var assetFile = document.getElementById('assetFile');
+  if(assetFile){
+    var assetList = document.getElementById('assetList');
+    var assetInfo = document.getElementById('assetInfo');
+    var MAX_CHARS = 60000;
+    function aesc(t){ return String(t).replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+    function loadSheetJS(){
+      if(window.XLSX) return Promise.resolve(window.XLSX);
+      return new Promise(function(ok, bad){
+        var s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+        s.onload = function(){ ok(window.XLSX); }; s.onerror = bad;
+        document.head.appendChild(s);
+      });
+    }
+    function readAsText(file){
+      return new Promise(function(ok, bad){ var r = new FileReader(); r.onload = function(){ ok(r.result); }; r.onerror = bad; r.readAsText(file); });
+    }
+    function readAsBuffer(file){
+      return new Promise(function(ok, bad){ var r = new FileReader(); r.onload = function(){ ok(r.result); }; r.onerror = bad; r.readAsArrayBuffer(file); });
+    }
+    function clearAsset(){ assetList.value = ''; assetInfo.innerHTML = ''; assetInfo.className = 'qf-asset'; }
+    assetFile.addEventListener('change', function(){
+      var file = assetFile.files && assetFile.files[0];
+      if(!file){ clearAsset(); return; }
+      assetInfo.className = 'qf-asset'; assetInfo.textContent = 'READING ' + file.name.toUpperCase() + '…';
+      var isExcel = /\.xlsx?$/i.test(file.name);
+      var p = isExcel
+        ? Promise.all([loadSheetJS(), readAsBuffer(file)]).then(function(r){
+            var wb = r[0].read(r[1], {type:'array'});
+            return r[0].utils.sheet_to_csv(wb.Sheets[wb.SheetNames[0]]);
+          })
+        : readAsText(file);
+      p.then(function(text){
+        var lines = String(text).split(/\r?\n/).map(function(l){ return l.replace(/,+$/, '').trim(); }).filter(Boolean);
+        if(!lines.length) throw new Error('empty');
+        var head = lines[0].toLowerCase();
+        var hasHeader = /serial|s\/n|model|asset|drive|capacity|make/.test(head);
+        var count = lines.length - (hasHeader ? 1 : 0);
+        var out = 'File: ' + file.name + ' (' + count + ' row' + (count === 1 ? '' : 's') + ')\n' + lines.join('\n');
+        var cut = out.length > MAX_CHARS;
+        if(cut) out = out.slice(0, MAX_CHARS) + '\n[... list truncated — please email the full file]';
+        assetList.value = out;
+        var dc = assetFile.form && assetFile.form.querySelector('[name="drive_count"]');
+        if(dc && !dc.value.trim()) dc.value = count;
+        assetInfo.className = 'qf-asset ok';
+        assetInfo.innerHTML = '✓ ' + count + ' ROW' + (count === 1 ? '' : 'S') + ' READ FROM ' + aesc(file.name.toUpperCase()) +
+          (/serial|s\/n/.test(head) ? ' · SERIAL COLUMN FOUND' : '') +
+          '<span class="qf-prev">' + aesc(lines.slice(0, 3).join('\n')) + (lines.length > 3 ? '\n…' : '') + '</span>' +
+          (cut ? '<span class="qf-warn">That list is long — we\'ve included the first part. Please also email the full file to info@endbyte.net.</span>' : '') +
+          '<button type="button" class="qf-clear">Remove list</button>';
+        assetInfo.querySelector('.qf-clear').addEventListener('click', function(){ assetFile.value = ''; clearAsset(); });
+      }).catch(function(){
+        assetList.value = '';
+        assetInfo.className = 'qf-asset err';
+        assetInfo.textContent = "COULDN'T READ THAT FILE — TRY A CSV, OR EMAIL IT TO INFO@ENDBYTE.NET.";
+      });
+    });
+  }
+
   /* ---------- quote form (home page only) ---------- */
   var qform = document.getElementById('quoteForm');
   if(qform){
@@ -617,7 +684,7 @@
           '<div class="row"><span>ISSUED</span><span>' + esc(c.issued) + '</span></div>' +
           '<div class="row"><span>METHOD</span><span>' + esc(c.method) + '</span></div>' +
           '<div class="row"><span>DRIVES</span><span>' + esc(c.drives) + '</span></div>' +
-          '<div class="row"><span>RESULT</span><span class="ok">' + esc(c.result) + '</span></div>' +
+          '<div class="row"><span>RESULT</span><span class="' + (/fail|not verified/i.test(c.result) ? 'warn' : 'ok') + '">' + esc(c.result) + '</span></div>' +
           (c.sample ? '<p class="vr-note">This is the demonstration certificate shown on our website. It doesn\'t cover real media.</p>' : '');
       }).catch(function(){
         vOut.className = 'vr miss';
@@ -633,6 +700,76 @@
     });
     var pre = new URLSearchParams(window.location.search).get('id');
     if(pre){ vInput.value = norm(pre); show(pre); }
+  }
+
+
+  /* ---------- job tracking (track.html) ---------- */
+  var tForm = document.getElementById('trackForm');
+  if(tForm){
+    var tInput = document.getElementById('jobId');
+    var tOut = document.getElementById('trackResult');
+    var STAGES = [['received','Received'],['wiping','Wiping'],['verifying','Verifying'],['ready','Certificate ready']];
+    function tesc(t){ return String(t == null ? '' : t).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+    function tnorm(v){
+      v = String(v || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if(v.indexOf('EB') === 0) v = v.slice(2);
+      return v.length === 8 ? 'EB-' + v.slice(0,4) + '-' + v.slice(4) : String(tInput.value || '').toUpperCase().trim();
+    }
+    function tload(){
+      var base = document.querySelector('link[rel="icon"]').getAttribute('href').replace(/favicon\.svg$/, '');
+      return fetch(base + 'jobs.json', {cache:'no-store'}).then(function(r){
+        if(!r.ok) throw new Error('unavailable'); return r.json();
+      }).then(function(d){ return d.jobs || {}; });
+    }
+    function tshow(code){
+      code = tnorm(code);
+      if(!code){ tOut.innerHTML = ''; return; }
+      tOut.className = 'tr loading'; tOut.textContent = 'LOOKING UP JOB…';
+      tload().then(function(jobs){
+        var j = jobs[code];
+        if(!j){
+          tOut.className = 'tr miss';
+          tOut.innerHTML = '<div class="vr-h">NO MATCH · ' + tesc(code) + '</div><p>We couldn\'t find that job code. Check it against your pickup receipt, or call <a href="tel:+14084206991">+1 (408) 420-6991</a>.</p>';
+          return;
+        }
+        var cur = 0;
+        STAGES.forEach(function(s, i){ if(s[0] === j.stage) cur = i; });
+        var hist = j.history || {};
+        var steps = STAGES.map(function(s, i){
+          var st = i < cur ? 'done' : (i === cur ? (s[0] === 'ready' ? 'done' : 'now') : 'todo');
+          return '<li class="' + st + '"><span class="dot"></span><b>' + s[1] + '</b><small>' + (hist[s[0]] ? tesc(hist[s[0]]) : (st === 'now' ? 'In progress' : '—')) + '</small></li>';
+        }).join('');
+        var certs = (j.certificates || []).map(function(n){
+          return '<a class="btn btn-primary tr-cert" href="verify.html?id=' + encodeURIComponent(n) + '">VIEW CERTIFICATE ' + tesc(n) + ' →</a>';
+        }).join('');
+        tOut.className = 'tr hit';
+        tOut.innerHTML =
+          '<div class="vr-h"><span>' + (j.demo ? 'DEMO JOB' : 'JOB') + ' · ' + tesc(code) + '</span><span>' + (j.drives ? tesc(j.drives) + ' DRIVES' : '') + '</span></div>' +
+          '<ol class="tr-steps">' + steps + '</ol>' +
+          (j.note ? '<p class="tr-note">' + tesc(j.note) + '</p>' : '') +
+          '<p class="tr-upd">Last updated ' + tesc(j.updated || '') + '</p>' + certs;
+      }).catch(function(){
+        tOut.className = 'tr miss';
+        tOut.innerHTML = '<div class="vr-h">TRACKING UNAVAILABLE</div><p>Please try again, or call <a href="tel:+14084206991">+1 (408) 420-6991</a>.</p>';
+      });
+    }
+    tForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var code = tnorm(tInput.value); tInput.value = code;
+      if(history.replaceState) history.replaceState(null, '', '?job=' + encodeURIComponent(code));
+      tshow(code);
+    });
+    var tpre = new URLSearchParams(window.location.search).get('job');
+    if(tpre){ tInput.value = tpre; tInput.value = tnorm(tpre); tshow(tpre); }
+  }
+
+
+  /* ---------- online booking link ---------- */
+  if(BOOKING_URL){
+    document.querySelectorAll('[data-book]').forEach(function(a){
+      a.setAttribute('href', BOOKING_URL); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener');
+    });
+    document.documentElement.classList.add('has-booking');
   }
 
 })();
