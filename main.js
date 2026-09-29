@@ -42,6 +42,17 @@
     });
   }
 
+  /* ---------- desktop Services dropdown ---------- */
+  var dd = document.getElementById('navServices');
+  if(dd){
+    var ddBtn = dd.querySelector('.nav-dd-btn');
+    function setDD(open){ dd.classList.toggle('open', open); ddBtn.setAttribute('aria-expanded', open); }
+    ddBtn.addEventListener('click', function(e){ e.stopPropagation(); setDD(!dd.classList.contains('open')); });
+    document.addEventListener('click', function(e){ if(!dd.contains(e.target)) setDD(false); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && dd.classList.contains('open')){ setDD(false); ddBtn.focus(); } });
+    dd.addEventListener('focusout', function(e){ if(!dd.contains(e.relatedTarget)) setDD(false); });
+  }
+
   /* ---------- hex rain (full-page background, home page only) ---------- */
   var hexCanvas = document.getElementById('hexrain');
   if(hexCanvas && !reduced){
