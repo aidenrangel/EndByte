@@ -42,6 +42,15 @@
     });
   }
 
+  /* ---------- tables: copy header labels onto cells so they stack into cards on phones ---------- */
+  document.querySelectorAll('.tbl-wrap table').forEach(function(t){
+    var heads = [].map.call(t.querySelectorAll('thead th'), function(th){ return th.getAttribute('data-short') || th.textContent.trim(); });
+    if(!heads.length) return;
+    t.querySelectorAll('tbody tr').forEach(function(tr){
+      [].forEach.call(tr.children, function(td, i){ if(i > 0 && heads[i]) td.setAttribute('data-label', heads[i]); });
+    });
+  });
+
   /* ---------- desktop Services dropdown ---------- */
   var dd = document.getElementById('navServices');
   if(dd){

@@ -573,16 +573,6 @@ a.btn{text-align:center}
 .faq-a a{color:var(--text);text-decoration:underline;text-decoration-color:var(--line2);text-underline-offset:3px}
 .faq-a a:hover{color:var(--amber);text-decoration-color:var(--amber)}
 
-/* sticky mobile call / quote bar */
-.callbar{display:none}
-@media(max-width:720px){
-  .callbar{display:grid;grid-template-columns:1.4fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:60;border-top:1px solid var(--line2);background:#0B0E12;padding-bottom:env(safe-area-inset-bottom)}
-  .callbar a{font-family:var(--mono);font-size:13px;letter-spacing:.04em;text-align:center;padding:16px 8px;font-weight:500}
-  .callbar .cb-call{color:var(--text)}
-  .callbar .cb-quote{background:var(--amber);color:#0E1116}
-  body{padding-bottom:calc(52px + env(safe-area-inset-bottom))}
-  nav.open ~ .callbar{display:none}
-}
 
 /* privacy / legal page */
 .legal{padding:64px 0 90px}
@@ -767,3 +757,54 @@ a.btn{text-align:center}
 .founder-line p{color:var(--dim);font-size:14.5px;line-height:1.55;margin:0}
 .founder-line b{color:var(--text);font-weight:600}
 .founder-line a{color:var(--amber);white-space:nowrap}
+
+/* ===== mobile polish (2026-09-29) ===== */
+@media(max-width:720px){
+  /* status bar: bigger tap target on the phone number */
+  .statusbar .right a{display:inline-block;padding:8px 0}
+  /* hero: tighter, bench shows 3 rows instead of 6 */
+  .hero .wrap{gap:40px}
+  .slots .slot:nth-child(n+10){display:none}
+  .slots{grid-template-columns:repeat(3,1fr)}
+  /* sections breathe less on small screens */
+  section{padding:68px 0}
+  .sec-head{margin-bottom:34px}
+  /* service + guide cards: compact */
+  .svc{padding:24px 22px 24px}
+  .svc .tag{margin-bottom:10px}
+  .svc h3{margin-bottom:8px}
+  .svc .more{margin-top:12px}
+  /* footer: readable, tappable links */
+  footer{padding:26px 0 30px}
+  footer .wrap{font-size:12px}
+  .foot-res,.foot-areas{line-height:1.5}
+  .foot-res a,.foot-areas a,footer .wrap > span a{display:inline-block;padding:7px 2px;color:var(--dim)}
+}
+@media(max-width:560px){
+  .hero-trust{gap:10px 16px}
+  .est-result{padding-top:26px}
+}
+
+/* tables → stacked cards on phones (labels filled in by main.js) */
+@media(max-width:640px){
+  .tbl-wrap{overflow:visible;border:none}
+  .tbl-wrap table{min-width:0}
+  .tbl-wrap thead{display:none}
+  .tbl-wrap table,.tbl-wrap tbody,.tbl-wrap tr,.tbl-wrap td{display:block;width:100%}
+  .tbl-wrap tr{border:1px solid var(--line2);background:var(--panel);margin-bottom:10px;padding:14px 16px}
+  .tbl-wrap td{border:none!important;padding:5px 0!important;text-align:left!important;background:none!important}
+  .tbl-wrap td:first-child{font-weight:600;color:var(--text);font-size:15.5px;padding-bottom:8px!important;margin-bottom:4px;border-bottom:1px solid var(--line)!important}
+  .tbl-wrap td[data-label]:not(:first-child){display:flex;justify-content:space-between;gap:16px;font-size:14px}
+  .tbl-wrap td[data-label]:not(:first-child)::before{content:attr(data-label);font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--faint);text-transform:uppercase;flex:0 0 42%}
+  .cmp td.us{color:var(--amber)!important}
+  .cmp td.us::before{color:var(--amber)!important}
+  .tc-table td a{white-space:normal}
+}
+@media(max-width:640px){
+  .legal .tbl-wrap table{min-width:0}
+  /* comparison table: one compact card per row, three values side by side */
+  .cmp tr{display:grid!important;grid-template-columns:repeat(3,1fr);gap:4px 8px;padding:12px 14px}
+  .cmp td:first-child{grid-column:1 / -1;font-size:14.5px;padding-bottom:6px!important;margin-bottom:2px}
+  .cmp td[data-label]:not(:first-child){flex-direction:column;justify-content:flex-start;gap:3px;font-size:13px;line-height:1.35;text-align:center!important;align-items:center}
+  .cmp td[data-label]:not(:first-child)::before{flex:none;font-size:9.5px;letter-spacing:.1em}
+}
