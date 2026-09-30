@@ -1,20 +1,6 @@
 {
   "_note": "Public job tracker for endbyte.net/track.html. Never put client names or serial numbers here.",
   "jobs": {
-    "EB-DEMO-2026": {
-      "stage": "ready",
-      "drives": 32,
-      "history": {
-        "received": "2026-09-28",
-        "wiping": "2026-09-29",
-        "verifying": "2026-09-29",
-        "ready": "2026-09-29"
-      },
-      "updated": "2026-09-29",
-      "note": "Demo job — shows how tracking works.",
-      "certificates": [],
-      "demo": true
-    },
     "EB-FR9V-7D3B": {
       "stage": "ready",
       "drives": 2,
