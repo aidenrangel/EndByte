@@ -19,7 +19,7 @@
     },
     "EB-NN5C-EBX8": {
       "stage": "received",
-      "drives": 1,
+      "drives": 123,
       "history": {
         "received": "2026-09-30"
       },
