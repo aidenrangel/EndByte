@@ -18,11 +18,13 @@
       ]
     },
     "EB-NN5C-EBX8": {
-      "stage": "wiping",
+      "stage": "ready",
       "drives": 123,
       "history": {
         "received": "2026-09-30",
-        "wiping": "2026-09-30"
+        "wiping": "2026-09-30",
+        "verifying": "2026-09-30",
+        "ready": "2026-09-30"
       },
       "updated": "2026-09-30",
       "note": "",
