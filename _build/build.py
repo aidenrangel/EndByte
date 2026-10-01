@@ -69,7 +69,7 @@ def sitemap(all_pages):
     def prio(p):
         if p == "index.html": return "1.0"
         if p.startswith("services/"): return "0.8"
-        if p.startswith("industries/") or p == "trust.html": return "0.8"
+        if p.startswith("industries/") or p in ("trust.html", "partners.html"): return "0.8"
         if p.startswith(("areas/", "guides/")) or p == "estimate.html": return "0.7"
         if p == "privacy.html": return "0.3"
         return "0.6"

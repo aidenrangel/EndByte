@@ -6,12 +6,37 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://www.endbyte.net/areas/cupertino.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.endbyte.net/areas/fremont.html</loc>
     <lastmod>2026-10-01</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.endbyte.net/areas/milpitas.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/areas/mountain-view.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.endbyte.net/areas/oakland.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/areas/palo-alto.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/areas/redwood-city.html</loc>
     <lastmod>2026-10-01</lastmod>
     <priority>0.7</priority>
   </url>
@@ -97,6 +122,11 @@
   </url>
   <url>
     <loc>https://www.endbyte.net/industries/startups.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/partners.html</loc>
     <lastmod>2026-10-01</lastmod>
     <priority>0.8</priority>
   </url>

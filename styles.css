@@ -942,3 +942,15 @@ a.btn{text-align:center}
 #quote{scroll-margin-top:110px}
 @keyframes qflash{0%{box-shadow:0 0 0 0 rgba(255,176,32,.0);border-color:var(--line2)}25%{box-shadow:0 0 0 6px rgba(255,176,32,.25);border-color:var(--amber)}100%{box-shadow:0 18px 50px rgba(0,0,0,.2);border-color:var(--line2)}}
 .qform.flash{animation:qflash 1.6s ease}
+
+/* city / area pages */
+.sp-hero .sp-lede{color:var(--dim);font-size:17.5px;line-height:1.6;max-width:640px;margin:18px 0 34px}
+.sp-actions{display:flex;flex-wrap:wrap;gap:12px}
+.sp-section{padding:80px 0}
+.sp-section .wrap>h2{font-size:clamp(24px,2.6vw,32px);max-width:760px;margin-bottom:18px}
+.sp-section .wrap>p{color:var(--dim);font-size:16px;line-height:1.7;max-width:760px;margin-bottom:18px}
+.sp-list{list-style:none;padding:0;margin:22px 0 0;max-width:760px;border-top:1px solid var(--line)}
+.sp-list li{padding:14px 0 14px 22px;border-bottom:1px solid var(--line);color:var(--dim);font-size:15.5px;position:relative}
+.sp-list li::before{content:'';position:absolute;left:0;top:22px;width:8px;height:8px;background:var(--amber,#FFB020)}
+.sp-list li a{color:var(--text);font-weight:600}
+@media (max-width:700px){.sp-section{padding:56px 0}.sp-actions .btn{flex:1 1 100%;text-align:center}}
