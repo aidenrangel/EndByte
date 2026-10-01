@@ -18,10 +18,13 @@
       ]
     },
     "EB-5D87-GVWP": {
-      "stage": "received",
+      "stage": "ready",
       "drives": 47,
       "history": {
-        "received": "2026-10-01"
+        "received": "2026-10-01",
+        "wiping": "2026-10-01",
+        "verifying": "2026-10-01",
+        "ready": "2026-10-01"
       },
       "updated": "2026-10-01",
       "note": "",
