@@ -23,7 +23,7 @@
       "issued": "2026-10-01",
       "method": "NIST 800-88 · 1-pass random",
       "drives": 22,
-      "result": "22 erased, not verified"
+      "result": "22 erased + verified"
     }
   }
 }
