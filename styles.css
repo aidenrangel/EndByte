@@ -939,3 +939,6 @@ a.btn{text-align:center}
 .prose a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
 @media(max-width:900px){.stds{grid-template-columns:1fr}}
 [id]{scroll-margin-top:96px}
+#quote{scroll-margin-top:110px}
+@keyframes qflash{0%{box-shadow:0 0 0 0 rgba(255,176,32,.0);border-color:var(--line2)}25%{box-shadow:0 0 0 6px rgba(255,176,32,.25);border-color:var(--amber)}100%{box-shadow:0 18px 50px rgba(0,0,0,.2);border-color:var(--line2)}}
+.qform.flash{animation:qflash 1.6s ease}

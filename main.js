@@ -836,4 +836,20 @@
     document.documentElement.classList.add('has-booking');
   }
 
+
+  /* ---------- "Get a quote" links: land on the form, highlight it, focus the first field ---------- */
+  var quoteBox = document.getElementById('quote');
+  if(quoteBox){
+    function goQuote(){
+      if(location.hash !== '#quote') return;
+      quoteBox.classList.add('in');
+      var form = quoteBox.querySelector('.qform');
+      if(form){ form.classList.remove('flash'); void form.offsetWidth; form.classList.add('flash'); }
+      var first = quoteBox.querySelector('[name="name"]');
+      if(first && window.matchMedia('(hover: hover)').matches){ setTimeout(function(){ first.focus({preventScroll:true}); }, 450); }
+    }
+    window.addEventListener('hashchange', goQuote);
+    goQuote();
+  }
+
 })();
