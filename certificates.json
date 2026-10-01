@@ -12,6 +12,12 @@
       "method": "NIST 800-88 · 1-pass random",
       "drives": 1,
       "result": "Erased · no errors · not verified"
+    },
+    "CD-2613": {
+      "issued": "2023-12-21",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 39,
+      "result": "36 erased, not verified · 3 failed"
     }
   }
 }
