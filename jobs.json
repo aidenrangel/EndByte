@@ -16,6 +16,16 @@
         "CD-2606",
         "CD-2607"
       ]
+    },
+    "EB-5D87-GVWP": {
+      "stage": "received",
+      "drives": 47,
+      "history": {
+        "received": "2026-10-01"
+      },
+      "updated": "2026-10-01",
+      "note": "",
+      "certificates": []
     }
   }
 }
