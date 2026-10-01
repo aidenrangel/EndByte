@@ -71,12 +71,32 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.endbyte.net/guides/hard-drive-disposal-santa-clara.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/guides/hipaa-hard-drive-disposal.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.endbyte.net/guides/index.html</loc>
     <lastmod>2026-10-01</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.endbyte.net/guides/is-formatting-enough.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.endbyte.net/guides/nist-800-88-explained.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/guides/old-company-laptops.html</loc>
     <lastmod>2026-10-01</lastmod>
     <priority>0.7</priority>
   </url>
@@ -87,6 +107,11 @@
   </url>
   <url>
     <loc>https://www.endbyte.net/guides/ship-a-hard-drive-safely.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.endbyte.net/guides/wipe-hard-drive-before-recycling.html</loc>
     <lastmod>2026-10-01</lastmod>
     <priority>0.7</priority>
   </url>

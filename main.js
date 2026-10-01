@@ -4,6 +4,12 @@
      While it's empty, "Book a pickup" buttons fall back to the quote form and the extra
      booking buttons stay hidden. */
   var BOOKING_URL = '';
+  /* Google Ads conversions for taps on the phone number and the "text us" link.
+     Create a conversion action for each in Google Ads, then paste what it gives you here:
+     either its event name (like 'ads_conversion_Contact_1') or its send_to value
+     (like 'AW-18236284920/AbCdEfGh'). Leave '' to only record the click without counting it. */
+  var CALL_CONVERSION = '';
+  var TEXT_CONVERSION = '';
   /* ========================= */
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -23,6 +29,24 @@
     else if(lightQuery.addListener) lightQuery.addListener(applyTheme);
   }
   try{ localStorage.removeItem('eb-theme'); }catch(e){}
+
+  /* ---------- call / text taps → Google Ads ---------- */
+  function adsEvent(conv){
+    if(typeof gtag !== 'function' || !conv) return;
+    if(conv.indexOf('AW-') === 0) gtag('event', 'conversion', {send_to: conv, transport_type: 'beacon'});
+    else gtag('event', conv, {transport_type: 'beacon'});
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href^="tel:"], a[href^="sms:"]');
+    if(!a) return;
+    var method = a.getAttribute('href').indexOf('sms:') === 0 ? 'text' : 'call';
+    var sec = a.closest('header, footer, section, form, nav, .mm, [id]');
+    if(typeof gtag === 'function'){
+      gtag('event', 'contact_click', {method: method, page: location.pathname,
+        location: sec ? (sec.id || sec.className.split(' ')[0] || sec.tagName.toLowerCase()) : '', transport_type: 'beacon'});
+    }
+    adsEvent(method === 'call' ? CALL_CONVERSION : TEXT_CONVERSION);
+  }, true);
 
   /* ---------- mobile menu (all pages) ---------- */
   var nav = document.querySelector('nav');
@@ -591,8 +615,9 @@
           qform.classList.add('sent');
           var done = document.createElement('div');
           done.className = 'qf-sent-msg';
-          done.innerHTML = '<div class="big">REQUEST RECEIVED ✓</div><p>Thanks — we\'ll get back to you shortly, usually same day. If it\'s urgent, call <a href="tel:+14084206991" style="color:var(--amber)">+1 (408) 420-6991</a>.</p>';
+          done.innerHTML = sentMessage(qform);
           qform.appendChild(done);
+          try{ done.scrollIntoView({block:'nearest', behavior: reduced ? 'auto' : 'smooth'}); }catch(e){}
         } else {
           throw new Error('bad status');
         }
@@ -603,6 +628,34 @@
         note.innerHTML = 'SOMETHING WENT WRONG — PLEASE EMAIL <a href="mailto:info@endbyte.net" style="color:var(--amber)">INFO@ENDBYTE.NET</a> INSTEAD.';
       });
     });
+  }
+
+  /* ---------- "what happens next" after a quote request ---------- */
+  function sentMessage(f){
+    function val(n){ var el = f.querySelector('[name="' + n + '"]'); return el ? String(el.value || '').trim() : ''; }
+    function h(t){ return String(t).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+    var first = val('name').split(/\s+/)[0];
+    var email = val('email');
+    var n = parseInt(val('drive_count').replace(/[^0-9]/g, ''), 10) || 0;
+    var hasList = !!val('asset_list');
+    var base = (document.querySelector('link[rel="icon"]') || {getAttribute:function(){return 'favicon.svg';}})
+                 .getAttribute('href').replace(/favicon\.svg$/, '');
+    var steps = [
+      ['We reply', 'Usually the same business day, to <b>' + h(email) + '</b>' + (val('phone') ? ' or by phone' : '') + ' — with a firm price and a few pickup or drop-off times.'],
+      ['We collect', 'Every drive is logged by serial and sealed at pickup. You get a receipt with a job code to follow progress online.'],
+      ['We wipe &amp; verify', 'Each drive is sanitized to NIST 800-88 (or your required standard) and read back to confirm. Failures are physically destroyed.'],
+      ['You get the certificate', 'Per-drive results you — or your auditor — can verify online.']
+    ];
+    var extra = '';
+    if(n >= 100) extra = '<p class="qf-sent-tip">With ' + n + '+ drives, your job may qualify for <a href="' + base + 'services/free-program.html">free certified destruction</a> — we\'ll check when we reply.</p>';
+    else if(!hasList && n >= 10) extra = '<p class="qf-sent-tip">Have a serial-number list? Reply to our email with it attached — it speeds up the quote and becomes the list your certificate is checked against.</p>';
+    return '<div class="big">REQUEST RECEIVED ✓</div>' +
+      '<p>Thanks' + (first ? ', ' + h(first) : '') + '. Here\'s what happens next:</p>' +
+      '<ol class="qf-next">' + steps.map(function(s){ return '<li><b>' + s[0] + '</b><span>' + s[1] + '</span></li>'; }).join('') + '</ol>' +
+      extra +
+      '<div class="qf-sent-links"><a href="' + base + 'endbyte-sample-certificate.pdf" target="_blank" rel="noopener">See a sample certificate →</a>' +
+      '<a href="' + base + 'trust.html">How we protect your data →</a></div>' +
+      '<p class="qf-sent-urgent">Urgent? Call or text <a href="tel:+14084206991">+1 (408) 420-6991</a>.</p>';
   }
 
   /* ---------- faq accordion (home page only) ---------- */
