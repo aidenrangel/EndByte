@@ -19,11 +19,137 @@
       "drives": 39,
       "result": "36 erased, not verified · 3 failed"
     },
-    "CD-2636": {
+    "CD-2637": {
+      "issued": "2026-09-30",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2638": {
+      "issued": "2026-09-30",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2639": {
+      "issued": "2026-09-30",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2640": {
+      "issued": "2026-09-30",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2641": {
+      "issued": "2026-09-30",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2642": {
+      "issued": "2026-09-30",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2643": {
+      "issued": "2026-09-30",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2644": {
+      "issued": "2026-09-30",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2645": {
+      "issued": "2026-09-30",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2646": {
+      "issued": "2026-09-30",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2647": {
+      "issued": "2026-09-30",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2648": {
+      "issued": "2026-09-30",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2649": {
       "issued": "2026-10-01",
       "method": "NIST 800-88 · 1-pass random",
-      "drives": 22,
-      "result": "22 erased + verified"
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2650": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2651": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2652": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2653": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2654": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2655": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2656": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2657": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
+    },
+    "CD-2658": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified"
     }
   }
 }
