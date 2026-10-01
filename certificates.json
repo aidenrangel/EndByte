@@ -19,137 +19,313 @@
       "drives": 39,
       "result": "36 erased, not verified · 3 failed"
     },
-    "CD-2637": {
-      "issued": "2026-09-30",
-      "method": "NIST 800-88 · 1-pass random",
-      "drives": 1,
-      "result": "PASS · erased and verified"
-    },
-    "CD-2638": {
-      "issued": "2026-09-30",
-      "method": "NIST 800-88 · 1-pass random",
-      "drives": 1,
-      "result": "PASS · erased and verified"
-    },
-    "CD-2639": {
-      "issued": "2026-09-30",
-      "method": "NIST 800-88 · 1-pass random",
-      "drives": 1,
-      "result": "PASS · erased and verified"
-    },
-    "CD-2640": {
-      "issued": "2026-09-30",
-      "method": "NIST 800-88 · 1-pass random",
-      "drives": 1,
-      "result": "PASS · erased and verified"
-    },
-    "CD-2641": {
-      "issued": "2026-09-30",
-      "method": "NIST 800-88 · 1-pass random",
-      "drives": 1,
-      "result": "PASS · erased and verified"
-    },
-    "CD-2642": {
-      "issued": "2026-09-30",
-      "method": "NIST 800-88 · 1-pass random",
-      "drives": 1,
-      "result": "PASS · erased and verified"
-    },
-    "CD-2643": {
-      "issued": "2026-09-30",
-      "method": "NIST 800-88 · 1-pass random",
-      "drives": 1,
-      "result": "PASS · erased and verified"
-    },
-    "CD-2644": {
-      "issued": "2026-09-30",
-      "method": "NIST 800-88 · 1-pass random",
-      "drives": 1,
-      "result": "PASS · erased and verified"
-    },
-    "CD-2645": {
-      "issued": "2026-09-30",
-      "method": "NIST 800-88 · 1-pass random",
-      "drives": 1,
-      "result": "PASS · erased and verified"
-    },
-    "CD-2646": {
-      "issued": "2026-09-30",
-      "method": "NIST 800-88 · 1-pass random",
-      "drives": 1,
-      "result": "PASS · erased and verified"
-    },
-    "CD-2647": {
-      "issued": "2026-09-30",
-      "method": "NIST 800-88 · 1-pass random",
-      "drives": 1,
-      "result": "PASS · erased and verified"
-    },
-    "CD-2648": {
-      "issued": "2026-09-30",
-      "method": "NIST 800-88 · 1-pass random",
-      "drives": 1,
-      "result": "PASS · erased and verified"
-    },
-    "CD-2649": {
+    "CD-2659": {
       "issued": "2026-10-01",
       "method": "NIST 800-88 · 1-pass random",
       "drives": 1,
-      "result": "PASS · erased and verified"
+      "result": "PASS · erased and verified",
+      "completed": "2026-09-30",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "917X",
+      "serials": [
+        "ce8aa581e35c6926fb1f8ead"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
     },
-    "CD-2650": {
+    "CD-2660": {
       "issued": "2026-10-01",
       "method": "NIST 800-88 · 1-pass random",
       "drives": 1,
-      "result": "PASS · erased and verified"
+      "result": "PASS · erased and verified",
+      "completed": "2026-09-30",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "R7GX",
+      "serials": [
+        "c0c010ac16428b90bde04f19"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
     },
-    "CD-2651": {
+    "CD-2661": {
       "issued": "2026-10-01",
       "method": "NIST 800-88 · 1-pass random",
       "drives": 1,
-      "result": "PASS · erased and verified"
+      "result": "PASS · erased and verified",
+      "completed": "2026-09-30",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "ENNX",
+      "serials": [
+        "f489f35223291a4a5f1f5375"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
     },
-    "CD-2652": {
+    "CD-2662": {
       "issued": "2026-10-01",
       "method": "NIST 800-88 · 1-pass random",
       "drives": 1,
-      "result": "PASS · erased and verified"
+      "result": "PASS · erased and verified",
+      "completed": "2026-09-30",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "J3HX",
+      "serials": [
+        "0308c87c46784a2524cc9056"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
     },
-    "CD-2653": {
+    "CD-2663": {
       "issued": "2026-10-01",
       "method": "NIST 800-88 · 1-pass random",
       "drives": 1,
-      "result": "PASS · erased and verified"
+      "result": "PASS · erased and verified",
+      "completed": "2026-09-30",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "900X",
+      "serials": [
+        "fc6271ed449f77acb14d4f99"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
     },
-    "CD-2654": {
+    "CD-2664": {
       "issued": "2026-10-01",
       "method": "NIST 800-88 · 1-pass random",
       "drives": 1,
-      "result": "PASS · erased and verified"
+      "result": "PASS · erased and verified",
+      "completed": "2026-09-30",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "1YLX",
+      "serials": [
+        "1638654c060ad45d36a67065"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
     },
-    "CD-2655": {
+    "CD-2665": {
       "issued": "2026-10-01",
       "method": "NIST 800-88 · 1-pass random",
       "drives": 1,
-      "result": "PASS · erased and verified"
+      "result": "PASS · erased and verified",
+      "completed": "2026-09-30",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "R1JX",
+      "serials": [
+        "c21959fb98b3ae479645f93a"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
     },
-    "CD-2656": {
+    "CD-2666": {
       "issued": "2026-10-01",
       "method": "NIST 800-88 · 1-pass random",
       "drives": 1,
-      "result": "PASS · erased and verified"
+      "result": "PASS · erased and verified",
+      "completed": "2026-09-30",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "NJYX",
+      "serials": [
+        "263c3ade868e1f8eb68f64cc"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
     },
-    "CD-2657": {
+    "CD-2667": {
       "issued": "2026-10-01",
       "method": "NIST 800-88 · 1-pass random",
       "drives": 1,
-      "result": "PASS · erased and verified"
+      "result": "PASS · erased and verified",
+      "completed": "2026-09-30",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "XMEX",
+      "serials": [
+        "df84915e1bc98f3022c4907f"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
     },
-    "CD-2658": {
+    "CD-2668": {
       "issued": "2026-10-01",
       "method": "NIST 800-88 · 1-pass random",
       "drives": 1,
-      "result": "PASS · erased and verified"
+      "result": "PASS · erased and verified",
+      "completed": "2026-09-30",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "4JHX",
+      "serials": [
+        "7c36e3c1369179bba896f916"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
+    },
+    "CD-2669": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified",
+      "completed": "2026-09-30",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "A6GX",
+      "serials": [
+        "bd49f09169e4f9438b51e7e8"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
+    },
+    "CD-2670": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified",
+      "completed": "2026-09-30",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "3RUX",
+      "serials": [
+        "cfc398e2eec17af5fc29df35"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
+    },
+    "CD-2671": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified",
+      "completed": "2026-10-01",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "ZZ2X",
+      "serials": [
+        "ecfc2bc21e2983ee415b6291"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
+    },
+    "CD-2672": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified",
+      "completed": "2026-10-01",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "01UX",
+      "serials": [
+        "f6173d55c9d0dcdec16243e4"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
+    },
+    "CD-2673": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified",
+      "completed": "2026-10-01",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "3MPX",
+      "serials": [
+        "0d7bfbfd0739bc14cdb24d92"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
+    },
+    "CD-2674": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified",
+      "completed": "2026-10-01",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "E41X",
+      "serials": [
+        "7f148e9279f2dd4607ce2cc5"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
+    },
+    "CD-2675": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified",
+      "completed": "2026-10-01",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "NZSX",
+      "serials": [
+        "b5858a9cff9686360f73a430"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
+    },
+    "CD-2676": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified",
+      "completed": "2026-10-01",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "D6YX",
+      "serials": [
+        "e3a43df532b751a493e91c00"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
+    },
+    "CD-2677": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified",
+      "completed": "2026-10-01",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "A1PX",
+      "serials": [
+        "4ed24c1377cbab0b5c965818"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
+    },
+    "CD-2678": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified",
+      "completed": "2026-10-01",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "79BX",
+      "serials": [
+        "9664445d2ad17834d43b1e60"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
+    },
+    "CD-2679": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified",
+      "completed": "2026-10-01",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "156X",
+      "serials": [
+        "288d776ee2a718766338a21c"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
+    },
+    "CD-2680": {
+      "issued": "2026-10-01",
+      "method": "NIST 800-88 · 1-pass random",
+      "drives": 1,
+      "result": "PASS · erased and verified",
+      "completed": "2026-10-01",
+      "media": "HDD · 3.64 TB",
+      "serial_tail": "HJUX",
+      "serials": [
+        "07b8d28cb3da1aa3d16cc7f5"
+      ],
+      "verification": "100% read-back · passed",
+      "disposition": "Retained · resale"
     }
   }
 }
