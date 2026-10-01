@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles.css?v=53e7fdaf">
+<link rel="stylesheet" href="../styles.css?v=5a371aa5">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -173,14 +173,14 @@
     <div class="sp-cols">
       <div class="prose">
         <h2>Wiped, verified, and proven</h2>
-        <p>Wiping a drive properly means more than running a tool and trusting it. EndByte sanitizes to NIST 800-88 across a dedicated wipe bench: overwrite for hard drives, and the drive's own firmware sanitize or secure-erase commands for SSDs, with every drive monitored from start to finish. If your policy specifically requires DoD 5220.22-M multi-pass, we run that instead and the certificate records it.</p>
+        <p>Wiping a drive properly means more than running a tool and trusting it. EndByte sanitizes to NIST 800-88 across a dedicated wipe bench: overwrite for hard drives, and the drive's own firmware sanitize or secure-erase commands for SSDs, with every drive monitored from start to finish. If your contract or policy names a specific standard — DoD 5220.22-M, British HMG IS5, German VSITR, Gutmann and <a href="#standards">20+ others</a> — we run that instead, and the certificate records exactly which one was used.</p>
         <p>Then comes the part most providers skip: a full-surface read-back of every sector. If anything other than zeros comes back, the drive fails — and failed drives don't get a second chance, they get physically destroyed. Only drives that pass complete verification earn a certificate.</p>
         <p>Because wiped drives keep their hardware value, software sanitization is also what powers our free destruction program — if we keep the verified drives afterward, the entire service can cost you nothing.</p>
       </div>
       <aside class="specpanel">
         <div class="sh">SERVICE SPEC</div>
         <div class="sr"><span>STANDARD</span><span class="g">NIST 800-88</span></div>
-        <div class="sr"><span>ON REQUEST</span><span class="">DoD 5220.22-M</span></div>
+        <div class="sr"><span>ALSO SUPPORTED</span><span class="">DoD · HMG IS5 · VSITR · 20+</span></div>
         <div class="sr"><span>METHOD</span><span class="">OVERWRITE · SANITIZE</span></div>
         <div class="sr"><span>MEDIA</span><span class="">HDD · SSD</span></div>
         <div class="sr"><span>VERIFY</span><span class="g">100% SECTORS</span></div>
@@ -189,6 +189,48 @@
         <div class="sr"><span>NO-COST OPT</span><span class="a">AVAILABLE</span></div>
       </aside>
     </div>
+
+    <div class="inc-head" id="standards">
+      <h2>Supported wipe standards</h2>
+      <p>NIST 800-88 is our default. When a contract, policy or auditor names a different standard, we run that one — every method below is available on our bench, and the certificate states which was used.</p>
+    </div>
+    <div class="stds">
+      <div class="stds-col">
+        <h5>U.S. government</h5>
+        <ul>
+          <li><b>NIST SP 800-88</b><span>Clear / Purge · default</span></li>
+          <li><b>DoD 5220.22-M</b><span>3 passes</span></li>
+          <li><b>DoD 5220.22-M (ECE)</b><span>7 passes</span></li>
+          <li><b>U.S. Army AR 380-19</b><span>3 passes</span></li>
+          <li><b>U.S. Air Force AFSSI 5020</b><span>3 passes</span></li>
+          <li><b>NAVSO P-5239-26</b><span>RLL &amp; MFM variants</span></li>
+          <li><b>NCSC-TG-025</b><span>3 passes</span></li>
+          <li><b>DOE M205.1-2</b><span>3 passes</span></li>
+        </ul>
+      </div>
+      <div class="stds-col">
+        <h5>International</h5>
+        <ul>
+          <li><b>British HMG IS5</b><span>Baseline &amp; Enhanced</span></li>
+          <li><b>Canadian RCMP OPS-II</b><span>7 passes</span></li>
+          <li><b>Canadian CSEC ITSG-06</b><span>3 passes</span></li>
+          <li><b>German VSITR</b><span>7 passes</span></li>
+          <li><b>Russian GOST R 50739-95</b><span>2 passes</span></li>
+          <li><b>Australian ISM</b><span>1 pass</span></li>
+        </ul>
+      </div>
+      <div class="stds-col">
+        <h5>Algorithms &amp; firmware</h5>
+        <ul>
+          <li><b>Peter Gutmann</b><span>35 passes</span></li>
+          <li><b>Bruce Schneier</b><span>7 passes</span></li>
+          <li><b>One pass — zeros or random</b><span>fast, verified</span></li>
+          <li><b>Custom pattern</b><span>up to 99 passes</span></li>
+          <li><b>ATA Secure Erase</b><span>drive firmware command</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="stds-note">More passes take longer but don't make a modern drive any more erased — verification is what proves the result. We'll recommend the fastest method that satisfies your requirement. <a href="../guides/nist-800-88-explained.html">How the standards compare →</a></p>
 
     <div class="inc-head">
       <h2>What's included</h2>
@@ -247,6 +289,6 @@
   </div>
 </footer>
 <!-- @end footer -->
-<script src="../main.js?v=aeeeea4f"></script>
+<script src="../main.js?v=ce70793e"></script>
 </body>
 </html>

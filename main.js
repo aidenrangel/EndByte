@@ -719,9 +719,12 @@
                          : '<span class="warn">Not on the verify list yet</span>';
           return '<a class="vr-cert" href="verify.html?id=' + encodeURIComponent(n) + '"><b>№ ' + esc(n) + ' →</b><span>' + detail + '</span></a>';
         }).join('');
+        var covered = certs.reduce(function(t, n){ return t + ((reg[n] && +reg[n].drives) || 0); }, 0);
+        var partial = j.drives && covered && covered < j.drives;
         vOut.className = 'vr hit';
         vOut.innerHTML = '<div class="vr-h"><span>JOB · ' + esc(code) + '</span><span>' + certs.length + ' CERTIFICATE' + (certs.length === 1 ? '' : 'S') + '</span></div>' +
-          '<p>Certificates issued by EndByte for this job. Select one to see its full verification.</p>' + rows;
+          '<p>Certificates issued by EndByte for this job' + (j.drives ? ' (' + (partial ? covered + ' of ' + esc(j.drives) : esc(j.drives)) + ' drives)' : '') + '. Select one to see its full verification.</p>' +
+          (partial ? '<p class="vr-note">Certificates so far cover ' + covered + ' of the ' + esc(j.drives) + ' drives on this job. Contact us if you expected more.</p>' : '') + rows;
       }).catch(function(){
         vOut.className = 'vr miss';
         vOut.innerHTML = '<div class="vr-h">LOOKUP UNAVAILABLE</div><p>Please try again, or call <a href="tel:+14084206991">+1 (408) 420-6991</a>.</p>';
