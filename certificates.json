@@ -1,12 +1,6 @@
 {
   "_note": "Public certificate registry for endbyte.net/verify.html. Add entries with: python3 _build/add_cert.py --help. Never put client names or full serial numbers here.",
   "certificates": {
-    "CD-2611": {
-      "issued": "2023-12-20",
-      "method": "NIST 800-88 · 1-pass random",
-      "drives": 1,
-      "result": "Erased · no errors · not verified"
-    },
     "CD-2606": {
       "issued": "2023-12-20",
       "method": "NIST 800-88 · 1-pass random",
@@ -30,12 +24,6 @@
       "method": "NIST 800-88 · 1-pass random",
       "drives": 1,
       "result": "Erased · no errors · not verified"
-    },
-    "CD-2610": {
-      "issued": "2023-12-20",
-      "method": "NIST 800-88 · 1-pass random",
-      "drives": 2,
-      "result": "2 erased, not verified"
     }
   }
 }
