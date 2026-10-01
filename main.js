@@ -841,6 +841,18 @@
         if(!r.ok) throw new Error('unavailable'); return r.json();
       }).then(function(d){ return d.jobs || {}; });
     }
+    function tprogress(j){
+      /* live drive count posted by EndByte Desk while the job is on the bench */
+      if(j.done == null || (j.stage !== 'wiping' && j.stage !== 'verifying')) return '';
+      var done = +j.done || 0, total = +j.drives || 0;
+      var pct = total ? Math.min(100, Math.round(done / total * 100)) : 0;
+      var label = total ? done + ' of ' + total + ' drives done' : done + ' drive' + (done === 1 ? '' : 's') + ' done';
+      if(total && done >= total) label = 'All ' + total + ' drives wiped · certificates being prepared';
+      return '<div class="tr-prog"><div class="tr-prog-top"><span>' + tesc(label) + '</span>' +
+        (total ? '<span>' + pct + '%</span>' : '') + '</div>' +
+        (total ? '<div class="tr-bar"><i style="width:' + pct + '%"></i></div>' : '') +
+        (j.progress_at ? '<small>as of ' + tesc(j.progress_at) + '</small>' : '') + '</div>';
+    }
     function tshow(code){
       code = tnorm(code);
       if(!code){ tOut.innerHTML = ''; return; }
@@ -865,7 +877,7 @@
         tOut.className = 'tr hit';
         tOut.innerHTML =
           '<div class="vr-h"><span>' + (j.demo ? 'DEMO JOB' : 'JOB') + ' · ' + tesc(code) + '</span><span>' + (j.drives ? tesc(j.drives) + ' DRIVES' : '') + '</span></div>' +
-          '<ol class="tr-steps">' + steps + '</ol>' +
+          '<ol class="tr-steps">' + steps + '</ol>' + tprogress(j) +
           (j.note ? '<p class="tr-note">' + tesc(j.note) + '</p>' : '') +
           '<p class="tr-upd">Last updated ' + tesc(j.updated || '') + '</p>' + certs;
       }).catch(function(){
