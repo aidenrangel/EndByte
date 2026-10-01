@@ -16,25 +16,6 @@
         "CD-2606",
         "CD-2607"
       ]
-    },
-    "EB-NN5C-EBX8": {
-      "stage": "ready",
-      "drives": 2,
-      "history": {
-        "received": "2026-09-30",
-        "wiping": "2026-09-30",
-        "verifying": "2026-09-30",
-        "ready": "2026-09-30"
-      },
-      "updated": "2026-09-30",
-      "note": "",
-      "certificates": [
-        "CD-2608",
-        "CD-2609",
-        "CD-2610",
-        "CD-2611",
-        "CD-2612"
-      ]
     }
   }
 }
