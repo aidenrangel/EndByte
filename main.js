@@ -673,6 +673,49 @@
     var vOut = document.getElementById('verifyResult');
     var registry = null;
     function esc(t){ return String(t).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+    /* serial check: the site only stores a one-way fingerprint of each serial
+       (sha256 of "endbyte|<certificate>|<serial>"), never the serial itself.
+       Must match serial_hash() in the certificate tools (cert_extras.py). */
+    function serialKey(v){ return String(v || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); }
+    function serialHash(num, serial){
+      var data = new TextEncoder().encode('endbyte|' + num + '|' + serialKey(serial));
+      return crypto.subtle.digest('SHA-256', data).then(function(buf){
+        return Array.prototype.map.call(new Uint8Array(buf), function(b){ return ('0' + b.toString(16)).slice(-2); }).join('').slice(0, 24);
+      });
+    }
+    var canHash = !!(window.crypto && crypto.subtle && window.TextEncoder);
+    function serialBox(nums){
+      if(!canHash || !nums.length) return '';
+      return '<form class="vr-sc" data-nums="' + esc(nums.join(',')) + '">' +
+        '<label>CHECK A SERIAL NUMBER</label>' +
+        '<div class="vr-sc-row"><input type="text" placeholder="Serial from your drive or asset list" spellcheck="false" autocapitalize="characters" required>' +
+        '<button type="submit" class="btn btn-ghost">CHECK</button></div>' +
+        '<div class="vr-sc-out" aria-live="polite"></div></form>';
+    }
+    function wireSerialBox(reg){
+      var f = vOut.querySelector('.vr-sc');
+      if(!f) return;
+      f.addEventListener('submit', function(e){
+        e.preventDefault();
+        var inp = f.querySelector('input'), out = f.querySelector('.vr-sc-out');
+        var serial = inp.value;
+        if(serialKey(serial).length < 4){ out.className = 'vr-sc-out warn'; out.textContent = 'Enter the full serial number.'; return; }
+        var nums = f.getAttribute('data-nums').split(',');
+        out.className = 'vr-sc-out'; out.textContent = 'Checking…';
+        Promise.all(nums.map(function(n){
+          return serialHash(n, serial).then(function(h){ return (reg[n] && (reg[n].serials || []).indexOf(h) !== -1) ? n : null; });
+        })).then(function(found){
+          found = found.filter(Boolean);
+          if(found.length){
+            out.className = 'vr-sc-out ok';
+            out.textContent = '✓ Match — this drive is covered by certificate ' + found.join(', ') + '.';
+          } else {
+            out.className = 'vr-sc-out warn';
+            out.textContent = '✕ No match. Check the serial for typos, or call +1 (408) 420-6991 and we\'ll look it up.';
+          }
+        });
+      });
+    }
     function norm(v){
       v = String(v || '').toUpperCase().replace(/\s+/g, '').replace(/[–—]/g, '-');
       var j = v.match(/^EB-?([A-Z0-9]{4})-?([A-Z0-9]{4})$/);
@@ -687,6 +730,10 @@
         if(!r.ok) throw new Error('registry unavailable');
         return r.json();
       }).then(function(d){ registry = d.certificates || {}; return registry; });
+    }
+    function row(label, val, cls){
+      if(!val) return '';
+      return '<div class="row"><span>' + label + '</span><span' + (cls ? ' class="' + cls + '"' : '') + '>' + esc(val) + '</span></div>';
     }
     function isJob(id){ return /^EB-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(id) && /[A-Z]/.test(id.slice(3)); }
     function loadJobs(){
@@ -724,7 +771,9 @@
         vOut.className = 'vr hit';
         vOut.innerHTML = '<div class="vr-h"><span>JOB · ' + esc(code) + '</span><span>' + certs.length + ' CERTIFICATE' + (certs.length === 1 ? '' : 'S') + '</span></div>' +
           '<p>Certificates issued by EndByte for this job' + (j.drives ? ' (' + (partial ? covered + ' of ' + esc(j.drives) : esc(j.drives)) + ' drives)' : '') + '. Select one to see its full verification.</p>' +
-          (partial ? '<p class="vr-note">Certificates so far cover ' + covered + ' of the ' + esc(j.drives) + ' drives on this job. Contact us if you expected more.</p>' : '') + rows;
+          (partial ? '<p class="vr-note">Certificates so far cover ' + covered + ' of the ' + esc(j.drives) + ' drives on this job. Contact us if you expected more.</p>' : '') + rows +
+          serialBox(certs.filter(function(n){ return reg[n] && reg[n].serials && reg[n].serials.length; }));
+        wireSerialBox(reg);
       }).catch(function(){
         vOut.className = 'vr miss';
         vOut.innerHTML = '<div class="vr-h">LOOKUP UNAVAILABLE</div><p>Please try again, or call <a href="tel:+14084206991">+1 (408) 420-6991</a>.</p>';
@@ -746,10 +795,17 @@
         vOut.innerHTML =
           '<div class="vr-h"><span>' + (c.sample ? 'SAMPLE CERTIFICATE' : 'GENUINE · ISSUED BY ENDBYTE') + '</span><span>№ ' + esc(id) + '</span></div>' +
           '<div class="row"><span>ISSUED</span><span>' + esc(c.issued) + '</span></div>' +
+          row('ERASE COMPLETED', c.completed) +
           '<div class="row"><span>METHOD</span><span>' + esc(c.method) + '</span></div>' +
+          row('MEDIA', c.media) +
           '<div class="row"><span>DRIVES</span><span>' + esc(c.drives) + '</span></div>' +
+          row('SERIAL', c.serial_tail ? '•••• ' + c.serial_tail : '') +
+          row('VERIFICATION', c.verification, /fail|not performed|of \d+ verified/i.test(c.verification || '') ? 'warn' : (/passed/i.test(c.verification || '') ? 'ok' : '')) +
           '<div class="row"><span>RESULT</span><span class="' + (/fail|not verified/i.test(c.result) ? 'warn' : 'ok') + '">' + esc(c.result) + '</span></div>' +
-          (c.sample ? '<p class="vr-note">This is the demonstration certificate shown on our website. It doesn\'t cover real media.</p>' : '');
+          row('DISPOSITION', c.disposition) +
+          (c.sample ? '<p class="vr-note">This is the demonstration certificate shown on our website. It doesn\'t cover real media.</p>' : '') +
+          (c.serials && c.serials.length ? serialBox([id]) : '');
+        wireSerialBox(reg);
       }).catch(function(){
         vOut.className = 'vr miss';
         vOut.innerHTML = '<div class="vr-h">REGISTRY UNAVAILABLE</div><p>We couldn\'t reach the certificate registry. Please try again, or call <a href="tel:+14084206991">+1 (408) 420-6991</a>.</p>';

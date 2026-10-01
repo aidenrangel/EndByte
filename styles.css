@@ -954,3 +954,18 @@ a.btn{text-align:center}
 .sp-list li::before{content:'';position:absolute;left:0;top:22px;width:8px;height:8px;background:var(--amber,#FFB020)}
 .sp-list li a{color:var(--text);font-weight:600}
 @media (max-width:700px){.sp-section{padding:56px 0}.sp-actions .btn{flex:1 1 100%;text-align:center}}
+
+/* verify page · serial check */
+.vr .row span:last-child{text-align:right}
+.vr-sc{margin-top:18px;padding-top:16px;border-top:1px solid var(--line2)}
+.vr-sc label{display:block;font-size:11px;letter-spacing:.12em;color:var(--faint);line-height:1.4;margin-bottom:8px}
+.vr-sc-row{display:flex;gap:8px}
+.vr-sc-row input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line2);color:var(--text);font-family:var(--mono);font-size:14px;letter-spacing:.04em;padding:10px 12px;text-transform:uppercase}
+.vr-sc-row input::placeholder{text-transform:none;letter-spacing:0}
+.vr-sc-row input:focus{outline:none;border-color:var(--amber)}
+.vr-sc-row .btn{padding:10px 16px}
+.vr-sc-out{font-size:12.5px;line-height:1.6;margin-top:8px;color:var(--faint)}
+.vr-sc-out:empty{display:none}
+.vr-sc-out.ok{color:var(--green)}
+.vr-sc-out.warn{color:var(--amber)}
+@media(max-width:480px){.vr-sc-row{flex-direction:column}}
