@@ -16,6 +16,16 @@
         "CD-2606",
         "CD-2607"
       ]
+    },
+    "EB-J98X-2BKV": {
+      "stage": "received",
+      "drives": 22,
+      "history": {
+        "received": "2026-10-01"
+      },
+      "updated": "2026-10-01",
+      "note": "",
+      "certificates": []
     }
   }
 }
