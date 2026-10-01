@@ -828,7 +828,7 @@
   if(tForm){
     var tInput = document.getElementById('jobId');
     var tOut = document.getElementById('trackResult');
-    var STAGES = [['received','Received'],['wiping','Wiping'],['verifying','Verifying'],['ready','Certificate ready']];
+    var STAGES = [['received','Received'],['wiping','Wiping & verifying'],['ready','Certificate ready']];
     function tesc(t){ return String(t == null ? '' : t).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
     function tnorm(v){
       v = String(v || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
@@ -847,7 +847,7 @@
       var done = +j.done || 0, total = +j.drives || 0;
       var pct = total ? Math.min(100, Math.round(done / total * 100)) : 0;
       var label = total ? done + ' of ' + total + ' drives done' : done + ' drive' + (done === 1 ? '' : 's') + ' done';
-      if(total && done >= total) label = 'All ' + total + ' drives wiped · certificates being prepared';
+      if(total && done >= total) label = 'All ' + total + ' drives wiped and verified · certificate being prepared';
       return '<div class="tr-prog"><div class="tr-prog-top"><span>' + tesc(label) + '</span>' +
         (total ? '<span>' + pct + '%</span>' : '') + '</div>' +
         (total ? '<div class="tr-bar"><i style="width:' + pct + '%"></i></div>' : '') +
@@ -864,12 +864,13 @@
           tOut.innerHTML = '<div class="vr-h">NO MATCH · ' + tesc(code) + '</div><p>We couldn\'t find that job code. Check it against your pickup receipt, or call <a href="tel:+14084206991">+1 (408) 420-6991</a>.</p>';
           return;
         }
+        var stage = j.stage === 'verifying' ? 'wiping' : j.stage;   // older jobs used a separate verifying step
         var cur = 0;
-        STAGES.forEach(function(s, i){ if(s[0] === j.stage) cur = i; });
+        STAGES.forEach(function(s, i){ if(s[0] === stage) cur = i; });
         var hist = j.history || {};
         var steps = STAGES.map(function(s, i){
           var st = i < cur ? 'done' : (i === cur ? (s[0] === 'ready' ? 'done' : 'now') : 'todo');
-          return '<li class="' + st + '"><span class="dot"></span><b>' + s[1] + '</b><small>' + (hist[s[0]] ? tesc(hist[s[0]]) : (st === 'now' ? 'In progress' : '—')) + '</small></li>';
+          return '<li class="' + st + '"><span class="dot"></span><b>' + tesc(s[1]) + '</b><small>' + (hist[s[0]] ? tesc(hist[s[0]]) : (st === 'now' ? 'In progress' : '—')) + '</small></li>';
         }).join('');
         var certs = (j.certificates || []).map(function(n){
           return '<a class="btn btn-primary tr-cert" href="verify.html?id=' + encodeURIComponent(n) + '">VIEW CERTIFICATE ' + tesc(n) + ' →</a>';

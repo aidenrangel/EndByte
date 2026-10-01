@@ -827,7 +827,7 @@ a.btn{text-align:center}
 .tr.hit .vr-h{color:var(--amber)}
 .tr p{font-family:var(--sans);color:var(--dim);font-size:14px;line-height:1.6;margin-top:6px}
 .tr a:not(.btn){color:var(--text);text-decoration:underline}
-.tr-steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:18px 0 8px;padding:0;position:relative}
+.tr-steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:18px 0 8px;padding:0;position:relative}
 .tr-steps li{position:relative;padding-top:26px;text-align:left}
 .tr-steps li::before{content:'';position:absolute;top:7px;left:14px;right:0;height:2px;background:var(--line2)}
 .tr-steps li:last-child::before{display:none}
@@ -977,3 +977,5 @@ a.btn{text-align:center}
 .tr-bar{height:6px;background:var(--line2);margin-top:10px;overflow:hidden}
 .tr-bar i{display:block;height:100%;background:var(--amber);transition:width .6s ease}
 .tr-prog small{display:block;font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:8px}
+.inc-grid-3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:860px){.inc-grid-3{grid-template-columns:1fr}}
