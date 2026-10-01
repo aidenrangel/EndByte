@@ -1,21 +1,15 @@
 {
   "_note": "Public job tracker for endbyte.net/track.html. Never put client names or serial numbers here.",
   "jobs": {
-    "EB-FR9V-7D3B": {
-      "stage": "ready",
-      "drives": 2,
+    "EB-CF96-5J2J": {
+      "stage": "received",
+      "drives": 20,
       "history": {
-        "received": "2026-09-29",
-        "wiping": "2026-09-29",
-        "verifying": "2026-09-29",
-        "ready": "2026-09-29"
+        "received": "2026-10-01"
       },
-      "updated": "2026-09-29",
+      "updated": "2026-10-01",
       "note": "",
-      "certificates": [
-        "CD-2606",
-        "CD-2607"
-      ]
+      "certificates": []
     }
   }
 }
