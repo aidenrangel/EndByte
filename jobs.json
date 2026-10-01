@@ -16,21 +16,6 @@
         "CD-2606",
         "CD-2607"
       ]
-    },
-    "EB-5D87-GVWP": {
-      "stage": "ready",
-      "drives": 47,
-      "history": {
-        "received": "2026-10-01",
-        "wiping": "2026-10-01",
-        "verifying": "2026-10-01",
-        "ready": "2026-10-01"
-      },
-      "updated": "2026-10-01",
-      "note": "",
-      "certificates": [
-        "CD-2613"
-      ]
     }
   }
 }
