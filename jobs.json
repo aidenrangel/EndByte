@@ -28,7 +28,9 @@
       },
       "updated": "2026-10-01",
       "note": "",
-      "certificates": []
+      "certificates": [
+        "CD-2613"
+      ]
     }
   }
 }
