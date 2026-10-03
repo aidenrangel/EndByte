@@ -456,6 +456,16 @@
                   state:'empty', prog:0, pass:1, speed:0, sn:serial()});
     }
 
+    // keep the "· N SLOTS" label in step with how many slots this screen size shows
+    var slotsLabel = document.querySelector('.bench-slots');
+    function syncSlotCount(){
+      if(!slotsLabel) return;
+      var shown = slots.filter(function(s){ return s.el.offsetParent !== null; }).length;
+      slotsLabel.textContent = ' · ' + (shown || SLOTS) + ' SLOTS';
+    }
+    syncSlotCount();
+    window.addEventListener('resize', syncSlotCount);
+
     function start(s){
       s.state='wiping'; s.prog=0; s.pass=1;
       s.speed = 0.3 + Math.random()*0.7;   // single NIST 800-88 pass, so a slower bar
