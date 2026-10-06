@@ -1018,3 +1018,8 @@ a.btn{text-align:center}
 .sa-act .btn{padding:11px 18px;font-size:12.5px}
 .sa-act a.sa-link{font-family:var(--mono);font-size:12px;letter-spacing:.05em;color:var(--text);text-decoration:underline;text-underline-offset:3px}
 @media(max-width:480px){.sa-act .btn{width:100%;text-align:center}}
+
+/* section labels: the short amber line draws itself in as the section scrolls into view */
+.js .reveal .eyebrow::before{width:0;transition:width .7s cubic-bezier(.2,.7,.2,1) .12s}
+.js .reveal.in .eyebrow::before{width:28px}
+@media (prefers-reduced-motion: reduce){.js .reveal .eyebrow::before{width:28px;transition:none}}
