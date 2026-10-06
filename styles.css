@@ -1023,3 +1023,5 @@ a.btn{text-align:center}
 .js .reveal .eyebrow::before{width:0;transition:width .7s cubic-bezier(.2,.7,.2,1) .12s}
 .js .reveal.in .eyebrow::before{width:28px}
 @media (prefers-reduced-motion: reduce){.js .reveal .eyebrow::before{width:28px;transition:none}}
+.doc-grid.three{grid-template-columns:repeat(3,1fr)}
+@media(max-width:980px){.doc-grid.three{grid-template-columns:1fr}}
