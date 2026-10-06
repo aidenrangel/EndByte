@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=818232bd">
+<link rel="stylesheet" href="styles.css?v=197b9e16">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -430,8 +430,20 @@
         <a href="partners.html" class="area-pill">IT providers<span>→</span></a>
       </div>
     </div>
-    <div class="serve-row reveal">
+    <div class="serve-row serve-row-top reveal">
       <span class="serve-k">SERVICE AREAS</span>
+      <div class="sa-wrap">
+      <div class="sa-check">
+        <form class="sa-form" id="areaCheck" autocomplete="off">
+          <label for="areaQ" class="vf-label">DO YOU SERVE ME? ENTER YOUR CITY OR ZIP CODE</label>
+          <div class="vf-row">
+            <input id="areaQ" name="area" type="text" list="areaList" placeholder="e.g. Sunnyvale or 94086" spellcheck="false" autocapitalize="words" enterkeyhint="search" required>
+            <button type="submit" class="btn btn-primary">CHECK</button>
+          </div>
+          <datalist id="areaList"><option value="Alameda"><option value="Alamo"><option value="Albany"><option value="Alviso"><option value="American Canyon"><option value="Antioch"><option value="Aptos"><option value="Aromas"><option value="Atherton"><option value="Belmont"><option value="Belvedere Tiburon"><option value="Ben Lomond"><option value="Benicia"><option value="Berkeley"><option value="Bethel Island"><option value="Birds Landing"><option value="Bolinas"><option value="Boulder Creek"><option value="Brentwood"><option value="Brisbane"><option value="Brookdale"><option value="Burlingame"><option value="Byron"><option value="Campbell"><option value="Canyon"><option value="Capitola"><option value="Carmel By The Sea"><option value="Castro Valley"><option value="Castroville"><option value="Ceres"><option value="Chualar"><option value="Clayton"><option value="Concord"><option value="Corte Madera"><option value="Coyote"><option value="Crockett"><option value="Crows Landing"><option value="Cupertino"><option value="Daly City"><option value="Danville"><option value="Davenport"><option value="Diablo"><option value="Discovery Bay"><option value="Dublin"><option value="El Cerrito"><option value="El Granada"><option value="El Sobrante"><option value="Emeryville"><option value="Fairfax"><option value="Felton"><option value="Freedom"><option value="Fremont"><option value="French Camp"><option value="Gilroy"><option value="Greenbrae"><option value="Gustine"><option value="Half Moon Bay"><option value="Hayward"><option value="Hercules"><option value="Hollister"><option value="Holt"><option value="Holy City"><option value="Isleton"><option value="Kentfield"><option value="Keyes"><option value="Knightsen"><option value="La Honda"><option value="Lafayette"><option value="Larkspur"><option value="Lathrop"><option value="Livermore"><option value="Loma Mar"><option value="Los Altos"><option value="Los Gatos"><option value="Manteca"><option value="Marina"><option value="Martinez"><option value="Menlo Park"><option value="Mill Valley"><option value="Millbrae"><option value="Milpitas"><option value="Modesto"><option value="Montara"><option value="Monterey"><option value="Moraga"><option value="Morgan Hill"><option value="Moss Beach"><option value="Moss Landing"><option value="Mount Hamilton"><option value="Mount Hermon"><option value="Mountain View"><option value="New Almaden"><option value="Newark"><option value="Newman"><option value="Oakland"><option value="Oakley"><option value="Orinda"><option value="Pacific Grove"><option value="Pacifica"><option value="Palo Alto"><option value="Patterson"><option value="Pebble Beach"><option value="Pescadero"><option value="Piedmont"><option value="Pinole"><option value="Pittsburg"><option value="Pleasant Hill"><option value="Pleasanton"><option value="Port Costa"><option value="Portola Valley"><option value="Portola Vally"><option value="Redwood City"><option value="Redwood Estates"><option value="Richmond"><option value="Rio Vista"><option value="Ripon"><option value="Rodeo"><option value="Ross"><option value="Salida"><option value="Salinas"><option value="San Anselmo"><option value="San Bruno"><option value="San Carlos"><option value="San Francisco"><option value="San Gregorio"><option value="San Jose"><option value="San Juan Bautista"><option value="San Leandro"><option value="San Lorenzo"><option value="San Martin"><option value="San Mateo"><option value="San Pablo"><option value="San Quentin"><option value="San Rafael"><option value="San Ramon"><option value="Santa Clara"><option value="Santa Cruz"><option value="Saratoga"><option value="Sausalito"><option value="Scotts Valley"><option value="Seaside"><option value="Soquel"><option value="South San Francisco"><option value="Spreckels"><option value="Stanford"><option value="Stevinson"><option value="Stinson Beach"><option value="Stockton"><option value="Sunnyvale"><option value="Sunol"><option value="Tracy"><option value="Tres Pinos"><option value="Union City"><option value="Vallejo"><option value="Vernalis"><option value="Walnut Creek"><option value="Watsonville"><option value="Westley"><option value="Woodacre"></datalist>
+        </form>
+        <div class="sa-result" id="areaResult" aria-live="polite"></div>
+      </div>
       <div class="areastrip-cities">
         <a href="areas/san-jose.html" class="area-pill">San Jose<span>→</span></a>
         <a href="areas/santa-clara.html" class="area-pill">Santa Clara<span>→</span></a>
@@ -444,6 +456,7 @@
         <a href="areas/cupertino.html" class="area-pill">Cupertino<span>→</span></a>
         <a href="areas/milpitas.html" class="area-pill">Milpitas<span>→</span></a>
         <a href="areas/redwood-city.html" class="area-pill">Redwood City<span>→</span></a>
+      </div>
       </div>
     </div>
   </div>
@@ -574,6 +587,6 @@
   </div>
 </footer>
 <!-- @end footer -->
-<script src="main.js?v=a1ff95a3"></script>
+<script src="main.js?v=7769428b"></script>
 </body>
 </html>

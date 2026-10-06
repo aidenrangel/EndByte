@@ -34,7 +34,7 @@ def write(p, s):
 def pages():
     out = []
     for dirpath, dirs, files in os.walk(ROOT):
-        dirs[:] = [d for d in dirs if not d.startswith((".", "_"))]
+        dirs[:] = [d for d in dirs if not d.startswith((".", "_")) and not d.lower().startswith("claude")]  # skip tool/app folders
         for fn in files:
             if fn.endswith(".html"):
                 out.append(os.path.relpath(os.path.join(dirpath, fn), ROOT).replace(os.sep, "/"))

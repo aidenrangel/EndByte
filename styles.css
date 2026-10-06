@@ -995,3 +995,26 @@ a.btn{text-align:center}
 .qf-sent-urgent{font-size:13px!important}
 .qf-sent-msg .qf-next,.qf-sent-msg .qf-sent-tip{text-align:left}
 .qf-sent-msg .qf-sent-links{justify-content:center}
+
+/* home · "Do you serve me?" checker */
+.serve-row-top{align-items:start}
+.serve-row-top .serve-k{padding-top:4px}
+.sa-wrap{display:flex;flex-direction:column;gap:18px;min-width:0}
+.sa-check{max-width:640px}
+.sa-form .vf-row input{font-size:16px;letter-spacing:.04em;text-transform:none;padding:12px 14px;background:var(--field)}
+.sa-form .vf-row .btn{padding:12px 22px}
+.sa-result:empty{display:none}
+.sa-result{margin-top:14px;border:1px solid var(--line2);background:var(--panel);padding:16px 18px}
+.sa-result.yes{border-color:var(--green)}
+.sa-result.near{border-color:var(--amber)}
+.sa-result.mail,.sa-result.miss{border-color:var(--line2)}
+.sa-h{font-family:var(--mono);font-size:12px;letter-spacing:.12em;margin-bottom:6px}
+.sa-result.yes .sa-h{color:var(--green)}
+.sa-result.near .sa-h{color:var(--amber)}
+.sa-result.mail .sa-h,.sa-result.miss .sa-h{color:var(--text)}
+.sa-result p{color:var(--dim);font-size:14.5px;line-height:1.6;margin:0}
+.sa-result p b{color:var(--text);font-weight:600}
+.sa-act{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:14px}
+.sa-act .btn{padding:11px 18px;font-size:12.5px}
+.sa-act a.sa-link{font-family:var(--mono);font-size:12px;letter-spacing:.05em;color:var(--text);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:480px){.sa-act .btn{width:100%;text-align:center}}

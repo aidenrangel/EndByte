@@ -668,6 +668,111 @@
       '<p class="qf-sent-urgent">Urgent? Call or text <a href="tel:+14084206991">+1 (408) 420-6991</a>.</p>';
   }
 
+  /* ---------- "Do you serve me?" checker (home page) ---------- */
+  var saForm = document.getElementById('areaCheck');
+  if(saForm){
+    // Change these if your service area or policy changes.
+    var SA_PICKUP_MI = 60;     // up to this distance: standard Bay Area pickup
+    var SA_REGION_MI = 200;    // up to this (and north of Bakersfield): scheduled pickup or mail-in
+    var SA_PAGES = {'san jose':1,'santa clara':1,'sunnyvale':1,'fremont':1,'oakland':1,'san francisco':1,
+                    'mountain view':1,'palo alto':1,'cupertino':1,'milpitas':1,'redwood city':1};
+    var saIn = document.getElementById('areaQ'), saOut = document.getElementById('areaResult'), saData = null;
+    var saBase = (document.querySelector('link[rel="icon"]') || {getAttribute:function(){return 'favicon.svg';}}).getAttribute('href').replace(/favicon\.svg$/, '');
+    function saLoad(){
+      if(saData) return Promise.resolve(saData);
+      return fetch(saBase + 'serve-areas.json').then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
+        d.byName = {}; d.c.forEach(function(c, i){ d.byName[c[0].toLowerCase()] = i; });
+        saData = d; return d;
+      });
+    }
+    saIn.addEventListener('focus', function(){ saLoad().catch(function(){}); }, {once:true});
+    function saEsc(t){ return String(t).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+    function saMiles(a, b, c, d){
+      var R = 3958.8, r = Math.PI/180, x = Math.sin((c-a)*r/2), y = Math.sin((d-b)*r/2);
+      return 2*R*Math.asin(Math.sqrt(x*x + Math.cos(a*r)*Math.cos(c*r)*y*y));
+    }
+    function saNorm(q){
+      return q.toLowerCase().replace(/[.,]/g, ' ').replace(/\b(ca|calif|california|usa)\b/g, ' ')
+              .replace(/\bmt\b/g, 'mount').replace(/\bst\b/g, 'saint').replace(/\s+/g, ' ').trim();
+    }
+    var SA_ALIAS = {'sf':'san francisco','san fran':'san francisco','frisco':'san francisco','sj':'san jose','san josé':'san jose','south sf':'south san francisco','ssf':'south san francisco','mount view':'mountain view','mtn view':'mountain view','mv':'mountain view','pa':'palo alto','rwc':'redwood city','east palo alto':'east palo alto'};
+    function saLev(a, b){
+      if(Math.abs(a.length - b.length) > 2) return 9;
+      var p = [], i, j;
+      for(j = 0; j <= b.length; j++) p[j] = j;
+      for(i = 1; i <= a.length; i++){
+        var prev = p[0]; p[0] = i;
+        for(j = 1; j <= b.length; j++){
+          var t = p[j]; p[j] = Math.min(p[j] + 1, p[j-1] + 1, prev + (a[i-1] === b[j-1] ? 0 : 1)); prev = t;
+        }
+      }
+      return p[b.length];
+    }
+    function saFind(d, raw){
+      var q = raw.trim(), z = q.match(/^(\d{5})(-\d{4})?$/);
+      if(z){
+        var e = d.z[z[1]];
+        if(!e) return {zip: z[1], outside: true};
+        var c = d.c[e[0]];
+        return {name: c[0], lat: e.length > 1 ? e[1] : c[1], lon: e.length > 1 ? e[2] : c[2], zip: z[1]};
+      }
+      var n = saNorm(q); n = SA_ALIAS[n] || n;
+      if(!n) return null;
+      var i = d.byName[n];
+      if(i == null){
+        var best = null, bd = 3;
+        for(var k in d.byName){
+          var dist = k.indexOf(n) === 0 && n.length >= 4 ? 0.5 : saLev(n, k);
+          if(dist < bd){ bd = dist; best = k; }
+        }
+        if(best != null && bd <= (n.length > 6 ? 2 : 1)) i = d.byName[best];
+      }
+      if(i == null) return null;
+      var c2 = d.c[i];
+      return {name: c2[0], lat: c2[1], lon: c2[2]};
+    }
+    function saShow(cls, head, body, actions){
+      saOut.className = 'sa-result ' + cls;
+      saOut.innerHTML = '<div class="sa-h">' + head + '</div><p>' + body + '</p>' + (actions ? '<div class="sa-act">' + actions + '</div>' : '');
+    }
+    var SA_EST = '<a class="btn btn-primary" href="' + saBase + 'estimate.html">GET AN INSTANT ESTIMATE →</a>';
+    var SA_QUOTE = '<a class="sa-link" href="#quote">Request a quote</a>';
+    var SA_SHIP = '<a class="sa-link" href="' + saBase + 'guides/ship-a-hard-drive-safely.html">How to mail your drives →</a>';
+    saForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var q = saIn.value;
+      if(!q.trim()) return;
+      saOut.className = 'sa-result'; saOut.textContent = 'Checking…';
+      saLoad().then(function(d){
+        var r = saFind(d, q);
+        if(typeof gtag === 'function') gtag('event', 'area_check', {query_type: /^\d/.test(q.trim()) ? 'zip' : 'city', found: !!(r && !r.outside)});
+        if(!r){
+          saShow('miss', 'WE COULDN\'T FIND THAT PLACE', 'Try your ZIP code instead — or just <a href="#quote">ask us</a>. We serve the whole Bay Area and work with customers across California by mail.', '');
+          return;
+        }
+        if(r.outside){
+          saShow('mail', 'MAIL-IN AVAILABLE · ZIP ' + saEsc(r.zip), 'That\'s outside our pickup area, but you can mail drives to our Santa Clara bench. Every drive is logged by serial on arrival and certified like any other job.', SA_SHIP + SA_QUOTE);
+          return;
+        }
+        var mi = Math.max(1, Math.round(saMiles(d.b[0], d.b[1], r.lat, r.lon)));
+        var place = '<b>' + saEsc(r.name) + '</b>' + (r.zip ? ' (' + saEsc(r.zip) + ')' : '');
+        var key = r.name.toLowerCase();
+        var page = SA_PAGES[key] ? '<a class="sa-link" href="' + saBase + 'areas/' + key.replace(/ /g, '-') + '.html">' + saEsc(r.name) + ' page →</a>' : SA_QUOTE;
+        if(key === 'santa clara' || mi <= 2){
+          saShow('yes', '✓ YOU\'RE RIGHT NEXT TO US', place + ' is home to our bench. We can pick up from you or you can drop off.', SA_EST + page);
+        } else if(mi <= SA_PICKUP_MI){
+          saShow('yes', '✓ YES — WE PICK UP IN ' + saEsc(r.name.toUpperCase()), place + ' is about <b>' + mi + ' miles</b> from our Santa Clara bench, inside our Bay Area pickup area. Every drive is logged by serial and sealed at pickup.', SA_EST + page);
+        } else if(mi <= SA_REGION_MI && r.lat >= 35.4){
+          saShow('near', 'WE CAN HELP IN ' + saEsc(r.name.toUpperCase()), place + ' is about <b>' + mi + ' miles</b> from our bench. Larger jobs get a scheduled pickup; smaller batches can be mailed in.', '<a class="btn btn-primary" href="#quote">REQUEST A QUOTE →</a>' + SA_SHIP);
+        } else {
+          saShow('mail', 'MAIL-IN AVAILABLE', place + ' is about <b>' + mi + ' miles</b> away — outside our pickup area, but you can mail drives to our Santa Clara bench. Every drive is logged by serial on arrival and certified like any other job.', SA_SHIP + SA_QUOTE);
+        }
+      }).catch(function(){
+        saShow('miss', 'LOOKUP UNAVAILABLE', 'Please try again, or call <a href="tel:+14084206991">+1 (408) 420-6991</a>.', '');
+      });
+    });
+  }
+
   /* ---------- faq accordion (home page only) ---------- */
   var faqItems = document.querySelectorAll('.faq-item');
   if(faqItems.length){
